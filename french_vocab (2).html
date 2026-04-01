@@ -598,7 +598,7 @@ const WORDS = [
   {fr:"déjà",zh:"已经",en:"already",level:"A2",type:"other",cat:"A2副词与其他"},
   {fr:"encore",zh:"还/又",en:"still / again",level:"A2",type:"other",cat:"A2副词与其他"},
   {fr:"aussi",zh:"也",en:"also",level:"A2",type:"other",cat:"A2副词与其他"},
-  {fr:"technologie",zh:"科技",en:"technology",level:"A2",type:"other",cat:"A2副词与其他",emoji:"⚙️"},
+  {fr:"technologie",zh:"科技",en:"technology",level:"A2",type:"noun",cat:"购物与消费",emoji:"⚙️"},
   {fr:"réseau",zh:"网络/人脉",en:"network",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
   {fr:"donnée",zh:"数据",en:"data",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
   {fr:"intelligence",zh:"智能",en:"intelligence",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
@@ -1350,7 +1350,6 @@ const WORDS = [
   {fr:"sénior",zh:"老年人",en:"senior",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
   {fr:"thérapie",zh:"治疗",en:"therapy",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
   {fr:"inconscient",zh:"无意识的",en:"unconscious",level:"B2",type:"adj",cat:"B2形容词"},
-  {fr:"psychique",zh:"心理的",en:"psychic / mental",level:"B2",type:"adj",cat:"B2形容词"},
   {fr:"informationnel",zh:"资讯的",en:"informational",level:"B2",type:"adj",cat:"B2形容词"},
   {fr:"opportunité",zh:"机会",en:"opportunity",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
   {fr:"informatiser",zh:"使电脑化",en:"to computerise",level:"B2",type:"verb",cat:"B2核心动词"},
@@ -1576,9 +1575,16 @@ function filtered(){
 function speakWord(btn){
   const fr = btn.dataset.fr;
   if(!fr) return;
+  // Phonetic overrides for words the browser mispronounces
+  const phoneticMap = {
+    'tropical': 'tropicale',
+    'œuvre': 'euvre',
+    'suspense': 'süspanse',
+  };
+  const text = phoneticMap[fr] || fr;
   window.speechSynthesis.cancel();
   function doSpeak(){
-    const u = new SpeechSynthesisUtterance(fr);
+    const u = new SpeechSynthesisUtterance(text);
     const voices = window.speechSynthesis.getVoices();
     const frVoice = voices.find(v => v.lang === 'fr-FR') || voices.find(v => v.lang.startsWith('fr'));
     if(frVoice) u.voice = frVoice;
@@ -1586,7 +1592,6 @@ function speakWord(btn){
     u.rate = 0.85;
     window.speechSynthesis.speak(u);
   }
-  // voices may not be loaded yet on first call
   if(window.speechSynthesis.getVoices().length === 0){
     window.speechSynthesis.onvoiceschanged = doSpeak;
   } else {
