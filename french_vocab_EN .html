@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulaire TCF NCLC7 — MLI (EN)</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#3BB3A0;
+  --primary-dark:#2A8F7E;
+  --primary-light:#E6F5F3;
+  --navy:#1B3A6B;
+  --navy-dark:#162F58;
+  --bg:#F4F9F8;
+  --border:#C8E6E2;
+  --text:#1a1a1a;
+  --muted:#5A7A76;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+header{background:var(--navy);padding:.7rem 1.25rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(27,58,107,.3)}
+.header-top{display:flex;align-items:center;gap:1rem;margin-bottom:.6rem}
+.logo-img{height:38px;background:#fff;border-radius:6px;padding:3px 8px}
+.header-title{color:#fff;font-size:.82rem;font-weight:400;opacity:.8;line-height:1.4}
+.header-title strong{font-size:.97rem;font-weight:700;display:block;opacity:1}
+.controls{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.filter-label{font-size:10px;color:rgba(255,255,255,.55);font-weight:600;text-transform:uppercase;letter-spacing:.07em;align-self:center}
+.divider{width:1px;height:16px;background:rgba(255,255,255,.2);margin:0 .2rem;align-self:center}
+
+.btn{padding:4px 11px;border-radius:20px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);font-size:12px;cursor:pointer;color:rgba(255,255,255,.7);font-weight:500;transition:all .15s}
+.btn:hover{background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.45)}
+.btn.active{background:#fff;color:var(--navy);border-color:#fff;font-weight:700}
+.btn-a1.active{background:#EEEDFE;color:#3C3489;border-color:#EEEDFE}
+.btn-a2.active{background:#E1F5EE;color:#0F6E56;border-color:#E1F5EE}
+.btn-b1.active{background:#FAECE7;color:#993C1D;border-color:#FAECE7}
+.btn-b2.active{background:#E6F1FB;color:#185FA5;border-color:#E6F1FB}
+.btn-noun.active,.btn-other.active{background:#fff;color:var(--navy);border-color:#fff}
+.btn-verb.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.btn-adj.active{background:#F0A500;color:#fff;border-color:#F0A500}
+
+.teal-line{height:3px;background:linear-gradient(90deg,var(--navy),var(--primary))}
+
+.mode-bar{display:flex;gap:.5rem;padding:.55rem 1.25rem;background:#fff;border-bottom:2px solid var(--primary)}
+.mode-tab{padding:5px 16px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--muted);transition:all .15s}
+.mode-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.mode-tab:hover:not(.active){border-color:var(--primary);color:var(--primary-dark)}
+
+.stats-bar{display:flex;align-items:center;justify-content:space-between;padding:.4rem 1.25rem;background:var(--primary-light);border-bottom:1px solid var(--border);font-size:11px;color:var(--muted)}
+.starred-toggle{cursor:pointer;font-size:11px;color:var(--muted);background:none;border:none;padding:0}
+.starred-toggle.on{color:#E6A800;font-weight:700}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;padding:.9rem 1.25rem}
+
+.card{background:#fff;border-radius:10px;border:1.5px solid var(--border);padding:.85rem .95rem;cursor:pointer;transition:transform .1s,box-shadow .1s;position:relative;user-select:none}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(59,179,160,.15)}
+.card.flipped .front{display:none}
+.card.flipped .back{display:block}
+.back{display:none}
+.card.starred-card{border-color:#E6A800;border-width:2px}
+
+.level-badge{position:absolute;top:7px;right:7px;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;letter-spacing:.05em}
+.badge-a1{background:#EEEDFE;color:#3C3489}
+.badge-a2{background:#E1F5EE;color:#0F6E56}
+.badge-b1{background:#FAECE7;color:#993C1D}
+.badge-b2{background:#E6F1FB;color:#185FA5}
+
+.gender-badge{display:inline-block;font-size:9px;font-weight:700;padding:1px 5px;border-radius:6px;margin-left:3px;vertical-align:middle}
+.g-m{background:#E6F5F3;color:var(--primary-dark)}
+.g-f{background:#FDE8F0;color:#A0295A}
+.g-mf{background:#F0EEF9;color:#5B4A9B}
+
+.star-btn{position:absolute;top:7px;left:7px;font-size:14px;background:none;border:none;cursor:pointer;opacity:.2;transition:opacity .15s;line-height:1}
+.star-btn.on{opacity:1}
+.card:hover .star-btn{opacity:.5}
+.card:hover .star-btn.on{opacity:1}
+
+.card-emoji{font-size:1.8rem;line-height:1;margin-bottom:.3rem;display:block;text-align:center}
+.word-fr{font-size:1.15rem;font-weight:700;color:var(--navy);margin:.1rem 0;line-height:1.3;text-align:center}
+.word-type{font-size:10px;color:#bbb;margin-bottom:.45rem;text-align:center}
+.hint{font-size:9px;color:#ccc;text-align:center;margin-top:.35rem}
+.speak-btn{background:none;border:none;cursor:pointer;font-size:12px;opacity:.35;margin-left:3px;vertical-align:middle}
+.speak-btn:hover{opacity:1}
+
+.back .word-fr-sm{font-size:.85rem;color:#bbb;text-align:center;margin-bottom:.2rem}
+.back .word-zh{font-size:1.15rem;font-weight:700;color:var(--text);text-align:center;margin-bottom:.15rem}
+.back .word-en{font-size:.8rem;color:#999;text-align:center;font-style:italic}
+.back .cat-tag{font-size:9px;color:#ccc;text-align:center;margin-top:.4rem}
+.back .gender-display{text-align:center;margin:.25rem 0 .1rem;font-size:11px;color:var(--muted)}
+
+.type-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.dot-noun{background:var(--navy)}
+.dot-verb{background:var(--primary)}
+.dot-adj{background:#F0A500}
+.dot-other{background:#A0A0B0}
+
+.quiz-wrap{padding:1.25rem;max-width:560px;margin:0 auto}
+.quiz-card{background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:2rem 1.5rem;text-align:center;margin-bottom:1rem;box-shadow:0 4px 16px rgba(59,179,160,.1)}
+.quiz-q-emoji{font-size:2.8rem;margin-bottom:.4rem}
+.quiz-q-fr{font-size:1.55rem;font-weight:700;color:var(--navy);margin-bottom:.15rem}
+.quiz-q-sub{font-size:.82rem;color:var(--muted);margin-bottom:1.5rem}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+.quiz-opt{padding:.65rem .8rem;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-size:.88rem;cursor:pointer;transition:all .15s;text-align:left;color:var(--text)}
+.quiz-opt:hover{border-color:var(--primary);background:var(--primary-light)}
+.quiz-opt.correct{background:var(--primary-light);border-color:var(--primary);color:var(--primary-dark);font-weight:600}
+.quiz-opt.wrong{background:#FAECE7;border-color:#993C1D;color:#993C1D}
+.quiz-opt.reveal{background:#f8f8f8;color:#ccc;border-color:#eee}
+.quiz-progress{display:flex;gap:4px;margin-bottom:.7rem;justify-content:center;flex-wrap:wrap}
+.prog-dot{width:9px;height:9px;border-radius:50%;background:var(--border)}
+.prog-dot.done-ok{background:var(--primary)}
+.prog-dot.done-err{background:#E05A3A}
+.prog-dot.current{background:var(--navy)}
+.quiz-score{font-size:.82rem;color:var(--muted);margin-bottom:.5rem;text-align:center}
+.quiz-next{width:100%;padding:.6rem;border-radius:10px;background:var(--primary);color:#fff;border:none;font-size:.9rem;cursor:pointer;margin-top:.75rem;font-weight:600}
+.quiz-next:hover{background:var(--primary-dark)}
+.quiz-finish{background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:2rem;text-align:center}
+.quiz-finish h2{font-size:1.3rem;margin-bottom:.5rem;color:var(--navy)}
+.quiz-finish p{color:var(--muted);font-size:.9rem;margin-bottom:1.25rem}
+.quiz-restart{padding:.55rem 1.5rem;border-radius:20px;background:var(--primary);color:#fff;border:none;cursor:pointer;font-size:.88rem;font-weight:600;margin:.25rem}
+.quiz-restart:hover{background:var(--primary-dark)}
+
+.list-wrap{padding:.75rem 1.25rem;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th{padding:.45rem .6rem;border-bottom:2px solid var(--primary);text-align:left;color:var(--navy);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+td{padding:.38rem .6rem;border-bottom:1px solid #EDF5F4;vertical-align:middle}
+tr:nth-child(even) td{background:#F9FEFE}
+
+.empty{text-align:center;padding:3rem;color:var(--muted);font-size:.9rem;grid-column:1/-1}
+
+@media(max-width:600px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));padding:.65rem;gap:7px}
+  .quiz-opts{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <img class="logo-img" src="data:image/jpeg;base64,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" alt="MLI">
+    <div class="header-title">
+      <strong>Vocabulaire essentiel — TCF NCLC7</strong>
+      Flashcards · Quiz · Master your vocabulary
+    </div>
+  </div>
+  <div class="controls">
+    <span class="filter-label">Niveau</span>
+    <div style="display:flex;gap:.3rem;flex-wrap:wrap">
+      <button class="btn btn-all active" data-group="level" data-val="all">All</button>
+      <button class="btn btn-a1" data-group="level" data-val="A1">A1</button>
+      <button class="btn btn-a2" data-group="level" data-val="A2">A2</button>
+      <button class="btn btn-b1" data-group="level" data-val="B1">B1</button>
+      <button class="btn btn-b2" data-group="level" data-val="B2">B2</button>
+    </div>
+    <div class="divider"></div>
+    <span class="filter-label">Type</span>
+    <div style="display:flex;gap:.3rem;flex-wrap:wrap">
+      <button class="btn btn-all active" data-group="type" data-val="all">All</button>
+      <button class="btn btn-noun" data-group="type" data-val="noun">Noun</button>
+      <button class="btn btn-verb" data-group="type" data-val="verb">Verb</button>
+      <button class="btn btn-adj" data-group="type" data-val="adj">Adj.</button>
+      <button class="btn btn-other" data-group="type" data-val="other">Other</button>
+    </div>
+  </div>
+</header>
+<div class="teal-line"></div>
+
+<div class="mode-bar">
+  <button class="mode-tab active" data-mode="flash">🃏 Flashcards</button>
+  <button class="mode-tab" data-mode="quiz">✏️ Quiz</button>
+  <button class="mode-tab" data-mode="list">📋 List</button>
+</div>
+
+<div class="stats-bar">
+  <span id="stats-text">Loading…</span>
+  <button class="starred-toggle" id="starred-toggle">⭐ Starred only</button>
+</div>
+
+<div id="main-area"></div>
+
+<script>
+const WORDS = [
+  {fr:"homme",zh:"男人",en:"man",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👨",gender:"m"},
+  {fr:"femme",zh:"女人/妻子",en:"woman / wife",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👩",gender:"f"},
+  {fr:"garçon",zh:"男孩",en:"boy",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👦",gender:"m"},
+  {fr:"fille",zh:"女孩/女儿",en:"girl / daughter",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👧",gender:"f"},
+  {fr:"enfant",zh:"孩子",en:"child",level:"A1",type:"noun",cat:"人物与家庭",emoji:"🧒",gender:"mf"},
+  {fr:"personne",zh:"人",en:"person",level:"A1",type:"noun",cat:"人物与家庭",emoji:"🙋",gender:"f"},
+  {fr:"ami",zh:"朋友",en:"friend",level:"A1",type:"noun",cat:"人物与家庭",emoji:"🤝",gender:"m"},
+  {fr:"copain",zh:"朋友/同伴",en:"friend / buddy",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👫",gender:"m"},
+  {fr:"famille",zh:"家庭",en:"family",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👨‍👩‍👧",gender:"f"},
+  {fr:"parents",zh:"父母",en:"parents",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👨‍👩‍👦",gender:"m"},
+  {fr:"père",zh:"父亲",en:"father",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👨",gender:"m"},
+  {fr:"mère",zh:"母亲",en:"mother",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👩",gender:"f"},
+  {fr:"fils",zh:"儿子",en:"son",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👦",gender:"m"},
+  {fr:"frère",zh:"兄弟",en:"brother",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👬",gender:"m"},
+  {fr:"sœur",zh:"姐妹",en:"sister",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👭",gender:"f"},
+  {fr:"grand-père",zh:"祖父",en:"grandfather",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👴",gender:"m"},
+  {fr:"grand-mère",zh:"祖母",en:"grandmother",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👵",gender:"f"},
+  {fr:"mari",zh:"丈夫",en:"husband",level:"A1",type:"noun",cat:"人物与家庭",emoji:"💍",gender:"m"},
+  {fr:"professeur",zh:"老师",en:"teacher",level:"A1",type:"noun",cat:"人物与家庭",emoji:"👩‍🏫",gender:"m"},
+  {fr:"élève",zh:"中小学生",en:"pupil",level:"A1",type:"noun",cat:"人物与家庭",emoji:"📚",gender:"mf"},
+  {fr:"étudiant",zh:"大学生",en:"student",level:"A1",type:"noun",cat:"人物与家庭",emoji:"🎓",gender:"m"},
+  {fr:"directeur",zh:"主管/校长",en:"director",level:"A1",type:"noun",cat:"人物与家庭",emoji:"💼",gender:"m"},
+  {fr:"collègue",zh:"同事",en:"colleague",level:"A1",type:"noun",cat:"人物与家庭",emoji:"🤝",gender:"mf"},
+  {fr:"client",zh:"客人/顾客",en:"customer",level:"A1",type:"noun",cat:"人物与家庭",emoji:"🛒",gender:"m"},
+  {fr:"médecin",zh:"医生",en:"doctor",level:"A1",type:"noun",cat:"人物与家庭",emoji:"🩺",gender:"m"},
+  {fr:"voisin",zh:"邻居",en:"neighbour",level:"A1",type:"noun",cat:"人物与家庭",emoji:"🏘️",gender:"m"},
+  {fr:"acteur",zh:"演员",en:"actor",level:"A1",type:"noun",cat:"人物与家庭",emoji:"🎭",gender:"m"},
+  {fr:"ville",zh:"城市",en:"city",level:"A1",type:"noun",cat:"地点与交通",emoji:"🏙️",gender:"f"},
+  {fr:"village",zh:"村庄",en:"village",level:"A1",type:"noun",cat:"地点与交通",emoji:"🏡",gender:"m"},
+  {fr:"pays",zh:"国家",en:"country",level:"A1",type:"noun",cat:"地点与交通",emoji:"🌍",gender:"m"},
+  {fr:"monde",zh:"世界",en:"world",level:"A1",type:"noun",cat:"地点与交通",emoji:"🌎",gender:"m"},
+  {fr:"rue",zh:"街道",en:"street",level:"A1",type:"noun",cat:"地点与交通",emoji:"🛣️",gender:"f"},
+  {fr:"route",zh:"道路",en:"road",level:"A1",type:"noun",cat:"地点与交通",emoji:"🛤️",gender:"f"},
+  {fr:"place",zh:"广场",en:"square",level:"A1",type:"noun",cat:"地点与交通",emoji:"⛲",gender:"f"},
+  {fr:"parc",zh:"公园",en:"park",level:"A1",type:"noun",cat:"地点与交通",emoji:"🌳",gender:"m"},
+  {fr:"jardin",zh:"花园",en:"garden",level:"A1",type:"noun",cat:"地点与交通",emoji:"🌿",gender:"m"},
+  {fr:"mer",zh:"海",en:"sea",level:"A1",type:"noun",cat:"地点与交通",emoji:"🌊",gender:"f"},
+  {fr:"plage",zh:"海滩",en:"beach",level:"A1",type:"noun",cat:"地点与交通",emoji:"🏖️",gender:"f"},
+  {fr:"montagne",zh:"山",en:"mountain",level:"A1",type:"noun",cat:"地点与交通",emoji:"⛰️",gender:"f"},
+  {fr:"nature",zh:"自然",en:"nature",level:"A1",type:"noun",cat:"地点与交通",emoji:"🌱",gender:"f"},
+  {fr:"école",zh:"学校",en:"school",level:"A1",type:"noun",cat:"地点与交通",emoji:"🏫",gender:"f"},
+  {fr:"université",zh:"大学",en:"university",level:"A1",type:"noun",cat:"地点与交通",emoji:"🎓",gender:"f"},
+  {fr:"bibliothèque",zh:"图书馆",en:"library",level:"A1",type:"noun",cat:"地点与交通",emoji:"📖",gender:"f"},
+  {fr:"musée",zh:"博物馆",en:"museum",level:"A1",type:"noun",cat:"地点与交通",emoji:"🖼️",gender:"m"},
+  {fr:"cinéma",zh:"电影院",en:"cinema",level:"A1",type:"noun",cat:"地点与交通",emoji:"🎬",gender:"m"},
+  {fr:"hôpital",zh:"医院",en:"hospital",level:"A1",type:"noun",cat:"地点与交通",emoji:"🏥",gender:"m"},
+  {fr:"aéroport",zh:"机场",en:"airport",level:"A1",type:"noun",cat:"地点与交通",emoji:"✈️",gender:"m"},
+  {fr:"gare",zh:"火车站",en:"train station",level:"A1",type:"noun",cat:"地点与交通",emoji:"🚉",gender:"f"},
+  {fr:"restaurant",zh:"餐厅",en:"restaurant",level:"A1",type:"noun",cat:"地点与交通",emoji:"🍽️",gender:"m"},
+  {fr:"café",zh:"咖啡馆",en:"café",level:"A1",type:"noun",cat:"地点与交通",emoji:"☕",gender:"m"},
+  {fr:"magasin",zh:"商店",en:"shop",level:"A1",type:"noun",cat:"地点与交通",emoji:"🏪",gender:"m"},
+  {fr:"supermarché",zh:"超市",en:"supermarket",level:"A1",type:"noun",cat:"地点与交通",emoji:"🛒",gender:"m"},
+  {fr:"hôtel",zh:"旅馆",en:"hotel",level:"A1",type:"noun",cat:"地点与交通",emoji:"🏨",gender:"m"},
+  {fr:"voiture",zh:"汽车",en:"car",level:"A1",type:"noun",cat:"地点与交通",emoji:"🚗",gender:"f"},
+  {fr:"bus",zh:"公交车",en:"bus",level:"A1",type:"noun",cat:"地点与交通",emoji:"🚌",gender:"m"},
+  {fr:"train",zh:"火车",en:"train",level:"A1",type:"noun",cat:"地点与交通",emoji:"🚆",gender:"m"},
+  {fr:"métro",zh:"地铁",en:"metro",level:"A1",type:"noun",cat:"地点与交通",emoji:"🚇",gender:"m"},
+  {fr:"avion",zh:"飞机",en:"aeroplane",level:"A1",type:"noun",cat:"地点与交通",emoji:"✈️",gender:"m"},
+  {fr:"vélo",zh:"自行车",en:"bicycle",level:"A1",type:"noun",cat:"地点与交通",emoji:"🚲",gender:"m"},
+  {fr:"bateau",zh:"船",en:"boat",level:"A1",type:"noun",cat:"地点与交通",emoji:"⛵",gender:"m"},
+  {fr:"maison",zh:"房子",en:"house",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🏠",gender:"f"},
+  {fr:"appartement",zh:"公寓",en:"apartment",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🏢",gender:"m"},
+  {fr:"pièce",zh:"房间",en:"room",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🚪",gender:"f"},
+  {fr:"chambre",zh:"卧室",en:"bedroom",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🛏️",gender:"f"},
+  {fr:"cuisine",zh:"厨房",en:"kitchen",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🍳",gender:"f"},
+  {fr:"salle",zh:"大厅/房间",en:"hall / room",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🏛️",gender:"f"},
+  {fr:"porte",zh:"门",en:"door",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🚪",gender:"f"},
+  {fr:"fenêtre",zh:"窗户",en:"window",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🪟",gender:"f"},
+  {fr:"escalier",zh:"楼梯",en:"staircase",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🪜",gender:"m"},
+  {fr:"lit",zh:"床",en:"bed",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🛏️",gender:"m"},
+  {fr:"table",zh:"桌子",en:"table",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🪑",gender:"f"},
+  {fr:"chaise",zh:"椅子",en:"chair",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🪑",gender:"f"},
+  {fr:"bureau",zh:"办公桌/办公室",en:"desk / office",level:"A1",type:"noun",cat:"房屋与物品",emoji:"💻",gender:"m"},
+  {fr:"téléphone",zh:"电话",en:"telephone",level:"A1",type:"noun",cat:"房屋与物品",emoji:"📞",gender:"m"},
+  {fr:"ordinateur",zh:"电脑",en:"computer",level:"A1",type:"noun",cat:"房屋与物品",emoji:"💻",gender:"m"},
+  {fr:"télévision",zh:"电视",en:"television",level:"A1",type:"noun",cat:"房屋与物品",emoji:"📺",gender:"f"},
+  {fr:"livre",zh:"书",en:"book",level:"A1",type:"noun",cat:"房屋与物品",emoji:"📚",gender:"m"},
+  {fr:"papier",zh:"纸",en:"paper",level:"A1",type:"noun",cat:"房屋与物品",emoji:"📄",gender:"m"},
+  {fr:"photo",zh:"照片",en:"photo",level:"A1",type:"noun",cat:"房屋与物品",emoji:"📸",gender:"f"},
+  {fr:"sac",zh:"包/袋子",en:"bag",level:"A1",type:"noun",cat:"房屋与物品",emoji:"👜",gender:"m"},
+  {fr:"argent",zh:"钱",en:"money",level:"A1",type:"noun",cat:"房屋与物品",emoji:"💰",gender:"m"},
+  {fr:"billet",zh:"车票/钞票",en:"ticket / banknote",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🎫",gender:"m"},
+  {fr:"ticket",zh:"票",en:"ticket",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🎟️",gender:"m"},
+  {fr:"carte",zh:"卡片",en:"card",level:"A1",type:"noun",cat:"房屋与物品",emoji:"💳",gender:"f"},
+  {fr:"prix",zh:"价格",en:"price",level:"A1",type:"noun",cat:"房屋与物品",emoji:"💲",gender:"m"},
+  {fr:"vêtement",zh:"衣服",en:"clothing",level:"A1",type:"noun",cat:"房屋与物品",emoji:"👕",gender:"m"},
+  {fr:"pantalon",zh:"裤子",en:"trousers",level:"A1",type:"noun",cat:"房屋与物品",emoji:"👖",gender:"m"},
+  {fr:"chemise",zh:"衬衫",en:"shirt",level:"A1",type:"noun",cat:"房屋与物品",emoji:"👔",gender:"f"},
+  {fr:"robe",zh:"连衣裙",en:"dress",level:"A1",type:"noun",cat:"房屋与物品",emoji:"👗",gender:"f"},
+  {fr:"chaussure",zh:"鞋子",en:"shoe",level:"A1",type:"noun",cat:"房屋与物品",emoji:"👟",gender:"f"},
+  {fr:"corps",zh:"身体",en:"body",level:"A1",type:"noun",cat:"房屋与物品",emoji:"🫁",gender:"m"},
+  {fr:"tête",zh:"头",en:"head",level:"A1",type:"noun",cat:"房屋与物品",emoji:"👤",gender:"f"},
+  {fr:"main",zh:"手",en:"hand",level:"A1",type:"noun",cat:"房屋与物品",emoji:"✋",gender:"f"},
+  {fr:"repas",zh:"一餐",en:"meal",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🍽️",gender:"m"},
+  {fr:"petit-déjeuner",zh:"早餐",en:"breakfast",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🥐",gender:"m"},
+  {fr:"déjeuner",zh:"午餐",en:"lunch",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🥗",gender:"m"},
+  {fr:"dîner",zh:"晚餐",en:"dinner",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🌙",gender:"m"},
+  {fr:"menu",zh:"菜单",en:"menu",level:"A1",type:"noun",cat:"饮食与动物",emoji:"📋",gender:"m"},
+  {fr:"viande",zh:"肉",en:"meat",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🥩",gender:"f"},
+  {fr:"poulet",zh:"鸡肉",en:"chicken",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🍗",gender:"m"},
+  {fr:"poisson",zh:"鱼",en:"fish",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🐟",gender:"m"},
+  {fr:"fruit",zh:"水果",en:"fruit",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🍎",gender:"m"},
+  {fr:"légume",zh:"蔬菜",en:"vegetable",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🥦",gender:"m"},
+  {fr:"pain",zh:"面包",en:"bread",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🍞",gender:"m"},
+  {fr:"fromage",zh:"奶酪",en:"cheese",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🧀",gender:"m"},
+  {fr:"gâteau",zh:"蛋糕",en:"cake",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🎂",gender:"m"},
+  {fr:"dessert",zh:"甜点",en:"dessert",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🍰",gender:"m"},
+  {fr:"sucre",zh:"糖",en:"sugar",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🍬",gender:"m"},
+  {fr:"sel",zh:"盐",en:"salt",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🧂",gender:"m"},
+  {fr:"eau",zh:"水",en:"water",level:"A1",type:"noun",cat:"饮食与动物",emoji:"💧",gender:"f"},
+  {fr:"lait",zh:"牛奶",en:"milk",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🥛",gender:"m"},
+  {fr:"thé",zh:"茶",en:"tea",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🍵",gender:"m"},
+  {fr:"jus",zh:"果汁",en:"juice",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🥤",gender:"m"},
+  {fr:"animal",zh:"动物",en:"animal",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🐾",gender:"m"},
+  {fr:"chien",zh:"狗",en:"dog",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🐕",gender:"m"},
+  {fr:"chat",zh:"猫",en:"cat",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🐈",gender:"m"},
+  {fr:"cheval",zh:"马",en:"horse",level:"A1",type:"noun",cat:"饮食与动物",emoji:"🐴",gender:"m"},
+  {fr:"temps",zh:"时间/天气",en:"time / weather",level:"A1",type:"noun",cat:"时间与日期",emoji:"⏰",gender:"m"},
+  {fr:"heure",zh:"小时",en:"hour",level:"A1",type:"noun",cat:"时间与日期",emoji:"🕐",gender:"f"},
+  {fr:"minute",zh:"分钟",en:"minute",level:"A1",type:"noun",cat:"时间与日期",emoji:"⏱️",gender:"f"},
+  {fr:"jour",zh:"天",en:"day",level:"A1",type:"noun",cat:"时间与日期",emoji:"📅",gender:"m"},
+  {fr:"matin",zh:"早上",en:"morning",level:"A1",type:"noun",cat:"时间与日期",emoji:"🌅",gender:"m"},
+  {fr:"après-midi",zh:"下午",en:"afternoon",level:"A1",type:"noun",cat:"时间与日期",emoji:"☀️",gender:"m"},
+  {fr:"soir",zh:"晚上",en:"evening",level:"A1",type:"noun",cat:"时间与日期",emoji:"🌆",gender:"m"},
+  {fr:"nuit",zh:"夜晚",en:"night",level:"A1",type:"noun",cat:"时间与日期",emoji:"🌙",gender:"f"},
+  {fr:"semaine",zh:"星期",en:"week",level:"A1",type:"noun",cat:"时间与日期",emoji:"📆",gender:"f"},
+  {fr:"mois",zh:"月",en:"month",level:"A1",type:"noun",cat:"时间与日期",emoji:"📅",gender:"m"},
+  {fr:"année",zh:"年",en:"year",level:"A1",type:"noun",cat:"时间与日期",emoji:"🗓️",gender:"f"},
+  {fr:"lundi",zh:"星期一",en:"Monday",level:"A1",type:"noun",cat:"时间与日期",emoji:"1️⃣",gender:"m"},
+  {fr:"mardi",zh:"星期二",en:"Tuesday",level:"A1",type:"noun",cat:"时间与日期",emoji:"2️⃣",gender:"m"},
+  {fr:"mercredi",zh:"星期三",en:"Wednesday",level:"A1",type:"noun",cat:"时间与日期",emoji:"3️⃣",gender:"m"},
+  {fr:"jeudi",zh:"星期四",en:"Thursday",level:"A1",type:"noun",cat:"时间与日期",emoji:"4️⃣",gender:"m"},
+  {fr:"vendredi",zh:"星期五",en:"Friday",level:"A1",type:"noun",cat:"时间与日期",emoji:"5️⃣",gender:"m"},
+  {fr:"samedi",zh:"星期六",en:"Saturday",level:"A1",type:"noun",cat:"时间与日期",emoji:"6️⃣",gender:"m"},
+  {fr:"dimanche",zh:"星期日",en:"Sunday",level:"A1",type:"noun",cat:"时间与日期",emoji:"7️⃣",gender:"m"},
+  {fr:"janvier",zh:"一月",en:"January",level:"A1",type:"noun",cat:"时间与日期",emoji:"❄️",gender:"m"},
+  {fr:"mars",zh:"三月",en:"March",level:"A1",type:"noun",cat:"时间与日期",emoji:"🌸",gender:"m"},
+  {fr:"avril",zh:"四月",en:"April",level:"A1",type:"noun",cat:"时间与日期",emoji:"🌧️",gender:"m"},
+  {fr:"mai",zh:"五月",en:"May",level:"A1",type:"noun",cat:"时间与日期",emoji:"🌺",gender:"m"},
+  {fr:"juin",zh:"六月",en:"June",level:"A1",type:"noun",cat:"时间与日期",emoji:"☀️",gender:"m"},
+  {fr:"juillet",zh:"七月",en:"July",level:"A1",type:"noun",cat:"时间与日期",emoji:"🏖️",gender:"m"},
+  {fr:"août",zh:"八月",en:"August",level:"A1",type:"noun",cat:"时间与日期",emoji:"🌻",gender:"m"},
+  {fr:"septembre",zh:"九月",en:"September",level:"A1",type:"noun",cat:"时间与日期",emoji:"🍂",gender:"m"},
+  {fr:"novembre",zh:"十一月",en:"November",level:"A1",type:"noun",cat:"时间与日期",emoji:"🍁",gender:"m"},
+  {fr:"décembre",zh:"十二月",en:"December",level:"A1",type:"noun",cat:"时间与日期",emoji:"❄️",gender:"m"},
+  {fr:"être",zh:"是",en:"to be",level:"A1",type:"verb",cat:"核心动词",emoji:"✅"},
+  {fr:"avoir",zh:"有",en:"to have",level:"A1",type:"verb",cat:"核心动词",emoji:"🤲"},
+  {fr:"aller",zh:"去",en:"to go",level:"A1",type:"verb",cat:"核心动词",emoji:"🚶"},
+  {fr:"faire",zh:"做",en:"to do / make",level:"A1",type:"verb",cat:"核心动词",emoji:"🔨"},
+  {fr:"dire",zh:"说",en:"to say",level:"A1",type:"verb",cat:"核心动词",emoji:"💬"},
+  {fr:"parler",zh:"说话",en:"to speak",level:"A1",type:"verb",cat:"核心动词",emoji:"🗣️"},
+  {fr:"lire",zh:"阅读",en:"to read",level:"A1",type:"verb",cat:"核心动词",emoji:"📖"},
+  {fr:"écrire",zh:"写",en:"to write",level:"A1",type:"verb",cat:"核心动词",emoji:"✏️"},
+  {fr:"écouter",zh:"听",en:"to listen",level:"A1",type:"verb",cat:"核心动词",emoji:"👂"},
+  {fr:"regarder",zh:"看",en:"to watch",level:"A1",type:"verb",cat:"核心动词",emoji:"👀"},
+  {fr:"voir",zh:"看见",en:"to see",level:"A1",type:"verb",cat:"核心动词",emoji:"👁️"},
+  {fr:"manger",zh:"吃",en:"to eat",level:"A1",type:"verb",cat:"核心动词",emoji:"🍴"},
+  {fr:"boire",zh:"喝",en:"to drink",level:"A1",type:"verb",cat:"核心动词",emoji:"🥤"},
+  {fr:"acheter",zh:"买",en:"to buy",level:"A1",type:"verb",cat:"核心动词",emoji:"🛍️"},
+  {fr:"vendre",zh:"卖",en:"to sell",level:"A1",type:"verb",cat:"核心动词",emoji:"💰"},
+  {fr:"payer",zh:"付款",en:"to pay",level:"A1",type:"verb",cat:"核心动词",emoji:"💳"},
+  {fr:"travailler",zh:"工作",en:"to work",level:"A1",type:"verb",cat:"核心动词",emoji:"💼"},
+  {fr:"jouer",zh:"玩",en:"to play",level:"A1",type:"verb",cat:"核心动词",emoji:"🎮"},
+  {fr:"aimer",zh:"喜欢",en:"to like / love",level:"A1",type:"verb",cat:"核心动词",emoji:"❤️"},
+  {fr:"adorer",zh:"喜爱",en:"to adore",level:"A1",type:"verb",cat:"核心动词",emoji:"💖"},
+  {fr:"habiter",zh:"居住",en:"to live",level:"A1",type:"verb",cat:"核心动词",emoji:"🏠"},
+  {fr:"venir",zh:"来",en:"to come",level:"A1",type:"verb",cat:"核心动词",emoji:"👋"},
+  {fr:"partir",zh:"离开",en:"to leave",level:"A1",type:"verb",cat:"核心动词",emoji:"👋"},
+  {fr:"arriver",zh:"到达",en:"to arrive",level:"A1",type:"verb",cat:"核心动词",emoji:"🎯"},
+  {fr:"entrer",zh:"进入",en:"to enter",level:"A1",type:"verb",cat:"核心动词",emoji:"🚪"},
+  {fr:"rentrer",zh:"返回",en:"to return home",level:"A1",type:"verb",cat:"核心动词",emoji:"🏠"},
+  {fr:"sortir",zh:"出去",en:"to go out",level:"A1",type:"verb",cat:"核心动词",emoji:"🚶"},
+  {fr:"dormir",zh:"睡觉",en:"to sleep",level:"A1",type:"verb",cat:"核心动词",emoji:"😴"},
+  {fr:"se coucher",zh:"就寝",en:"to go to bed",level:"A1",type:"verb",cat:"核心动词",emoji:"🛏️"},
+  {fr:"se lever",zh:"起床",en:"to get up",level:"A1",type:"verb",cat:"核心动词",emoji:"⬆️"},
+  {fr:"marcher",zh:"走路",en:"to walk",level:"A1",type:"verb",cat:"核心动词",emoji:"🚶"},
+  {fr:"nager",zh:"游泳",en:"to swim",level:"A1",type:"verb",cat:"核心动词",emoji:"🏊"},
+  {fr:"danser",zh:"跳舞",en:"to dance",level:"A1",type:"verb",cat:"核心动词",emoji:"💃"},
+  {fr:"chercher",zh:"寻找",en:"to look for",level:"A1",type:"verb",cat:"核心动词",emoji:"🔍"},
+  {fr:"trouver",zh:"找到",en:"to find",level:"A1",type:"verb",cat:"核心动词",emoji:"✅"},
+  {fr:"prendre",zh:"拿/乘坐",en:"to take",level:"A1",type:"verb",cat:"核心动词",emoji:"🤲"},
+  {fr:"donner",zh:"给",en:"to give",level:"A1",type:"verb",cat:"核心动词",emoji:"🎁"},
+  {fr:"comprendre",zh:"理解",en:"to understand",level:"A1",type:"verb",cat:"核心动词",emoji:"💡"},
+  {fr:"apprendre",zh:"学习",en:"to learn",level:"A1",type:"verb",cat:"核心动词",emoji:"📚"},
+  {fr:"étudier",zh:"读书",en:"to study",level:"A1",type:"verb",cat:"核心动词",emoji:"📝"},
+  {fr:"savoir",zh:"知道",en:"to know (fact)",level:"A1",type:"verb",cat:"核心动词",emoji:"🧠"},
+  {fr:"connaître",zh:"认识",en:"to know (person)",level:"A1",type:"verb",cat:"核心动词",emoji:"🤝"},
+  {fr:"vouloir",zh:"想要",en:"to want",level:"A1",type:"verb",cat:"核心动词",emoji:"💭"},
+  {fr:"pouvoir",zh:"能够",en:"to be able to",level:"A1",type:"verb",cat:"核心动词",emoji:"💪"},
+  {fr:"devoir",zh:"必须",en:"to have to",level:"A1",type:"verb",cat:"核心动词",emoji:"📋"},
+  {fr:"aider",zh:"帮助",en:"to help",level:"A1",type:"verb",cat:"核心动词",emoji:"🤝"},
+  {fr:"attendre",zh:"等待",en:"to wait",level:"A1",type:"verb",cat:"核心动词",emoji:"⏳"},
+  {fr:"répondre",zh:"回答",en:"to answer",level:"A1",type:"verb",cat:"核心动词",emoji:"↩️"},
+  {fr:"appeler",zh:"打电话",en:"to call",level:"A1",type:"verb",cat:"核心动词",emoji:"📱"},
+  {fr:"commencer",zh:"开始",en:"to begin",level:"A1",type:"verb",cat:"核心动词",emoji:"▶️"},
+  {fr:"finir",zh:"结束",en:"to finish",level:"A1",type:"verb",cat:"核心动词",emoji:"🏁"},
+  {fr:"ouvrir",zh:"打开",en:"to open",level:"A1",type:"verb",cat:"核心动词",emoji:"🔓"},
+  {fr:"grand",zh:"大的",en:"big / tall",level:"A1",type:"adj",cat:"形容词",emoji:"⬆️",fem:"grande"},
+  {fr:"petit",zh:"小的",en:"small",level:"A1",type:"adj",cat:"形容词",emoji:"⬇️",fem:"petite"},
+  {fr:"bon",zh:"好的",en:"good",level:"A1",type:"adj",cat:"形容词",emoji:"👍",fem:"bonne"},
+  {fr:"mauvais",zh:"坏的",en:"bad",level:"A1",type:"adj",cat:"形容词",emoji:"👎",fem:"mauvaise"},
+  {fr:"beau",zh:"美丽的",en:"beautiful",level:"A1",type:"adj",cat:"形容词",emoji:"✨",fem:"belle"},
+  {fr:"nouveau",zh:"新的",en:"new",level:"A1",type:"adj",cat:"形容词",emoji:"🆕",fem:"nouvelle"},
+  {fr:"vieux",zh:"老的/旧的",en:"old",level:"A1",type:"adj",cat:"形容词",emoji:"📜",fem:"vieille"},
+  {fr:"jeune",zh:"年轻的",en:"young",level:"A1",type:"adj",cat:"形容词",emoji:"🌱",fem:"jeune"},
+  {fr:"chaud",zh:"热的",en:"hot",level:"A1",type:"adj",cat:"形容词",emoji:"🌡️",fem:"chaude"},
+  {fr:"froid",zh:"冷的",en:"cold",level:"A1",type:"adj",cat:"形容词",emoji:"❄️",fem:"froide"},
+  {fr:"facile",zh:"简单的",en:"easy",level:"A1",type:"adj",cat:"形容词",emoji:"😊",fem:"facile"},
+  {fr:"difficile",zh:"困难的",en:"difficult",level:"A1",type:"adj",cat:"形容词",emoji:"😤",fem:"difficile"},
+  {fr:"cher",zh:"昂贵的",en:"expensive",level:"A1",type:"adj",cat:"形容词",emoji:"💎",fem:"chère"},
+  {fr:"gratuit",zh:"免费的",en:"free",level:"A1",type:"adj",cat:"形容词",emoji:"🆓",fem:"gratuite"},
+  {fr:"libre",zh:"自由的/有空的",en:"free / available",level:"A1",type:"adj",cat:"形容词",emoji:"🕊️",fem:"libre"},
+  {fr:"vrai",zh:"真的",en:"true",level:"A1",type:"adj",cat:"形容词",emoji:"✅",fem:"vraie"},
+  {fr:"rouge",zh:"红色的",en:"red",level:"A1",type:"adj",cat:"形容词",emoji:"🔴",fem:"rouge"},
+  {fr:"jaune",zh:"黄色的",en:"yellow",level:"A1",type:"adj",cat:"形容词",emoji:"🟡",fem:"jaune"},
+  {fr:"blanc",zh:"白色的",en:"white",level:"A1",type:"adj",cat:"形容词",emoji:"⬜",fem:"blanche"},
+  {fr:"noir",zh:"黑色的",en:"black",level:"A1",type:"adj",cat:"形容词",emoji:"⬛",fem:"noire"},
+  {fr:"bleu",zh:"蓝色的",en:"blue",level:"A1",type:"adj",cat:"形容词",emoji:"🔵",fem:"bleue"},
+  {fr:"vert",zh:"绿色的",en:"green",level:"A1",type:"adj",cat:"形容词",emoji:"🟢",fem:"verte"},
+  {fr:"gris",zh:"灰色的",en:"grey",level:"A1",type:"adj",cat:"形容词",emoji:"🩶",fem:"grise"},
+  {fr:"français",zh:"法国的",en:"French",level:"A1",type:"adj",cat:"形容词",emoji:"🇫🇷",fem:"française"},
+  {fr:"anglais",zh:"英国的/英语的",en:"English",level:"A1",type:"adj",cat:"形容词",emoji:"🇬🇧",fem:"anglaise"},
+  {fr:"premier",zh:"第一的",en:"first",level:"A1",type:"adj",cat:"形容词",emoji:"🥇",fem:"première"},
+  {fr:"dernier",zh:"最后的",en:"last",level:"A1",type:"adj",cat:"形容词",emoji:"🏁",fem:"dernière"},
+  {fr:"prochain",zh:"下一个的",en:"next",level:"A1",type:"adj",cat:"形容词",emoji:"➡️",fem:"prochaine"},
+  {fr:"seul",zh:"单独的",en:"alone / only",level:"A1",type:"adj",cat:"形容词",emoji:"🙁",fem:"seule"},
+  {fr:"tout",zh:"所有的",en:"all / every",level:"A1",type:"adj",cat:"形容词",emoji:"🌐",fem:"toute"},
+  {fr:"autre",zh:"其他的",en:"other",level:"A1",type:"adj",cat:"形容词",emoji:"↔️",fem:"autre"},
+  {fr:"même",zh:"相同的",en:"same",level:"A1",type:"adj",cat:"形容词",emoji:"🟰",fem:"même"},
+  {fr:"malade",zh:"生病的",en:"sick",level:"A1",type:"adj",cat:"形容词",emoji:"🤒",fem:"malade"},
+  {fr:"fatigué",zh:"疲倦的",en:"tired",level:"A1",type:"adj",cat:"形容词",emoji:"😴",fem:"fatiguée"},
+  {fr:"heureux",zh:"快乐的",en:"happy",level:"A1",type:"adj",cat:"形容词",emoji:"😊",fem:"heureuse"},
+  {fr:"content",zh:"满意的",en:"pleased",level:"A1",type:"adj",cat:"形容词",emoji:"😌",fem:"contente"},
+  {fr:"je",zh:"我",en:"I",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"tu",zh:"你",en:"you (informal)",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"il",zh:"他",en:"he",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"elle",zh:"她",en:"she",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"nous",zh:"我们",en:"we",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"vous",zh:"您/你们",en:"you (formal/pl.)",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"ils",zh:"他们",en:"they (m.)",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"elles",zh:"她们",en:"they (f.)",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"oui",zh:"是",en:"yes",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"non",zh:"不",en:"no",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"merci",zh:"谢谢",en:"thank you",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"bonjour",zh:"你好",en:"hello",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"salut",zh:"嗨/再见",en:"hi / bye",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"pardon",zh:"抱歉",en:"sorry",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"très",zh:"非常",en:"very",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"beaucoup",zh:"很多",en:"a lot",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"bien",zh:"好地",en:"well",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"mal",zh:"坏地",en:"badly",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"plus",zh:"更多",en:"more",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"moins",zh:"更少",en:"less",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"vite",zh:"快",en:"quickly",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"tard",zh:"晚",en:"late",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"tôt",zh:"早",en:"early",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"toujours",zh:"总是",en:"always",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"souvent",zh:"经常",en:"often",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"parfois",zh:"有时",en:"sometimes",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"jamais",zh:"从不",en:"never",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"maintenant",zh:"现在",en:"now",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"aujourd'hui",zh:"今天",en:"today",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"demain",zh:"明天",en:"tomorrow",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"hier",zh:"昨天",en:"yesterday",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"ici",zh:"这里",en:"here",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"là",zh:"那里",en:"there",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"où",zh:"哪里",en:"where",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"quand",zh:"何时",en:"when",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"comment",zh:"如何",en:"how",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"pourquoi",zh:"为什么",en:"why",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"combien",zh:"多少",en:"how many",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"qui",zh:"谁",en:"who",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"que",zh:"什么",en:"what / that",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"dans",zh:"在…里面",en:"in / inside",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"sur",zh:"在…上面",en:"on",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"devant",zh:"在…前面",en:"in front of",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"avec",zh:"和…一起",en:"with",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"sans",zh:"没有",en:"without",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"pour",zh:"为了",en:"for",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"et",zh:"和",en:"and",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"ou",zh:"或",en:"or",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"mais",zh:"但是",en:"but",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"si",zh:"如果",en:"if",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"voyage",zh:"旅行",en:"trip / travel",level:"A2",type:"noun",cat:"旅游与休闲",emoji:"✈️"},
+  {fr:"vacances",zh:"假期",en:"holidays",level:"A2",type:"noun",cat:"旅游与休闲",emoji:"🌴"},
+  {fr:"séjour",zh:"停留/旅程",en:"stay",level:"A2",type:"noun",cat:"旅游与休闲"},
+  {fr:"promenade",zh:"散步",en:"walk",level:"A2",type:"noun",cat:"旅游与休闲"},
+  {fr:"visite",zh:"参观",en:"visit",level:"A2",type:"noun",cat:"旅游与休闲"},
+  {fr:"tourisme",zh:"旅游业",en:"tourism",level:"A2",type:"noun",cat:"旅游与休闲"},
+  {fr:"rencontre",zh:"相遇/会面",en:"meeting",level:"A2",type:"noun",cat:"旅游与休闲",gender:"f"},
+  {fr:"fête",zh:"派对/节日",en:"party / celebration",level:"A2",type:"noun",cat:"旅游与休闲"},
+  {fr:"concours",zh:"比赛",en:"competition",level:"A2",type:"noun",cat:"旅游与休闲"},
+  {fr:"spectacle",zh:"表演",en:"show",level:"A2",type:"noun",cat:"旅游与休闲"},
+  {fr:"exposition",zh:"展览",en:"exhibition",level:"A2",type:"noun",cat:"旅游与休闲"},
+  {fr:"théâtre",zh:"剧院",en:"theatre",level:"A2",type:"noun",cat:"旅游与休闲",gender:"m"},
+  {fr:"film",zh:"电影",en:"film",level:"A2",type:"noun",cat:"旅游与休闲",gender:"m"},
+  {fr:"musique",zh:"音乐",en:"music",level:"A2",type:"noun",cat:"旅游与休闲",emoji:"🎵",gender:"f"},
+  {fr:"art",zh:"艺术",en:"art",level:"A2",type:"noun",cat:"旅游与休闲",emoji:"🎨",gender:"m"},
+  {fr:"littérature",zh:"文学",en:"literature",level:"A2",type:"noun",cat:"旅游与休闲",gender:"f"},
+  {fr:"sport",zh:"运动",en:"sport",level:"A2",type:"noun",cat:"旅游与休闲",emoji:"⚽"},
+  {fr:"natation",zh:"游泳",en:"swimming",level:"A2",type:"noun",cat:"旅游与休闲"},
+  {fr:"piscine",zh:"游泳池",en:"swimming pool",level:"A2",type:"noun",cat:"旅游与休闲"},
+  {fr:"vol",zh:"航班",en:"flight",level:"A2",type:"noun",cat:"旅游与休闲",gender:"m"},
+  {fr:"passager",zh:"乘客",en:"passenger",level:"A2",type:"noun",cat:"旅游与休闲",gender:"m"},
+  {fr:"bagage",zh:"行李",en:"luggage",level:"A2",type:"noun",cat:"旅游与休闲"},
+  {fr:"entreprise",zh:"企业/公司",en:"company",level:"A2",type:"noun",cat:"职场与学校",gender:"f"},
+  {fr:"travail",zh:"工作",en:"work",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"emploi",zh:"职位/就业",en:"job",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"profession",zh:"职业",en:"profession",level:"A2",type:"noun",cat:"职场与学校",gender:"f"},
+  {fr:"stage",zh:"实习",en:"internship",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"formation",zh:"培训",en:"training",level:"A2",type:"noun",cat:"职场与学校",gender:"f"},
+  {fr:"éducation",zh:"教育",en:"education",level:"A2",type:"noun",cat:"职场与学校"},
+  {fr:"apprentissage",zh:"学习",en:"learning",level:"A2",type:"noun",cat:"职场与学校"},
+  {fr:"cours",zh:"课程",en:"course",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"lycée",zh:"高中",en:"high school",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"diplôme",zh:"文凭",en:"diploma",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"inscription",zh:"报名/注册",en:"registration",level:"A2",type:"noun",cat:"职场与学校",gender:"f"},
+  {fr:"projet",zh:"计划",en:"project",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"association",zh:"协会/社团",en:"association",level:"A2",type:"noun",cat:"职场与学校",gender:"f"},
+  {fr:"réunion",zh:"会议",en:"meeting",level:"A2",type:"noun",cat:"职场与学校",gender:"f"},
+  {fr:"employeur",zh:"雇主",en:"employer",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"salarié",zh:"员工",en:"employee",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"adulte",zh:"成人",en:"adult",level:"A2",type:"noun",cat:"职场与学校",gender:"mf"},
+  {fr:"consommateur",zh:"消费者",en:"consumer",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"artiste",zh:"艺术家",en:"artist",level:"A2",type:"noun",cat:"职场与学校",gender:"mf"},
+  {fr:"auteur",zh:"作者",en:"author",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"achat",zh:"购买",en:"purchase",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"solde",zh:"打折",en:"sale",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"promotion",zh:"促销",en:"promotion",level:"A2",type:"noun",cat:"购物与消费"},
+  {fr:"boutique",zh:"店铺",en:"shop / boutique",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"commande",zh:"订单",en:"order",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"colis",zh:"包裹",en:"parcel",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"location",zh:"租赁",en:"rental",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"studio",zh:"单间公寓",en:"studio flat",level:"A2",type:"noun",cat:"购物与消费"},
+  {fr:"réduction",zh:"折扣",en:"discount",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"magazine",zh:"杂志",en:"magazine",level:"A2",type:"noun",cat:"购物与消费"},
+  {fr:"journal",zh:"报纸",en:"newspaper",level:"A2",type:"noun",cat:"购物与消费"},
+  {fr:"écran",zh:"屏幕",en:"screen",level:"A2",type:"noun",cat:"购物与消费"},
+  {fr:"application",zh:"应用程序",en:"app",level:"A2",type:"noun",cat:"购物与消费"},
+  {fr:"internet",zh:"网络",en:"internet",level:"A2",type:"noun",cat:"购物与消费",emoji:"🌐"},
+  {fr:"message",zh:"消息",en:"message",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"lettre",zh:"信件",en:"letter",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"cadeau",zh:"礼物",en:"gift",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"jeu",zh:"游戏",en:"game",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"quartier",zh:"街区",en:"neighbourhood",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"vie",zh:"生活/生命",en:"life",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"besoin",zh:"需求",en:"need",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"conseil",zh:"建议",en:"advice",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"choix",zh:"选择",en:"choice",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"objectif",zh:"目标",en:"objective",level:"A2",type:"noun",cat:"购物与消费"},
+  {fr:"avantage",zh:"好处/优势",en:"advantage",level:"A2",type:"noun",cat:"购物与消费"},
+  {fr:"problème",zh:"问题",en:"problem",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"solution",zh:"解决方案",en:"solution",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"information",zh:"资讯",en:"information",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"communication",zh:"沟通",en:"communication",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"idée",zh:"想法",en:"idea",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"question",zh:"问题",en:"question",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"réponse",zh:"回答",en:"answer",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"raison",zh:"原因",en:"reason",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"résultat",zh:"结果",en:"result",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"arbre",zh:"树木",en:"tree",level:"A2",type:"noun",cat:"自然与健康",emoji:"🌳",gender:"m"},
+  {fr:"boisson",zh:"饮料",en:"drink",level:"A2",type:"noun",cat:"自然与健康"},
+  {fr:"recyclage",zh:"回收",en:"recycling",level:"A2",type:"noun",cat:"自然与健康",emoji:"♻️",gender:"m"},
+  {fr:"pollution",zh:"污染",en:"pollution",level:"A2",type:"noun",cat:"自然与健康",emoji:"🏭",gender:"f"},
+  {fr:"campagne",zh:"乡村",en:"countryside",level:"A2",type:"noun",cat:"自然与健康",gender:"f"},
+  {fr:"santé",zh:"健康",en:"health",level:"A2",type:"noun",cat:"自然与健康",emoji:"💊"},
+  {fr:"maladie",zh:"疾病",en:"illness",level:"A2",type:"noun",cat:"自然与健康"},
+  {fr:"proposer",zh:"提供/建议",en:"to propose",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"participer",zh:"参加",en:"to participate",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"organiser",zh:"组织",en:"to organise",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"découvrir",zh:"发现",en:"to discover",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"partager",zh:"分享",en:"to share",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"utiliser",zh:"使用",en:"to use",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"améliorer",zh:"改善",en:"to improve",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"protéger",zh:"保护",en:"to protect",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"choisir",zh:"选择",en:"to choose",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"louer",zh:"租",en:"to rent",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"réserver",zh:"预订",en:"to reserve",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"annuler",zh:"取消",en:"to cancel",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"contacter",zh:"联络",en:"to contact",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"envoyer",zh:"发送",en:"to send",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"recevoir",zh:"收到",en:"to receive",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"expliquer",zh:"解释",en:"to explain",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"courir",zh:"跑步",en:"to run",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"voyager",zh:"旅行",en:"to travel",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"rester",zh:"停留",en:"to stay",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"vivre",zh:"生活",en:"to live",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"préférer",zh:"偏好",en:"to prefer",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"espérer",zh:"希望",en:"to hope",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"souhaiter",zh:"希望",en:"to wish",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"offrir",zh:"提供",en:"to offer",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"permettre",zh:"允许",en:"to allow",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"obliger",zh:"强迫",en:"to oblige",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"éviter",zh:"避免",en:"to avoid",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"respecter",zh:"尊重",en:"to respect",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"changer",zh:"改变",en:"to change",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"transformer",zh:"转换",en:"to transform",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"représenter",zh:"代表",en:"to represent",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"considérer",zh:"认为/考虑",en:"to consider",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"penser",zh:"思考",en:"to think",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"ancien",zh:"旧的/古老的",en:"old / former",level:"A2",type:"adj",cat:"A2形容词",fem:"ancienne"},
+  {fr:"occupé",zh:"忙碌的",en:"busy",level:"A2",type:"adj",cat:"A2形容词",fem:"occupée"},
+  {fr:"important",zh:"重要的",en:"important",level:"A2",type:"adj",cat:"A2形容词",fem:"importante"},
+  {fr:"intéressant",zh:"有趣的",en:"interesting",level:"A2",type:"adj",cat:"A2形容词",fem:"intéressante"},
+  {fr:"pratique",zh:"实用的",en:"practical",level:"A2",type:"adj",cat:"A2形容词",fem:"pratique"},
+  {fr:"utile",zh:"有用的",en:"useful",level:"A2",type:"adj",cat:"A2形容词",fem:"utile"},
+  {fr:"rapide",zh:"快速的",en:"fast",level:"A2",type:"adj",cat:"A2形容词",fem:"rapide"},
+  {fr:"lent",zh:"缓慢的",en:"slow",level:"A2",type:"adj",cat:"A2形容词",fem:"lente"},
+  {fr:"triste",zh:"悲伤的",en:"sad",level:"A2",type:"adj",cat:"A2形容词",fem:"triste"},
+  {fr:"calme",zh:"安静的",en:"calm",level:"A2",type:"adj",cat:"A2形容词",fem:"calme"},
+  {fr:"bruyant",zh:"吵闹的",en:"noisy",level:"A2",type:"adj",cat:"A2形容词",fem:"bruyante"},
+  {fr:"faux",zh:"假的",en:"false",level:"A2",type:"adj",cat:"A2形容词",fem:"fausse"},
+  {fr:"différent",zh:"不同的",en:"different",level:"A2",type:"adj",cat:"A2形容词",fem:"différente"},
+  {fr:"laid",zh:"丑陋的",en:"ugly",level:"A2",type:"adj",cat:"A2形容词",fem:"laide"},
+  {fr:"peu",zh:"少",en:"a little",level:"A2",type:"other",cat:"A2副词与其他"},
+  {fr:"déjà",zh:"已经",en:"already",level:"A2",type:"other",cat:"A2副词与其他"},
+  {fr:"encore",zh:"还/又",en:"still / again",level:"A2",type:"other",cat:"A2副词与其他"},
+  {fr:"aussi",zh:"也",en:"also",level:"A2",type:"other",cat:"A2副词与其他"},
+  {fr:"technologie",zh:"科技",en:"technology",level:"A2",type:"noun",cat:"购物与消费",emoji:"⚙️"},
+  {fr:"réseau",zh:"网络/人脉",en:"network",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"donnée",zh:"数据",en:"data",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"intelligence",zh:"智能",en:"intelligence",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"robot",zh:"机器人",en:"robot",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"média",zh:"媒体",en:"media",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"presse",zh:"新闻界",en:"press",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"documentaire",zh:"纪录片",en:"documentary",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"émission",zh:"节目",en:"programme",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"chaîne",zh:"频道",en:"channel",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"chercheur",zh:"研究员",en:"researcher",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"site",zh:"网站",en:"website",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"outil",zh:"工具",en:"tool",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"équipement",zh:"设备",en:"equipment",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"utilisateur",zh:"使用者",en:"user",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"innovation",zh:"创新",en:"innovation",level:"B1",type:"noun",cat:"科技与媒体",emoji:"💡",gender:"f"},
+  {fr:"science",zh:"科学",en:"science",level:"B1",type:"noun",cat:"科技与媒体",emoji:"🔬",gender:"f"},
+  {fr:"biodiversité",zh:"生物多样性",en:"biodiversity",level:"B1",type:"noun",cat:"环境与生态",emoji:"🌿",gender:"f"},
+  {fr:"énergie",zh:"能源",en:"energy",level:"B1",type:"noun",cat:"环境与生态",emoji:"⚡",gender:"f"},
+  {fr:"espèce",zh:"物种",en:"species",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"agriculture",zh:"农业",en:"agriculture",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"pesticide",zh:"农药",en:"pesticide",level:"B1",type:"noun",cat:"环境与生态",gender:"m"},
+  {fr:"gaspillage",zh:"浪费",en:"waste",level:"B1",type:"noun",cat:"环境与生态"},
+  {fr:"catastrophe",zh:"灾难",en:"disaster",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"planète",zh:"星球",en:"planet",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"climat",zh:"气候",en:"climate",level:"B1",type:"noun",cat:"环境与生态",emoji:"🌡️",gender:"m"},
+  {fr:"plastique",zh:"塑料",en:"plastic",level:"B1",type:"noun",cat:"环境与生态",gender:"m"},
+  {fr:"protection",zh:"保护",en:"protection",level:"B1",type:"noun",cat:"环境与生态"},
+  {fr:"risque",zh:"风险",en:"risk",level:"B1",type:"noun",cat:"环境与生态",gender:"m"},
+  {fr:"menace",zh:"威胁",en:"threat",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"disparition",zh:"消失/灭绝",en:"disappearance",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"compétence",zh:"技能/能力",en:"skill / competence",level:"B1",type:"noun",cat:"职场与教育",gender:"f"},
+  {fr:"carrière",zh:"职业生涯",en:"career",level:"B1",type:"noun",cat:"职场与教育",gender:"f"},
+  {fr:"salaire",zh:"薪水",en:"salary",level:"B1",type:"noun",cat:"职场与教育",emoji:"💵",gender:"m"},
+  {fr:"chômage",zh:"失业",en:"unemployment",level:"B1",type:"noun",cat:"职场与教育"},
+  {fr:"mondialisation",zh:"全球化",en:"globalisation",level:"B1",type:"noun",cat:"职场与教育",gender:"f"},
+  {fr:"économie",zh:"经济",en:"economy",level:"B1",type:"noun",cat:"职场与教育",emoji:"📈"},
+  {fr:"marché",zh:"市场",en:"market",level:"B1",type:"noun",cat:"职场与教育",emoji:"🏪",gender:"m"},
+  {fr:"recrutement",zh:"招募",en:"recruitment",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"expérience",zh:"经验",en:"experience",level:"B1",type:"noun",cat:"职场与教育"},
+  {fr:"réussite",zh:"成功",en:"success",level:"B1",type:"noun",cat:"职场与教育",gender:"f"},
+  {fr:"échec",zh:"失败",en:"failure",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"crise",zh:"危机",en:"crisis",level:"B1",type:"noun",cat:"职场与教育"},
+  {fr:"pédagogie",zh:"教学法",en:"pedagogy",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"connaissance",zh:"知识",en:"knowledge",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"vocabulaire",zh:"词汇",en:"vocabulary",level:"B1",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"mémoire",zh:"记忆力",en:"memory",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"concentration",zh:"专注力",en:"concentration",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"motivation",zh:"动机",en:"motivation",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"talent",zh:"才华",en:"talent",level:"B1",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"stratégie",zh:"策略",en:"strategy",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"méthode",zh:"方法",en:"method",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"système",zh:"系统",en:"system",level:"B1",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"langue",zh:"语言",en:"language",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"manuel",zh:"教科书",en:"textbook",level:"B1",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"stress",zh:"压力",en:"stress",level:"B1",type:"noun",cat:"健康与心理",emoji:"😰",gender:"m"},
+  {fr:"sommeil",zh:"睡眠",en:"sleep",level:"B1",type:"noun",cat:"健康与心理",emoji:"😴",gender:"m"},
+  {fr:"alimentation",zh:"饮食",en:"diet / food",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"syndrome",zh:"综合症",en:"syndrome",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"comportement",zh:"行为",en:"behaviour",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"génération",zh:"世代",en:"generation",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"identité",zh:"身份认同",en:"identity",level:"B1",type:"noun",cat:"健康与心理",emoji:"🪪",gender:"f"},
+  {fr:"solidarité",zh:"团结",en:"solidarity",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"traitement",zh:"治疗",en:"treatment",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"médicament",zh:"药物",en:"medicine",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"douleur",zh:"疼痛",en:"pain",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"cerveau",zh:"大脑",en:"brain",level:"B1",type:"noun",cat:"健康与心理",emoji:"🧠",gender:"m"},
+  {fr:"inégalité",zh:"不平等",en:"inequality",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"discrimination",zh:"歧视",en:"discrimination",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"exclusion",zh:"排斥",en:"exclusion",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"patrimoine",zh:"遗产",en:"heritage",level:"B1",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"valeur",zh:"价值观",en:"value",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"opinion",zh:"意见",en:"opinion",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"avenir",zh:"未来",en:"future",level:"B1",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"liberté",zh:"自由",en:"freedom",level:"B1",type:"noun",cat:"社会与文化",emoji:"🕊️"},
+  {fr:"réalité",zh:"现实",en:"reality",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"période",zh:"时期",en:"period",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"siècle",zh:"世纪",en:"century",level:"B1",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"innover",zh:"创新",en:"to innovate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"analyser",zh:"分析",en:"to analyse",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"évaluer",zh:"评估",en:"to evaluate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"développer",zh:"发展",en:"to develop",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"créer",zh:"创造",en:"to create",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"informer",zh:"通知",en:"to inform",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"sauver",zh:"拯救",en:"to save",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"anticiper",zh:"预期",en:"to anticipate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"augmenter",zh:"增加",en:"to increase",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"diminuer",zh:"减少",en:"to decrease",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"apporter",zh:"带来",en:"to bring",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"publier",zh:"发布",en:"to publish",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"naviguer",zh:"浏览/航行",en:"to navigate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"distinguer",zh:"区分",en:"to distinguish",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"percevoir",zh:"察觉",en:"to perceive",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"concevoir",zh:"构思",en:"to conceive",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"élaborer",zh:"详细制定",en:"to elaborate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"démontrer",zh:"证明",en:"to demonstrate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"numérique",zh:"数字的",en:"digital",level:"B1",type:"adj",cat:"B1形容词",fem:"numérique"},
+  {fr:"virtuel",zh:"虚拟的",en:"virtual",level:"B1",type:"adj",cat:"B1形容词",fem:"virtuelle"},
+  {fr:"durable",zh:"可持续的",en:"sustainable",level:"B1",type:"adj",cat:"B1形容词",fem:"durable"},
+  {fr:"écologique",zh:"生态的",en:"ecological",level:"B1",type:"adj",cat:"B1形容词",fem:"écologique"},
+  {fr:"biologique",zh:"有机的",en:"organic",level:"B1",type:"adj",cat:"B1形容词",fem:"biologique"},
+  {fr:"scientifique",zh:"科学的",en:"scientific",level:"B1",type:"adj",cat:"B1形容词",fem:"scientifique"},
+  {fr:"intellectuel",zh:"智力的",en:"intellectual",level:"B1",type:"adj",cat:"B1形容词",fem:"intellectuelle"},
+  {fr:"professionnel",zh:"专业的",en:"professional",level:"B1",type:"adj",cat:"B1形容词",fem:"professionnelle"},
+  {fr:"efficace",zh:"有效的",en:"effective",level:"B1",type:"adj",cat:"B1形容词",fem:"efficace"},
+  {fr:"indispensable",zh:"不可或缺的",en:"indispensable",level:"B1",type:"adj",cat:"B1形容词",fem:"indispensable"},
+  {fr:"nécessaire",zh:"必须的",en:"necessary",level:"B1",type:"adj",cat:"B1形容词",fem:"nécessaire"},
+  {fr:"essentiel",zh:"本质的",en:"essential",level:"B1",type:"adj",cat:"B1形容词",fem:"essentielle"},
+  {fr:"complexe",zh:"复杂的",en:"complex",level:"B1",type:"adj",cat:"B1形容词",fem:"complexe"},
+  {fr:"moderne",zh:"现代的",en:"modern",level:"B1",type:"adj",cat:"B1形容词",fem:"moderne"},
+  {fr:"actuel",zh:"当前的",en:"current",level:"B1",type:"adj",cat:"B1形容词",fem:"actuelle"},
+  {fr:"social",zh:"社会的",en:"social",level:"B1",type:"adj",cat:"B1形容词",fem:"sociale"},
+  {fr:"international",zh:"国际的",en:"international",level:"B1",type:"adj",cat:"B1形容词",fem:"internationale"},
+  {fr:"économique",zh:"经济的",en:"economic",level:"B1",type:"adj",cat:"B1形容词",fem:"économique"},
+  {fr:"télétravail",zh:"远程工作",en:"remote work",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"rémunération",zh:"薪酬",en:"remuneration",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"rentabilité",zh:"盈利能力",en:"profitability",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"compétitivité",zh:"竞争力",en:"competitiveness",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"syndicat",zh:"工会",en:"trade union",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"revendication",zh:"诉求",en:"demand",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"subvention",zh:"补助金",en:"subsidy",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"hiérarchie",zh:"阶层",en:"hierarchy",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"candidature",zh:"申请/候选",en:"application",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"concurrence",zh:"竞争",en:"competition",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"croissance",zh:"增长",en:"growth",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"déclin",zh:"衰退",en:"decline",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"stagnation",zh:"停滞",en:"stagnation",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"saturation",zh:"饱和",en:"saturation",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"finance",zh:"金融",en:"finance",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"usine",zh:"工厂",en:"factory",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"rendement",zh:"产量/收益",en:"yield",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"grève",zh:"罢工",en:"strike",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"budget",zh:"预算",en:"budget",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"financement",zh:"融资/资金",en:"funding",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"abonnement",zh:"订阅",en:"subscription",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"facture",zh:"账单",en:"invoice",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"embauche",zh:"雇用",en:"hiring",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"précarité",zh:"不稳定/脆弱",en:"precariousness",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"clientèle",zh:"客户群",en:"clientele",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"tarif",zh:"价格/费率",en:"rate / tariff",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"évaluation",zh:"评估",en:"evaluation",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"qualification",zh:"资格",en:"qualification",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"orientation",zh:"升学方向",en:"orientation",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"cursus",zh:"学业课程",en:"curriculum",level:"B2",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"rééducation",zh:"重新教育",en:"re-education",level:"B2",type:"noun",cat:"教育与研究"},
+  {fr:"baccalauréat",zh:"高中会考",en:"baccalaureate",level:"B2",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"campus",zh:"校园",en:"campus",level:"B2",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"laboratoire",zh:"实验室",en:"laboratory",level:"B2",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"savoir-faire",zh:"专业技能",en:"know-how",level:"B2",type:"noun",cat:"教育与研究"},
+  {fr:"assimilation",zh:"吸收/同化",en:"assimilation",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"compréhension",zh:"理解",en:"comprehension",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"épreuve",zh:"考验/测验",en:"test",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"cancre",zh:"差生",en:"dunce",level:"B2",type:"noun",cat:"教育与研究",gender:"mf"},
+  {fr:"défi",zh:"挑战",en:"challenge",level:"B2",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"démarche",zh:"步骤/方法",en:"approach",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"thèse",zh:"论文/论点",en:"thesis",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"hypothèse",zh:"假设",en:"hypothesis",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"synthèse",zh:"总结",en:"synthesis",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"linguiste",zh:"语言学家",en:"linguist",level:"B2",type:"noun",cat:"教育与研究",gender:"mf"},
+  {fr:"lexique",zh:"词汇表",en:"lexicon",level:"B2",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"orthographe",zh:"拼写",en:"spelling",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"traduction",zh:"翻译",en:"translation",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"bilingue",zh:"双语的",en:"bilingual",level:"B2",type:"noun",cat:"教育与研究"},
+  {fr:"épuisement",zh:"耗尽/倦怠",en:"exhaustion / burnout",level:"B2",type:"noun",cat:"心理与健康"},
+  {fr:"angoisse",zh:"焦虑",en:"anxiety",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"culpabilité",zh:"内疚",en:"guilt",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"psychologie",zh:"心理学",en:"psychology",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"mentalité",zh:"心态",en:"mentality",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"métabolisme",zh:"新陈代谢",en:"metabolism",level:"B2",type:"noun",cat:"心理与健康"},
+  {fr:"hygiène",zh:"卫生",en:"hygiene",level:"B2",type:"noun",cat:"心理与健康"},
+  {fr:"nutritionniste",zh:"营养师",en:"nutritionist",level:"B2",type:"noun",cat:"心理与健康"},
+  {fr:"tourment",zh:"折磨/苦恼",en:"torment",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"gêne",zh:"尴尬/不适",en:"embarrassment",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"autonomie",zh:"自主性",en:"autonomy",level:"B2",type:"noun",cat:"心理与健康"},
+  {fr:"transmission",zh:"传递",en:"transmission",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"idéologie",zh:"意识形态",en:"ideology",level:"B2",type:"noun",cat:"心理与健康"},
+  {fr:"égalité",zh:"平等",en:"equality",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"dévalorisation",zh:"贬低",en:"devaluation",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"introverti",zh:"内向的",en:"introvert",level:"B2",type:"noun",cat:"心理与健康"},
+  {fr:"clivage",zh:"分歧",en:"divide",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"coopération",zh:"合作",en:"cooperation",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"entraide",zh:"互助",en:"mutual aid",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"vulnérable",zh:"脆弱的",en:"vulnerable",level:"B2",type:"noun",cat:"心理与健康"},
+  {fr:"parentalité",zh:"父母身份",en:"parenthood",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"foyer",zh:"家庭",en:"home / household",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"adolescent",zh:"青少年",en:"teenager",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"compagnon",zh:"伴侣/同伴",en:"companion",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"interaction",zh:"互动",en:"interaction",level:"B2",type:"noun",cat:"心理与健康"},
+  {fr:"dialogue",zh:"对话",en:"dialogue",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"joie",zh:"喜悦",en:"joy",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"bonheur",zh:"幸福",en:"happiness",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"organisme",zh:"有机体/身体",en:"organism",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"génétique",zh:"遗传的",en:"genetic",level:"B2",type:"noun",cat:"心理与健康"},
+  {fr:"physiologique",zh:"生理的",en:"physiological",level:"B2",type:"noun",cat:"心理与健康"},
+  {fr:"algorithme",zh:"算法",en:"algorithm",level:"B2",type:"noun",cat:"环境与城市",emoji:"🤖",gender:"m"},
+  {fr:"logiciel",zh:"软件",en:"software",level:"B2",type:"noun",cat:"环境与城市",emoji:"💾",gender:"m"},
+  {fr:"néologisme",zh:"新词",en:"neologism",level:"B2",type:"noun",cat:"环境与城市",gender:"m"},
+  {fr:"internaute",zh:"网民",en:"internet user",level:"B2",type:"noun",cat:"环境与城市",gender:"mf"},
+  {fr:"automatisation",zh:"自动化",en:"automation",level:"B2",type:"noun",cat:"环境与城市",gender:"f"},
+  {fr:"périurbanisation",zh:"郊区化",en:"suburbanisation",level:"B2",type:"noun",cat:"环境与城市"},
+  {fr:"biosphère",zh:"生物圈",en:"biosphere",level:"B2",type:"noun",cat:"环境与城市",gender:"f"},
+  {fr:"écosystème",zh:"生态系统",en:"ecosystem",level:"B2",type:"noun",cat:"环境与城市",gender:"m"},
+  {fr:"polluant",zh:"污染物",en:"pollutant",level:"B2",type:"noun",cat:"环境与城市",gender:"m"},
+  {fr:"particule",zh:"微粒",en:"particle",level:"B2",type:"noun",cat:"环境与城市",gender:"f"},
+  {fr:"ressource",zh:"资源",en:"resource",level:"B2",type:"noun",cat:"环境与城市",gender:"f"},
+  {fr:"aménagement",zh:"规划",en:"planning",level:"B2",type:"noun",cat:"环境与城市",gender:"m"},
+  {fr:"réchauffement",zh:"暖化",en:"global warming",level:"B2",type:"noun",cat:"环境与城市",gender:"m"},
+  {fr:"désertification",zh:"荒漠化",en:"desertification",level:"B2",type:"noun",cat:"环境与城市",gender:"f"},
+  {fr:"immobilier",zh:"房地产",en:"real estate",level:"B2",type:"noun",cat:"环境与城市"},
+  {fr:"circulation",zh:"交通",en:"traffic",level:"B2",type:"noun",cat:"环境与城市",gender:"f"},
+  {fr:"covoiturage",zh:"共乘",en:"carpooling",level:"B2",type:"noun",cat:"环境与城市",gender:"m"},
+  {fr:"véhicule",zh:"车辆",en:"vehicle",level:"B2",type:"noun",cat:"环境与城市",gender:"m"},
+  {fr:"renouvelable",zh:"可再生的",en:"renewable",level:"B2",type:"noun",cat:"环境与城市"},
+  {fr:"esthétique",zh:"美学",en:"aesthetics",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"scénario",zh:"剧本",en:"screenplay",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"réalisateur",zh:"导演",en:"director",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"œuvre",zh:"作品",en:"work of art",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"notoriété",zh:"知名度",en:"fame",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"caricature",zh:"讽刺画",en:"caricature",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"argument",zh:"论点",en:"argument",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"mécanisme",zh:"机制",en:"mechanism",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"interculturel",zh:"跨文化的",en:"intercultural",level:"B2",type:"noun",cat:"文化与艺术"},
+  {fr:"cinéaste",zh:"电影制作人",en:"filmmaker",level:"B2",type:"noun",cat:"文化与艺术",gender:"mf"},
+  {fr:"comédien",zh:"喜剧演员/戏剧演员",en:"comedian / actor",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"galerie",zh:"画廊",en:"gallery",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"portrait",zh:"肖像",en:"portrait",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"dessin",zh:"绘画/素描",en:"drawing",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"peinture",zh:"画作",en:"painting",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"sculpture",zh:"雕塑",en:"sculpture",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"danse",zh:"舞蹈",en:"dance",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"philosophie",zh:"哲学",en:"philosophy",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"religion",zh:"宗教",en:"religion",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"croyance",zh:"信仰",en:"belief",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"éthique",zh:"伦理/道德的",en:"ethics",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"norme",zh:"规范",en:"norm",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"réputation",zh:"名誉",en:"reputation",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"époque",zh:"时代",en:"era",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"spectateur",zh:"观众",en:"spectator",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"auditeur",zh:"听众",en:"listener",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"festival",zh:"节庆",en:"festival",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"inspiration",zh:"灵感",en:"inspiration",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"imagination",zh:"想象力",en:"imagination",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"tradition",zh:"传统",en:"tradition",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"publication",zh:"出版物",en:"publication",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"édition",zh:"出版",en:"edition",level:"B2",type:"noun",cat:"文化与艺术"},
+  {fr:"lecteur",zh:"读者",en:"reader",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"forum",zh:"论坛",en:"forum",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"diffusion",zh:"传播",en:"broadcast",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"connexion",zh:"连线",en:"connection",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"programmation",zh:"程序设计",en:"programming",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"fonctionnalité",zh:"功能",en:"feature",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"interface",zh:"界面",en:"interface",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"dispositif",zh:"装置/机制",en:"device",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"notification",zh:"通知",en:"notification",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"réfuter",zh:"驳斥",en:"to refute",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"affirmer",zh:"断言",en:"to assert",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"dénoncer",zh:"谴责/揭露",en:"to denounce",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"justifier",zh:"为…辩解",en:"to justify",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"vulgariser",zh:"普及化",en:"to popularise",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"révéler",zh:"揭示",en:"to reveal",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"critiquer",zh:"批评",en:"to criticise",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"remettre en cause",zh:"质疑",en:"to call into question",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"éluder",zh:"回避",en:"to evade",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"certifier",zh:"证明/保证",en:"to certify",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"dévoiler",zh:"揭露",en:"to unveil",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"exhumer",zh:"挖掘出",en:"to unearth",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"révolutionner",zh:"彻底改变",en:"to revolutionise",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"bouleverser",zh:"颠覆",en:"to overturn",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"engendrer",zh:"产生",en:"to generate",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"favoriser",zh:"促进",en:"to favour",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"empêcher",zh:"阻碍",en:"to prevent",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"provoquer",zh:"引起",en:"to provoke",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"susciter",zh:"激起",en:"to arouse",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"déconstruire",zh:"解构",en:"to deconstruct",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"menacer",zh:"威胁",en:"to threaten",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"décupler",zh:"大幅增加",en:"to multiply tenfold",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"abaisser",zh:"降低",en:"to lower",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"prolonger",zh:"延长",en:"to extend",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"élargir",zh:"扩大",en:"to broaden",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"chuter",zh:"下降",en:"to fall",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"instituer",zh:"建立",en:"to institute",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"instaurer",zh:"创立",en:"to establish",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"pervertir",zh:"使腐化",en:"to corrupt",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"pallier",zh:"弥补",en:"to compensate for",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"concilier",zh:"协调",en:"to reconcile",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"s'affranchir",zh:"摆脱",en:"to free oneself",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"éradiquer",zh:"根除",en:"to eradicate",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"militer",zh:"致力于",en:"to campaign",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"rebondir",zh:"重振",en:"to bounce back",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"systématiser",zh:"系统化",en:"to systematise",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"interrompre",zh:"中断",en:"to interrupt",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"s'épanouir",zh:"茁壮/感到幸福",en:"to flourish",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"apaiser",zh:"缓解",en:"to soothe",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"halluciner",zh:"极度震惊",en:"to be astounded",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"craquer",zh:"崩溃",en:"to crack / break down",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"redouter",zh:"畏惧",en:"to dread",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"vénérer",zh:"崇拜",en:"to venerate",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"ridiculiser",zh:"嘲笑",en:"to ridicule",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"assimiler",zh:"吸收/同化",en:"to assimilate",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"confronter",zh:"面对",en:"to confront",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"dompter",zh:"驯服/克服",en:"to tame / overcome",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"s'acquitter",zh:"履行",en:"to fulfil",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"subvenir",zh:"满足/提供",en:"to provide for",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"fidéliser",zh:"留住顾客",en:"to retain / build loyalty",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"s'adapter",zh:"适应",en:"to adapt",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"privilégier",zh:"优先考虑",en:"to prioritise",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"empiéter",zh:"侵占",en:"to encroach",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"s'entretenir",zh:"维持",en:"to maintain",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"nuire",zh:"损害",en:"to harm",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"s'affronter",zh:"对峙",en:"to confront each other",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"manipuler",zh:"操纵",en:"to manipulate",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"envahir",zh:"侵入",en:"to invade",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"séduire",zh:"吸引",en:"to attract",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"intégrer",zh:"融入",en:"to integrate",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"acquérir",zh:"获得",en:"to acquire",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"dévaloriser",zh:"贬低",en:"to devalue",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"interagir",zh:"互动",en:"to interact",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"démissionner",zh:"辞职",en:"to resign",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"accaparer",zh:"独占",en:"to monopolise",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"grignoter",zh:"慢慢消耗",en:"to nibble away",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"empiler",zh:"堆积",en:"to pile up",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"aggraver",zh:"恶化",en:"to worsen",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"paradoxal",zh:"矛盾的",en:"paradoxical",level:"B2",type:"adj",cat:"B2形容词",fem:"paradoxale"},
+  {fr:"pertinent",zh:"中肯的",en:"pertinent",level:"B2",type:"adj",cat:"B2形容词",fem:"pertinente"},
+  {fr:"significatif",zh:"显著的",en:"significant",level:"B2",type:"adj",cat:"B2形容词",fem:"significative"},
+  {fr:"inévitable",zh:"不可避免的",en:"inevitable",level:"B2",type:"adj",cat:"B2形容词",fem:"inévitable"},
+  {fr:"fondamental",zh:"根本的",en:"fundamental",level:"B2",type:"adj",cat:"B2形容词",fem:"fondamentale"},
+  {fr:"superficiel",zh:"表面的",en:"superficial",level:"B2",type:"adj",cat:"B2形容词",fem:"superficielle"},
+  {fr:"profond",zh:"深刻的",en:"deep / profound",level:"B2",type:"adj",cat:"B2形容词",fem:"profonde"},
+  {fr:"subtil",zh:"微妙的",en:"subtle",level:"B2",type:"adj",cat:"B2形容词",fem:"subtile"},
+  {fr:"controversé",zh:"有争议的",en:"controversial",level:"B2",type:"adj",cat:"B2形容词",fem:"controversée"},
+  {fr:"authentique",zh:"真实的",en:"authentic",level:"B2",type:"adj",cat:"B2形容词",fem:"authentique"},
+  {fr:"fallacieux",zh:"谬误的",en:"fallacious",level:"B2",type:"adj",cat:"B2形容词",fem:"fallacieuse"},
+  {fr:"légitime",zh:"合法的",en:"legitimate",level:"B2",type:"adj",cat:"B2形容词",fem:"légitime"},
+  {fr:"rigide",zh:"僵化的",en:"rigid",level:"B2",type:"adj",cat:"B2形容词",fem:"rigide"},
+  {fr:"souple",zh:"灵活的",en:"flexible",level:"B2",type:"adj",cat:"B2形容词",fem:"souple"},
+  {fr:"éphémère",zh:"短暂的",en:"ephemeral",level:"B2",type:"adj",cat:"B2形容词",fem:"éphémère"},
+  {fr:"progressif",zh:"渐进的",en:"progressive",level:"B2",type:"adj",cat:"B2形容词",fem:"progressive"},
+  {fr:"systématique",zh:"系统性的",en:"systematic",level:"B2",type:"adj",cat:"B2形容词",fem:"systématique"},
+  {fr:"absurde",zh:"荒谬的",en:"absurd",level:"B2",type:"adj",cat:"B2形容词",fem:"absurde"},
+  {fr:"imprévisible",zh:"不可预测的",en:"unpredictable",level:"B2",type:"adj",cat:"B2形容词",fem:"imprévisible"},
+  {fr:"ambigu",zh:"模棱两可的",en:"ambiguous",level:"B2",type:"adj",cat:"B2形容词",fem:"ambiguë"},
+  {fr:"considérable",zh:"可观的/大量的",en:"considerable",level:"B2",type:"adj",cat:"B2形容词",fem:"considérable"},
+  {fr:"évident",zh:"明显的",en:"evident",level:"B2",type:"adj",cat:"B2形容词",fem:"évidente"},
+  {fr:"inattendu",zh:"意想不到的",en:"unexpected",level:"B2",type:"adj",cat:"B2形容词",fem:"inattendue"},
+  {fr:"hostile",zh:"充满敌意的",en:"hostile",level:"B2",type:"adj",cat:"B2形容词",fem:"hostile"},
+  {fr:"crédible",zh:"可信的",en:"credible",level:"B2",type:"adj",cat:"B2形容词",fem:"crédible"},
+  {fr:"explicite",zh:"明确的",en:"explicit",level:"B2",type:"adj",cat:"B2形容词",fem:"explicite"},
+  {fr:"implicite",zh:"隐含的",en:"implicit",level:"B2",type:"adj",cat:"B2形容词",fem:"implicite"},
+  {fr:"contradictoire",zh:"矛盾的",en:"contradictory",level:"B2",type:"adj",cat:"B2形容词",fem:"contradictoire"},
+  {fr:"aléatoire",zh:"随机的",en:"random",level:"B2",type:"adj",cat:"B2形容词",fem:"aléatoire"},
+  {fr:"improbable",zh:"不太可能的",en:"improbable",level:"B2",type:"adj",cat:"B2形容词",fem:"improbable"},
+  {fr:"spontané",zh:"自发的",en:"spontaneous",level:"B2",type:"adj",cat:"B2形容词",fem:"spontanée"},
+  {fr:"permanent",zh:"永久的",en:"permanent",level:"B2",type:"adj",cat:"B2形容词",fem:"permanente"},
+  {fr:"nocif",zh:"有害的",en:"harmful",level:"B2",type:"adj",cat:"B2形容词",fem:"nocive"},
+  {fr:"nuisible",zh:"有害的",en:"harmful",level:"B2",type:"adj",cat:"B2形容词",fem:"nuisible"},
+  {fr:"toxique",zh:"有毒的",en:"toxic",level:"B2",type:"adj",cat:"B2形容词",fem:"toxique"},
+  {fr:"chimique",zh:"化学的",en:"chemical",level:"B2",type:"adj",cat:"B2形容词",fem:"chimique"},
+  {fr:"climatique",zh:"气候的",en:"climatic",level:"B2",type:"adj",cat:"B2形容词",fem:"climatique"},
+  {fr:"rural",zh:"乡村的",en:"rural",level:"B2",type:"adj",cat:"B2形容词",fem:"rurale"},
+  {fr:"urbain",zh:"城市的",en:"urban",level:"B2",type:"adj",cat:"B2形容词",fem:"urbaine"},
+  {fr:"marginalisé",zh:"被边缘化的",en:"marginalised",level:"B2",type:"adj",cat:"B2形容词",fem:"marginalisée"},
+  {fr:"collaboratif",zh:"协作的",en:"collaborative",level:"B2",type:"adj",cat:"B2形容词",fem:"collaborative"},
+  {fr:"artistique",zh:"艺术的",en:"artistic",level:"B2",type:"adj",cat:"B2形容词",fem:"artistique"},
+  {fr:"littéraire",zh:"文学的",en:"literary",level:"B2",type:"adj",cat:"B2形容词",fem:"littéraire"},
+  {fr:"contemporain",zh:"当代的",en:"contemporary",level:"B2",type:"adj",cat:"B2形容词",fem:"contemporaine"},
+  {fr:"traditionnel",zh:"传统的",en:"traditional",level:"B2",type:"adj",cat:"B2形容词",fem:"traditionnelle"},
+  {fr:"original",zh:"原创的",en:"original",level:"B2",type:"adj",cat:"B2形容词",fem:"originale"},
+  {fr:"classique",zh:"经典的",en:"classic",level:"B2",type:"adj",cat:"B2形容词",fem:"classique"},
+  {fr:"créatif",zh:"有创造力的",en:"creative",level:"B2",type:"adj",cat:"B2形容词",fem:"créative"},
+  {fr:"inventif",zh:"有发明才能的",en:"inventive",level:"B2",type:"adj",cat:"B2形容词",fem:"inventive"},
+  {fr:"s'il vous plaît",zh:"请",en:"please",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"au revoir",zh:"再见",en:"goodbye",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"bienvenue",zh:"欢迎",en:"welcome",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"demander",zh:"问",en:"to ask",level:"A1",type:"verb",cat:"核心动词"},
+  {fr:"chanter",zh:"唱歌",en:"to sing",level:"A1",type:"verb",cat:"核心动词"},
+  {fr:"fermer",zh:"关闭",en:"to close",level:"A1",type:"verb",cat:"核心动词"},
+  {fr:"marron",zh:"棕色的",en:"brown",level:"A1",type:"adj",cat:"形容词",fem:"marron"},
+  {fr:"orange",zh:"橘色的",en:"orange",level:"A1",type:"adj",cat:"形容词",fem:"orange"},
+  {fr:"rose",zh:"粉红色的",en:"pink",level:"A1",type:"adj",cat:"形容词",fem:"rose"},
+  {fr:"trente",zh:"三十",en:"thirty",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"quarante",zh:"四十",en:"forty",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"cinquante",zh:"五十",en:"fifty",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"soixante",zh:"六十",en:"sixty",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"mille",zh:"千",en:"thousand",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"oncle",zh:"叔伯",en:"uncle",level:"A1",type:"noun",cat:"人物与家庭",gender:"m"},
+  {fr:"tante",zh:"阿姨",en:"aunt",level:"A1",type:"noun",cat:"人物与家庭",gender:"f"},
+  {fr:"cousin",zh:"堂表亲",en:"cousin",level:"A1",type:"noun",cat:"人物与家庭",gender:"m"},
+  {fr:"bébé",zh:"婴儿",en:"baby",level:"A1",type:"noun",cat:"人物与家庭",gender:"m"},
+  {fr:"gens",zh:"人们",en:"people",level:"A1",type:"noun",cat:"人物与家庭",gender:"m"},
+  {fr:"policier",zh:"警察",en:"police officer",level:"A1",type:"noun",cat:"人物与家庭",gender:"m"},
+  {fr:"chanteur",zh:"歌手",en:"singer",level:"A1",type:"noun",cat:"人物与家庭",gender:"m"},
+  {fr:"serveur",zh:"服务生",en:"waiter",level:"A1",type:"noun",cat:"人物与家庭",gender:"m"},
+  {fr:"vendeur",zh:"售货员",en:"salesperson",level:"A1",type:"noun",cat:"人物与家庭",gender:"m"},
+  {fr:"secrétaire",zh:"秘书",en:"secretary",level:"A1",type:"noun",cat:"人物与家庭",gender:"mf"},
+  {fr:"boulanger",zh:"面包师",en:"baker",level:"A1",type:"noun",cat:"人物与家庭",gender:"m"},
+  {fr:"journaliste",zh:"记者",en:"journalist",level:"A1",type:"noun",cat:"人物与家庭",gender:"mf"},
+  {fr:"œil",zh:"眼睛",en:"eye",level:"A1",type:"noun",cat:"房屋与物品",gender:"m"},
+  {fr:"bouche",zh:"嘴巴",en:"mouth",level:"A1",type:"noun",cat:"房屋与物品",gender:"f"},
+  {fr:"nez",zh:"鼻子",en:"nose",level:"A1",type:"noun",cat:"房屋与物品",gender:"m"},
+  {fr:"oreille",zh:"耳朵",en:"ear",level:"A1",type:"noun",cat:"房屋与物品",gender:"f"},
+  {fr:"bras",zh:"手臂",en:"arm",level:"A1",type:"noun",cat:"房屋与物品",gender:"m"},
+  {fr:"jambe",zh:"腿",en:"leg",level:"A1",type:"noun",cat:"房屋与物品",gender:"f"},
+  {fr:"pied",zh:"脚",en:"foot",level:"A1",type:"noun",cat:"房屋与物品",gender:"m"},
+  {fr:"banque",zh:"银行",en:"bank",level:"A1",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"poste",zh:"邮局",en:"post office",level:"A1",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"boulangerie",zh:"面包店",en:"bakery",level:"A1",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"pharmacie",zh:"药局",en:"pharmacy",level:"A1",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"mur",zh:"墙壁",en:"wall",level:"A1",type:"noun",cat:"房屋与物品",gender:"m"},
+  {fr:"stylo",zh:"笔",en:"pen",level:"A1",type:"noun",cat:"房屋与物品",gender:"m"},
+  {fr:"cahier",zh:"笔记本",en:"notebook",level:"A1",type:"noun",cat:"房屋与物品",gender:"m"},
+  {fr:"clé",zh:"钥匙",en:"key",level:"A1",type:"noun",cat:"房屋与物品",gender:"f"},
+  {fr:"montre",zh:"手表",en:"watch",level:"A1",type:"noun",cat:"房屋与物品",gender:"f"},
+  {fr:"t-shirt",zh:"T恤",en:"T-shirt",level:"A1",type:"noun",cat:"房屋与物品",gender:"m"},
+  {fr:"jupe",zh:"裙子",en:"skirt",level:"A1",type:"noun",cat:"房屋与物品",gender:"f"},
+  {fr:"manteau",zh:"外套",en:"coat",level:"A1",type:"noun",cat:"房屋与物品",gender:"m"},
+  {fr:"chapeau",zh:"帽子",en:"hat",level:"A1",type:"noun",cat:"房屋与物品",gender:"m"},
+  {fr:"lunettes",zh:"眼镜",en:"glasses",level:"A1",type:"noun",cat:"房屋与物品",gender:"f"},
+  {fr:"taxi",zh:"计程车",en:"taxi",level:"A1",type:"noun",cat:"地点与交通",gender:"m"},
+  {fr:"moto",zh:"摩托车",en:"motorbike",level:"A1",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"soleil",zh:"太阳",en:"sun",level:"A1",type:"noun",cat:"地点与交通",gender:"m"},
+  {fr:"lune",zh:"月亮",en:"moon",level:"A1",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"ciel",zh:"天空",en:"sky",level:"A1",type:"noun",cat:"地点与交通",gender:"m"},
+  {fr:"pluie",zh:"雨",en:"rain",level:"A1",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"neige",zh:"雪",en:"snow",level:"A1",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"vent",zh:"风",en:"wind",level:"A1",type:"noun",cat:"地点与交通",gender:"m"},
+  {fr:"nuage",zh:"云",en:"cloud",level:"A1",type:"noun",cat:"地点与交通",gender:"m"},
+  {fr:"rivière",zh:"河",en:"river",level:"A1",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"fleur",zh:"花",en:"flower",level:"A1",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"pomme",zh:"苹果",en:"apple",level:"A1",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"banane",zh:"香蕉",en:"banana",level:"A1",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"fraise",zh:"草莓",en:"strawberry",level:"A1",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"tomate",zh:"番茄",en:"tomato",level:"A1",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"pomme de terre",zh:"马铃薯",en:"potato",level:"A1",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"œuf",zh:"蛋",en:"egg",level:"A1",type:"noun",cat:"饮食与动物",gender:"m"},
+  {fr:"vin",zh:"葡萄酒",en:"wine",level:"A1",type:"noun",cat:"饮食与动物",gender:"m"},
+  {fr:"bière",zh:"啤酒",en:"beer",level:"A1",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"verre",zh:"玻璃杯",en:"glass",level:"A1",type:"noun",cat:"饮食与动物",gender:"m"},
+  {fr:"tasse",zh:"杯子",en:"cup",level:"A1",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"assiette",zh:"盘子",en:"plate",level:"A1",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"couteau",zh:"刀",en:"knife",level:"A1",type:"noun",cat:"饮식与动物",gender:"m"},
+  {fr:"fourchette",zh:"叉子",en:"fork",level:"A1",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"cuillère",zh:"汤匙",en:"spoon",level:"A1",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"oiseau",zh:"鸟",en:"bird",level:"A1",type:"noun",cat:"饮食与动物",gender:"m"},
+  {fr:"été",zh:"夏天",en:"summer",level:"A1",type:"noun",cat:"时间与日期",gender:"m"},
+  {fr:"hiver",zh:"冬天",en:"winter",level:"A1",type:"noun",cat:"时间与日期",gender:"m"},
+  {fr:"printemps",zh:"春天",en:"spring",level:"A1",type:"noun",cat:"时间与日期",gender:"m"},
+  {fr:"automne",zh:"秋天",en:"autumn",level:"A1",type:"noun",cat:"时间与日期",gender:"m"},
+  {fr:"seconde",zh:"秒",en:"second",level:"A1",type:"noun",cat:"时间与日期",gender:"f"},
+  {fr:"février",zh:"二月",en:"February",level:"A1",type:"noun",cat:"时间与日期",gender:"m"},
+  {fr:"octobre",zh:"十月",en:"October",level:"A1",type:"noun",cat:"时间与日期",gender:"m"},
+  {fr:"avant",zh:"之前",en:"before",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"après",zh:"之后",en:"after",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"un peu",zh:"一点",en:"a little",level:"A1",type:"other",cat:"代词与其他"},
+  {fr:"concert",zh:"演唱会",en:"concert",level:"A2",type:"noun",cat:"旅游与休闲",gender:"m"},
+  {fr:"instrument",zh:"乐器",en:"instrument",level:"A2",type:"noun",cat:"旅游与休闲",gender:"m"},
+  {fr:"chanson",zh:"歌曲",en:"song",level:"A2",type:"noun",cat:"旅游与休闲",gender:"f"},
+  {fr:"roman",zh:"小说",en:"novel",level:"A2",type:"noun",cat:"旅游与休闲",gender:"m"},
+  {fr:"soirée",zh:"晚会",en:"evening party",level:"A2",type:"noun",cat:"旅游与休闲",gender:"f"},
+  {fr:"match",zh:"比赛",en:"match",level:"A2",type:"noun",cat:"旅游与休闲",gender:"m"},
+  {fr:"stade",zh:"体育场",en:"stadium",level:"A2",type:"noun",cat:"旅游与休闲",gender:"m"},
+  {fr:"croisière",zh:"邮轮旅行",en:"cruise",level:"A2",type:"noun",cat:"旅游与休闲",gender:"f"},
+  {fr:"port",zh:"港口",en:"port",level:"A2",type:"noun",cat:"旅游与休闲",gender:"m"},
+  {fr:"centre-ville",zh:"市中心",en:"city centre",level:"A2",type:"noun",cat:"地点与交通",gender:"m"},
+  {fr:"guichet",zh:"售票窗口",en:"ticket window",level:"A2",type:"noun",cat:"地点与交通",gender:"m"},
+  {fr:"trajet",zh:"路程",en:"journey",level:"A2",type:"noun",cat:"地点与交通",gender:"m"},
+  {fr:"vitesse",zh:"速度",en:"speed",level:"A2",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"autoroute",zh:"高速公路",en:"motorway",level:"A2",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"ligne",zh:"路线",en:"line",level:"A2",type:"noun",cat:"地点与交通",gender:"f"},
+  {fr:"tramway",zh:"轻轨",en:"tram",level:"A2",type:"noun",cat:"地点与交通",gender:"m"},
+  {fr:"conducteur",zh:"驾驶员",en:"driver",level:"A2",type:"noun",cat:"人物与家庭",gender:"m"},
+  {fr:"touriste",zh:"游客",en:"tourist",level:"A2",type:"noun",cat:"旅游与休闲",gender:"mf"},
+  {fr:"enseignant",zh:"教师",en:"teacher",level:"A2",type:"noun",cat:"职场与学校"},
+  {fr:"classe",zh:"班级",en:"class",level:"A2",type:"noun",cat:"职场与学校",gender:"f"},
+  {fr:"maternelle",zh:"幼儿园",en:"nursery school",level:"A2",type:"noun",cat:"职场与学校",gender:"f"},
+  {fr:"collège",zh:"初中",en:"middle school",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"contrat",zh:"合同",en:"contract",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"responsable",zh:"负责人",en:"person in charge",level:"A2",type:"noun",cat:"职场与学校",gender:"mf"},
+  {fr:"entretien",zh:"面试",en:"interview",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"bâtiment",zh:"建筑物",en:"building",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"chèque",zh:"支票",en:"cheque",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"histoire",zh:"故事/历史",en:"story / history",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"attention",zh:"注意",en:"attention",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"plaisir",zh:"乐趣",en:"pleasure",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"conséquence",zh:"后果",en:"consequence",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"date",zh:"日期",en:"date",level:"A2",type:"noun",cat:"时间与日期",gender:"f"},
+  {fr:"lieu",zh:"地点",en:"place / location",level:"A2",type:"noun",cat:"地点与交通",gender:"m"},
+  {fr:"environnement",zh:"环境",en:"environment",level:"A2",type:"noun",cat:"自然与健康",gender:"m"},
+  {fr:"écologie",zh:"生态",en:"ecology",level:"A2",type:"noun",cat:"自然与健康",gender:"f"},
+  {fr:"développement",zh:"发展",en:"development",level:"A2",type:"noun",cat:"自然与健康",gender:"m"},
+  {fr:"déchet",zh:"垃圾/废弃物",en:"waste",level:"A2",type:"noun",cat:"自然与健康",gender:"m"},
+  {fr:"forêt",zh:"森林",en:"forest",level:"A2",type:"noun",cat:"自然与健康",gender:"f"},
+  {fr:"panneau",zh:"告示牌",en:"sign",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"affiche",zh:"海报",en:"poster",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"annonce",zh:"广告/公告",en:"announcement",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"publicité",zh:"广告",en:"advertisement",level:"A2",type:"noun",cat:"购物与消费",gender:"f"},
+  {fr:"document",zh:"文件",en:"document",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"courriel",zh:"电子邮件",en:"email",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"rendez-vous",zh:"约会/预约",en:"appointment",level:"A2",type:"noun",cat:"职场与学校",gender:"m"},
+  {fr:"salon",zh:"展览/客厅",en:"lounge / show",level:"A2",type:"noun",cat:"旅游与休闲",gender:"m"},
+  {fr:"couleur",zh:"颜色",en:"colour",level:"A2",type:"noun",cat:"房屋与物品",gender:"f"},
+  {fr:"forme",zh:"形状",en:"shape",level:"A2",type:"noun",cat:"房屋与物品",gender:"f"},
+  {fr:"plat",zh:"菜肴",en:"dish",level:"A2",type:"noun",cat:"饮食与动物",gender:"m"},
+  {fr:"recette",zh:"食谱",en:"recipe",level:"A2",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"chocolat",zh:"巧克力",en:"chocolate",level:"A2",type:"noun",cat:"饮食与动物",gender:"m"},
+  {fr:"faim",zh:"饥饿",en:"hunger",level:"A2",type:"noun",cat:"饮食与动物",gender:"f"},
+  {fr:"appétit",zh:"胃口",en:"appetite",level:"A2",type:"noun",cat:"饮食与动物",gender:"m"},
+  {fr:"parfum",zh:"香水",en:"perfume",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"bijou",zh:"珠宝",en:"jewel",level:"A2",type:"noun",cat:"购物与消费",gender:"m"},
+  {fr:"locataire",zh:"租客",en:"tenant",level:"A2",type:"noun",cat:"房屋与物品",gender:"mf"},
+  {fr:"résidence",zh:"住宅区",en:"residence",level:"A2",type:"noun",cat:"房屋与物品",gender:"f"},
+  {fr:"portable",zh:"手机",en:"mobile phone",level:"A2",type:"noun",cat:"房屋与物品"},
+  {fr:"âge",zh:"年纪",en:"age",level:"A2",type:"noun",cat:"人物与家庭",gender:"m"},
+  {fr:"feuille",zh:"叶子",en:"leaf",level:"A2",type:"noun",cat:"自然与健康",gender:"f"},
+  {fr:"conduire",zh:"驾驶",en:"to drive",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"cuisiner",zh:"烹饪",en:"to cook",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"mettre",zh:"放置/穿",en:"to put / wear",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"lutter",zh:"对抗",en:"to fight",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"enrichir",zh:"丰富",en:"to enrich",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"emprunter",zh:"借用",en:"to borrow",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"réussir",zh:"成功",en:"to succeed",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"motiver",zh:"激励",en:"to motivate",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"exprimer",zh:"表达",en:"to express",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"confirmer",zh:"确认",en:"to confirm",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"agir",zh:"行动",en:"to act",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"soutenir",zh:"支持",en:"to support",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"entendre",zh:"听见",en:"to hear",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"coûter",zh:"花费",en:"to cost",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"rêver",zh:"梦想",en:"to dream",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"posséder",zh:"拥有",en:"to own",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"préparer",zh:"准备",en:"to prepare",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"enseigner",zh:"教导",en:"to teach",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"skier",zh:"滑雪",en:"to ski",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"inviter",zh:"邀请",en:"to invite",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"visiter",zh:"参观",en:"to visit",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"dépenser",zh:"花费",en:"to spend",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"maîtriser",zh:"掌握",en:"to master",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"discuter",zh:"讨论",en:"to discuss",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"rechercher",zh:"寻找",en:"to search for",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"former",zh:"培训",en:"to train",level:"A2",type:"verb",cat:"A2核心动词"},
+  {fr:"capable",zh:"有能力的",en:"capable",level:"A2",type:"adj",cat:"A2形容词",fem:"capable"},
+  {fr:"actif",zh:"活跃的",en:"active",level:"A2",type:"adj",cat:"A2形容词",fem:"active"},
+  {fr:"faible",zh:"微弱的",en:"weak",level:"A2",type:"adj",cat:"A2形容词",fem:"faible"},
+  {fr:"connu",zh:"著名的",en:"known / famous",level:"A2",type:"adj",cat:"A2形容词",fem:"connue"},
+  {fr:"inconnu",zh:"未知的",en:"unknown",level:"A2",type:"adj",cat:"A2形容词",fem:"inconnue"},
+  {fr:"habituel",zh:"日常的",en:"usual",level:"A2",type:"adj",cat:"A2形容词",fem:"habituelle"},
+  {fr:"élevé",zh:"高的",en:"high / elevated",level:"A2",type:"adj",cat:"A2形容词",fem:"élevée"},
+  {fr:"véritable",zh:"真正的",en:"genuine",level:"A2",type:"adj",cat:"A2形容词",fem:"véritable"},
+  {fr:"direct",zh:"直接的",en:"direct",level:"A2",type:"adj",cat:"A2形容词",fem:"directe"},
+  {fr:"léger",zh:"轻的",en:"light",level:"A2",type:"adj",cat:"A2形容词",fem:"légère"},
+  {fr:"insuffisant",zh:"不足的",en:"insufficient",level:"A2",type:"adj",cat:"A2形容词",fem:"insuffisante"},
+  {fr:"abondant",zh:"丰富的",en:"abundant",level:"A2",type:"adj",cat:"A2形容词",fem:"abondante"},
+  {fr:"varié",zh:"多样的",en:"varied",level:"A2",type:"adj",cat:"A2形容词",fem:"variée"},
+  {fr:"lointain",zh:"遥远的",en:"distant",level:"A2",type:"adj",cat:"A2形容词",fem:"lointaine"},
+  {fr:"idéal",zh:"理想的",en:"ideal",level:"A2",type:"adj",cat:"A2形容词",fem:"idéale"},
+  {fr:"spécial",zh:"特别的",en:"special",level:"A2",type:"adj",cat:"A2形容词",fem:"spéciale"},
+  {fr:"magnifique",zh:"壮丽的",en:"magnificent",level:"A2",type:"adj",cat:"A2形容词",fem:"magnifique"},
+  {fr:"bénéfique",zh:"有益的",en:"beneficial",level:"A2",type:"adj",cat:"A2形容词",fem:"bénéfique"},
+  {fr:"large",zh:"宽的",en:"wide",level:"A2",type:"adj",cat:"A2形容词",fem:"large"},
+  {fr:"haut",zh:"高的",en:"tall / high",level:"A2",type:"adj",cat:"A2形容词",fem:"haute"},
+  {fr:"présent",zh:"出席的/目前的",en:"present",level:"A2",type:"adj",cat:"A2形容词",fem:"présente"},
+  {fr:"merveilleux",zh:"美妙的",en:"marvellous",level:"A2",type:"adj",cat:"A2形容词",fem:"merveilleuse"},
+  {fr:"bénévole",zh:"志工",en:"volunteer",level:"B1",type:"noun",cat:"社会与文化",gender:"mf"},
+  {fr:"étranger",zh:"外国人",en:"foreigner",level:"B1",type:"noun",cat:"社会与文化"},
+  {fr:"cohabitation",zh:"共居",en:"cohabitation",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"retraité",zh:"退休人员",en:"retiree",level:"B1",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"logement",zh:"住房",en:"housing",level:"B1",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"allocation",zh:"津贴",en:"allowance",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"discours",zh:"演说",en:"speech",level:"B1",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"analphabétisme",zh:"文盲",en:"illiteracy",level:"B1",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"adaptation",zh:"改编",en:"adaptation",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"comédie",zh:"喜剧",en:"comedy",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"thématique",zh:"主题",en:"theme",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"soutien scolaire",zh:"课业辅导",en:"tutoring",level:"B1",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"mot",zh:"字/词",en:"word",level:"B1",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"phrase",zh:"句子",en:"sentence",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"effort",zh:"努力",en:"effort",level:"B1",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"intérêt",zh:"兴趣",en:"interest",level:"B1",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"passion",zh:"热情",en:"passion",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"découverte",zh:"发现",en:"discovery",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"niveau",zh:"水平/等级",en:"level",level:"B1",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"décision",zh:"决定",en:"decision",level:"B1",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"diagnostic",zh:"诊断",en:"diagnosis",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"affection",zh:"疾病",en:"ailment",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"remède",zh:"药物/疗法",en:"remedy",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"grippe",zh:"流感",en:"flu",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"sieste",zh:"午睡",en:"nap",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"addiction",zh:"成瘾",en:"addiction",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"trouble",zh:"障碍",en:"disorder",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"nourriture",zh:"食物",en:"food",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"activité",zh:"活动",en:"activity",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"loisir",zh:"休闲",en:"leisure",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"quotidien",zh:"日常生活",en:"daily life",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"rythme",zh:"节奏",en:"rhythm",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"courage",zh:"勇气",en:"courage",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"réflexion",zh:"思考",en:"reflection",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"consultation",zh:"看诊",en:"consultation",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"physique",zh:"身体的",en:"physical",level:"B1",type:"adj",cat:"B1形容词",fem:"physique"},
+  {fr:"mental",zh:"心理的",en:"mental",level:"B1",type:"adj",cat:"B1形容词",fem:"mentale"},
+  {fr:"psychologique",zh:"心理的",en:"psychological",level:"B1",type:"adj",cat:"B1形容词",fem:"psychologique"},
+  {fr:"sportif",zh:"运动的",en:"sporty",level:"B1",type:"adj",cat:"B1形容词",fem:"sportive"},
+  {fr:"agricole",zh:"农业的",en:"agricultural",level:"B1",type:"adj",cat:"B1形容词",fem:"agricole"},
+  {fr:"naturel",zh:"自然的",en:"natural",level:"B1",type:"adj",cat:"B1形容词",fem:"naturelle"},
+  {fr:"commercial",zh:"商业的",en:"commercial",level:"B1",type:"adj",cat:"B1形容词",fem:"commerciale"},
+  {fr:"politique",zh:"政治的",en:"political",level:"B1",type:"adj",cat:"B1形容词",fem:"politique"},
+  {fr:"général",zh:"一般的",en:"general",level:"B1",type:"adj",cat:"B1形容词",fem:"générale"},
+  {fr:"public",zh:"公共的",en:"public",level:"B1",type:"adj",cat:"B1形容词",fem:"publique"},
+  {fr:"privé",zh:"私人的",en:"private",level:"B1",type:"adj",cat:"B1形容词",fem:"privée"},
+  {fr:"économiser",zh:"节省",en:"to save (money)",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"remplacer",zh:"替换",en:"to replace",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"réduire",zh:"减少",en:"to reduce",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"garantir",zh:"保证",en:"to guarantee",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"fournir",zh:"提供",en:"to provide",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"doter",zh:"赋予",en:"to endow",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"bannir",zh:"禁止",en:"to ban",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"communiquer",zh:"沟通",en:"to communicate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"promouvoir",zh:"推广",en:"to promote",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"faciliter",zh:"使便利",en:"to facilitate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"attirer",zh:"吸引",en:"to attract",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"inciter",zh:"鼓励",en:"to encourage",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"s'engager",zh:"承诺",en:"to commit",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"consacrer",zh:"专门用于",en:"to dedicate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"recommander",zh:"推荐",en:"to recommend",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"libérer",zh:"释放",en:"to release",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"s'évader",zh:"逃离",en:"to escape",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"rassurer",zh:"使安心",en:"to reassure",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"épuiser",zh:"耗尽",en:"to exhaust",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"cumuler",zh:"累积",en:"to accumulate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"relativiser",zh:"客观看待",en:"to put in perspective",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"conserver",zh:"保持",en:"to keep / preserve",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"évoluer",zh:"演变",en:"to evolve",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"généraliser",zh:"普及",en:"to generalise",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"stimuler",zh:"刺激/激发",en:"to stimulate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"progresser",zh:"进步",en:"to progress",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"simplifier",zh:"简化",en:"to simplify",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"aborder",zh:"探讨",en:"to approach",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"renforcer",zh:"加强",en:"to reinforce",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"négliger",zh:"忽视",en:"to neglect",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"solliciter",zh:"激发/请求",en:"to solicit",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"mémoriser",zh:"记忆",en:"to memorise",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"refléter",zh:"反映",en:"to reflect",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"traduire",zh:"表现出",en:"to translate / express",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"reprocher",zh:"指责",en:"to blame",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"vérifier",zh:"核查",en:"to verify",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"consommer",zh:"消费",en:"to consume",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"renoncer",zh:"放弃",en:"to give up",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"s'inscrire",zh:"报名",en:"to register",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"contribuer",zh:"贡献",en:"to contribute",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"bénéficier",zh:"受益于",en:"to benefit from",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"profiter",zh:"享受/利用",en:"to enjoy / take advantage",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"s'inquiéter",zh:"担心",en:"to worry",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"compenser",zh:"补偿",en:"to compensate",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"filtrer",zh:"过滤",en:"to filter",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"exiger",zh:"要求",en:"to demand",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"interdire",zh:"禁止",en:"to forbid",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"limiter",zh:"限制",en:"to limit",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"prouver",zh:"证明",en:"to prove",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"observer",zh:"观察",en:"to observe",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"remarquer",zh:"注意到",en:"to notice",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"souligner",zh:"强调",en:"to underline / emphasise",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"annoncer",zh:"宣布",en:"to announce",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"résister",zh:"抵抗",en:"to resist",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"gaz à effet de serre",zh:"温室气体",en:"greenhouse gas",level:"B1",type:"noun",cat:"环境与生态",gender:"m"},
+  {fr:"CO2",zh:"二氧化碳",en:"CO2",level:"B1",type:"noun",cat:"环境与生态"},
+  {fr:"incinéré",zh:"被焚化的",en:"incinerated",level:"B1",type:"adj",cat:"B1形容词",fem:"incinérée"},
+  {fr:"tri",zh:"分类",en:"sorting",level:"B1",type:"noun",cat:"环境与生态"},
+  {fr:"ordure",zh:"垃圾",en:"rubbish",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"bicyclette",zh:"自行车",en:"bicycle",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"végétaliser",zh:"绿化",en:"to plant vegetation",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"abeille",zh:"蜜蜂",en:"bee",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"insecticide",zh:"杀虫剂",en:"insecticide",level:"B1",type:"noun",cat:"环境与生态"},
+  {fr:"nuisance sonore",zh:"噪音污染",en:"noise pollution",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"bétonnage",zh:"水泥化",en:"concreting",level:"B1",type:"noun",cat:"环境与生态",gender:"m"},
+  {fr:"producteur",zh:"生产者",en:"producer",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"saison",zh:"季节",en:"season",level:"B1",type:"noun",cat:"时间与日期",gender:"f"},
+  {fr:"tropical",zh:"热带的",en:"tropical",level:"B1",type:"adj",cat:"B1形容词",fem:"tropicale"},
+  {fr:"banlieue",zh:"郊区",en:"suburb",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"locomotion",zh:"交通工具",en:"locomotion",level:"B1",type:"noun",cat:"环境与生态",gender:"f"},
+  {fr:"transports en commun",zh:"大众运输",en:"public transport",level:"B1",type:"noun",cat:"环境与生态"},
+  {fr:"piéton",zh:"行人",en:"pedestrian",level:"B1",type:"noun",cat:"环境与生态",gender:"m"},
+  {fr:"réparateur",zh:"恢复精力的",en:"restorative",level:"B1",type:"adj",cat:"B1形容词",fem:"réparatrice"},
+  {fr:"musculaire",zh:"肌肉的",en:"muscular",level:"B1",type:"adj",cat:"B1形容词",fem:"musculaire"},
+  {fr:"gymnaste",zh:"体操运动员",en:"gymnast",level:"B1",type:"noun",cat:"健康与心理"},
+  {fr:"dyslexique",zh:"阅读障碍的",en:"dyslexic",level:"B1",type:"adj",cat:"B1形容词",fem:"dyslexique"},
+  {fr:"nutritionnel",zh:"营养的",en:"nutritional",level:"B1",type:"adj",cat:"B1形容词",fem:"nutritionnelle"},
+  {fr:"ingrédient",zh:"食材",en:"ingredient",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"saveur",zh:"风味",en:"flavour",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"détente",zh:"放松",en:"relaxation",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"inattentif",zh:"不专心的",en:"inattentive",level:"B1",type:"adj",cat:"B1形容词",fem:"inattentive"},
+  {fr:"nausée",zh:"恶心",en:"nausea",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"maux",zh:"病痛",en:"aches / pains",level:"B1",type:"noun",cat:"健康与心理",gender:"m"},
+  {fr:"infirmerie",zh:"医务室",en:"infirmary",level:"B1",type:"noun",cat:"健康与心理",gender:"f"},
+  {fr:"valeur ajoutée",zh:"附加价值",en:"added value",level:"B1",type:"noun",cat:"职场与教育",gender:"f"},
+  {fr:"obsolescence",zh:"过时/淘汰",en:"obsolescence",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"fabricant",zh:"制造商",en:"manufacturer",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"remplacement",zh:"替换",en:"replacement",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"productivité",zh:"生产力",en:"productivity",level:"B1",type:"noun",cat:"职场与教育",gender:"f"},
+  {fr:"commerce",zh:"商业/贸易",en:"commerce",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"production",zh:"生产",en:"production",level:"B1",type:"noun",cat:"职场与教育",gender:"f"},
+  {fr:"revenu",zh:"收入",en:"income",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"bénéfice",zh:"利润",en:"profit",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"investissement",zh:"投资",en:"investment",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"candidat",zh:"求职者",en:"candidate",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"équipe",zh:"团队",en:"team",level:"B1",type:"noun",cat:"职场与教育",gender:"f"},
+  {fr:"qualité",zh:"品质",en:"quality",level:"B1",type:"noun",cat:"职场与教育",gender:"f"},
+  {fr:"défaut",zh:"缺点",en:"defect / flaw",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"cause",zh:"原因",en:"cause",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"différence",zh:"差异",en:"difference",level:"B1",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"point de vue",zh:"观点",en:"point of view",level:"B1",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"passé",zh:"过去",en:"past",level:"B1",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"PDG",zh:"总裁",en:"CEO",level:"B1",type:"noun",cat:"职场与教育",gender:"m"},
+  {fr:"cyberspace",zh:"网络空间",en:"cyberspace",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"visioconférence",zh:"视频会议",en:"video conference",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"messagerie",zh:"通讯软件",en:"messaging",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"télécharger",zh:"下载",en:"to download",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"surfer",zh:"上网",en:"to surf (internet)",level:"B1",type:"verb",cat:"B1核心动词"},
+  {fr:"clavier",zh:"键盘",en:"keyboard",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"imprimante",zh:"打印机",en:"printer",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"carton",zh:"纸箱",en:"cardboard box",level:"B1",type:"noun",cat:"房屋与物品",gender:"m"},
+  {fr:"fonctionnement",zh:"运作",en:"functioning",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"technique",zh:"技术的",en:"technical",level:"B1",type:"adj",cat:"B1形容词",fem:"technique"},
+  {fr:"audio",zh:"音讯的",en:"audio",level:"B1",type:"adj",cat:"B1形容词",fem:"audio"},
+  {fr:"vidéo",zh:"影片",en:"video",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"image",zh:"图片",en:"image",level:"B1",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"usage",zh:"使用",en:"usage",level:"B1",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"trac",zh:"怯场",en:"stage fright",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"paralysie",zh:"瘫痪",en:"paralysis",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"surmonter",zh:"克服",en:"to overcome",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"visualiser",zh:"视觉化",en:"to visualise",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"tyrannique",zh:"专横的",en:"tyrannical",level:"B2",type:"adj",cat:"B2形容词",fem:"tyrannique"},
+  {fr:"culpabiliser",zh:"使内疚",en:"to make feel guilty",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"injonction",zh:"强制要求",en:"injunction",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"s'insinuer",zh:"潜入",en:"to insinuate oneself",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"fadeur",zh:"平淡",en:"blandness",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"sonore",zh:"声音的",en:"sound (adj)",level:"B2",type:"adj",cat:"B2形容词",fem:"sonore"},
+  {fr:"sensibilité",zh:"敏感度",en:"sensitivity",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"palais",zh:"味觉",en:"palate",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"savoureux",zh:"美味的",en:"tasty",level:"B2",type:"adj",cat:"B2形容词",fem:"savoureuse"},
+  {fr:"vrombissement",zh:"轰鸣声",en:"roar / hum",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"réacteur",zh:"引擎",en:"reactor / engine",level:"B2",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"enthousiasme",zh:"热情",en:"enthusiasm",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"mets",zh:"佳肴",en:"dish / delicacy",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"dérivatif",zh:"转移注意力的事物",en:"distraction",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"invulnérabilité",zh:"无懈可击",en:"invulnerability",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"persévérance",zh:"毅力",en:"perseverance",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"activer",zh:"启动/激发",en:"to activate",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"handicap",zh:"障碍/劣势",en:"handicap",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"atout",zh:"优势/王牌",en:"asset / trump card",level:"B2",type:"noun",cat:"论述与分析",gender:"m"},
+  {fr:"aptitude",zh:"资质",en:"aptitude",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"sénior",zh:"老年人",en:"senior",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"thérapie",zh:"治疗",en:"therapy",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"inconscient",zh:"无意识的",en:"unconscious",level:"B2",type:"adj",cat:"B2形容词",fem:"inconsciente"},
+  {fr:"informationnel",zh:"资讯的",en:"informational",level:"B2",type:"adj",cat:"B2形容词",fem:"informationnelle"},
+  {fr:"opportunité",zh:"机会",en:"opportunity",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"informatiser",zh:"使电脑化",en:"to computerise",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"plateforme",zh:"平台",en:"platform",level:"B2",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"retranscrire",zh:"转录",en:"to transcribe",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"répertorier",zh:"编目",en:"to catalogue",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"bioéthique",zh:"生物伦理学",en:"bioethics",level:"B2",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"polémique",zh:"争议",en:"controversy",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"rationaliste",zh:"理性主义者",en:"rationalist",level:"B2",type:"noun",cat:"论述与分析",gender:"m"},
+  {fr:"éradication",zh:"根除",en:"eradication",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"embryon",zh:"胚胎",en:"embryo",level:"B2",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"pathologique",zh:"病理的",en:"pathological",level:"B2",type:"adj",cat:"B2形容词",fem:"pathologique"},
+  {fr:"tare",zh:"遗传缺陷",en:"hereditary defect",level:"B2",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"inconciliable",zh:"不相容的",en:"irreconcilable",level:"B2",type:"adj",cat:"B2形容词",fem:"inconciliable"},
+  {fr:"génie",zh:"天才",en:"genius",level:"B2",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"alliage",zh:"合金",en:"alloy",level:"B2",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"carbone",zh:"碳",en:"carbon",level:"B2",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"titane",zh:"钛",en:"titanium",level:"B2",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"traction",zh:"牵引力",en:"traction",level:"B2",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"élasticité",zh:"弹性",en:"elasticity",level:"B2",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"vibration",zh:"震动",en:"vibration",level:"B2",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"tension",zh:"电压/紧张",en:"tension",level:"B2",type:"noun",cat:"科技与媒体",gender:"f"},
+  {fr:"curatif",zh:"治疗的",en:"curative",level:"B2",type:"adj",cat:"B2形容词",fem:"curative"},
+  {fr:"capteur",zh:"感测器",en:"sensor",level:"B2",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"composant",zh:"元件",en:"component",level:"B2",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"sophistiqué",zh:"精密的",en:"sophisticated",level:"B2",type:"adj",cat:"B2形容词",fem:"sophistiquée"},
+  {fr:"sincérité",zh:"真诚",en:"sincerity",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"hypocrisie",zh:"虚伪",en:"hypocrisy",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"mutation",zh:"变迁",en:"mutation / shift",level:"B2",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"surenchère",zh:"攀比",en:"one-upmanship",level:"B2",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"fâcherie",zh:"争吵",en:"quarrel",level:"B2",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"flou",zh:"模糊",en:"blurry / vague",level:"B2",type:"adj",cat:"B2形容词",fem:"floue"},
+  {fr:"ministre",zh:"部长",en:"minister",level:"B2",type:"noun",cat:"社会与文化",gender:"mf"},
+  {fr:"conseiller",zh:"顾问",en:"advisor",level:"B2",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"s'échiner",zh:"苦干",en:"to toil",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"dynamisme",zh:"活力",en:"dynamism",level:"B2",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"renouveau",zh:"复兴",en:"renewal",level:"B2",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"décennie",zh:"十年",en:"decade",level:"B2",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"naïveté",zh:"天真",en:"naivety",level:"B2",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"bourgeois",zh:"资产阶级的",en:"bourgeois",level:"B2",type:"adj",cat:"B2形容词",fem:"bourgeoise"},
+  {fr:"métropole",zh:"大都市",en:"metropolis",level:"B2",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"aversion",zh:"厌恶",en:"aversion",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"cibler",zh:"以…为目标",en:"to target",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"approche",zh:"方法/途径",en:"approach",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"citoyen",zh:"公民",en:"citizen",level:"B2",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"démocratie",zh:"民主",en:"democracy",level:"B2",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"réforme",zh:"改革",en:"reform",level:"B2",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"électroménager",zh:"家电",en:"household appliances",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"reculer",zh:"下降",en:"to fall back",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"déchiffrer",zh:"解读",en:"to decipher",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"sigle",zh:"首字母缩写",en:"acronym",level:"B2",type:"noun",cat:"论述与分析",gender:"m"},
+  {fr:"étiquette",zh:"标签",en:"label",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"facultatif",zh:"非强制的",en:"optional",level:"B2",type:"adj",cat:"B2形容词",fem:"facultative"},
+  {fr:"volontariat",zh:"自愿",en:"volunteering",level:"B2",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"manipulation",zh:"操纵",en:"manipulation",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"inné",zh:"天生的",en:"innate",level:"B2",type:"adj",cat:"B2形容词",fem:"innée"},
+  {fr:"défaillant",zh:"有缺陷的",en:"defective",level:"B2",type:"adj",cat:"B2形容词",fem:"défaillante"},
+  {fr:"surconsommation",zh:"过度消费",en:"overconsumption",level:"B2",type:"noun",cat:"职场与管理"},
+  {fr:"dépendance",zh:"依赖",en:"dependence",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"restriction",zh:"限制",en:"restriction",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"fléau",zh:"灾祸",en:"scourge",level:"B2",type:"noun",cat:"论述与分析",gender:"m"},
+  {fr:"champignon",zh:"蘑菇",en:"mushroom / fungus",level:"B2",type:"noun",cat:"环境与城市",gender:"m"},
+  {fr:"ronger",zh:"侵蚀",en:"to gnaw / erode",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"édifice",zh:"建筑物",en:"edifice",level:"B2",type:"noun",cat:"环境与城市",gender:"m"},
+  {fr:"restauration",zh:"修复",en:"restoration",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"contributeur",zh:"捐助者",en:"contributor",level:"B2",type:"noun",cat:"社会与文化",gender:"m"},
+  {fr:"ambitionner",zh:"渴望",en:"to aspire to",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"vocation",zh:"使命",en:"vocation",level:"B2",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"massive",zh:"大规模的",en:"massive",level:"B2",type:"adj",cat:"B2形容词",fem:"massive"},
+  {fr:"promoteur",zh:"发起人",en:"promoter",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"longévité",zh:"寿命",en:"longevity",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"robustesse",zh:"坚固性",en:"robustness",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"souscripteur",zh:"订户",en:"subscriber",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"forfait",zh:"套餐",en:"package / fixed rate",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"rentabiliser",zh:"使获利",en:"to make profitable",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"prestige",zh:"声望",en:"prestige",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"bourse",zh:"股票市场",en:"stock exchange",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"remboursement",zh:"退款",en:"reimbursement",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"réclamation",zh:"投诉",en:"complaint",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"restituer",zh:"归还",en:"to return",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"expertise",zh:"专业知识",en:"expertise",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"licence",zh:"学士学位",en:"bachelor's degree",level:"B2",type:"noun",cat:"教育与研究",gender:"f"},
+  {fr:"master",zh:"硕士学位",en:"master's degree",level:"B2",type:"noun",cat:"教育与研究",gender:"m"},
+  {fr:"méconnu",zh:"鲜为人知的",en:"little-known",level:"B2",type:"adj",cat:"B2形容词",fem:"méconnue"},
+  {fr:"motif",zh:"动机/图案",en:"motive / pattern",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"géométrisation",zh:"几何化",en:"geometrisation",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"cruel",zh:"残酷的",en:"cruel",level:"B2",type:"adj",cat:"B2形容词",fem:"cruelle"},
+  {fr:"tourmenté",zh:"饱受折磨的",en:"tormented",level:"B2",type:"adj",cat:"B2形容词",fem:"tourmentée"},
+  {fr:"patibulaire",zh:"面目可憎的",en:"sinister-looking",level:"B2",type:"adj",cat:"B2形容词",fem:"patibulaire"},
+  {fr:"anonyme",zh:"匿名的",en:"anonymous",level:"B2",type:"adj",cat:"B2形容词",fem:"anonyme"},
+  {fr:"singularité",zh:"独特性",en:"singularity",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"décomplexer",zh:"消除自卑感",en:"to free from inhibitions",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"flâner",zh:"闲逛",en:"to stroll",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"argot",zh:"俚语",en:"slang",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"s'indigner",zh:"感到愤慨",en:"to be indignant",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"ambiguïté",zh:"歧义",en:"ambiguity",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"laxisme",zh:"松懈",en:"laxity",level:"B2",type:"noun",cat:"论述与分析",gender:"m"},
+  {fr:"lexicologue",zh:"词汇学家",en:"lexicologist",level:"B2",type:"noun",cat:"文化与艺术",gender:"mf"},
+  {fr:"sentimental",zh:"感伤的",en:"sentimental",level:"B2",type:"adj",cat:"B2形容词",fem:"sentimentale"},
+  {fr:"suspense",zh:"悬念",en:"suspense",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"onéreux",zh:"昂贵的",en:"costly",level:"B2",type:"adj",cat:"B2形容词",fem:"onéreuse"},
+  {fr:"procurer",zh:"带来",en:"to provide / procure",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"insolite",zh:"不寻常的",en:"unusual",level:"B2",type:"adj",cat:"B2形容词",fem:"insolite"},
+  {fr:"cocasse",zh:"滑稽的",en:"comical",level:"B2",type:"adj",cat:"B2形容词",fem:"cocasse"},
+  {fr:"humanité",zh:"人性/人类",en:"humanity",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"caricaturer",zh:"讽刺",en:"to caricature",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"raffinement",zh:"精致",en:"refinement",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"subtilité",zh:"细腻",en:"subtlety",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"fluide",zh:"流畅的",en:"fluid",level:"B2",type:"adj",cat:"B2形容词",fem:"fluide"},
+  {fr:"inconditionnel",zh:"死忠的",en:"unconditional",level:"B2",type:"adj",cat:"B2形容词",fem:"inconditionnelle"},
+  {fr:"expérimental",zh:"实验性的",en:"experimental",level:"B2",type:"adj",cat:"B2形容词",fem:"expérimentale"},
+  {fr:"harmonie",zh:"和谐",en:"harmony",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"panorama",zh:"全景",en:"panorama",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"inviolé",zh:"未受侵犯的",en:"inviolate",level:"B2",type:"adj",cat:"B2形容词",fem:"inviolée"},
+  {fr:"extrait",zh:"摘录",en:"extract",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"mystère",zh:"谜团",en:"mystery",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"légende",zh:"传说",en:"legend",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"dynastie",zh:"王朝",en:"dynasty",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"mythe",zh:"神话",en:"myth",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"identitaire",zh:"身份认同的",en:"identity (adj)",level:"B2",type:"adj",cat:"B2形容词",fem:"identitaire"},
+  {fr:"essence",zh:"本质",en:"essence",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"frange",zh:"边缘群体",en:"fringe",level:"B2",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"texture",zh:"质地",en:"texture",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"applaudir",zh:"赞同",en:"to applaud",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"repousser",zh:"推迟/排斥",en:"to push back / repel",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"s'apparenter",zh:"类似于",en:"to be akin to",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"pénétrer",zh:"渗透",en:"to penetrate",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"s'attaquer",zh:"着手解决",en:"to tackle",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"sous-estimer",zh:"低估",en:"to underestimate",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"approfondir",zh:"深化",en:"to deepen",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"déplorer",zh:"哀叹",en:"to deplore",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"attribuer",zh:"归因于",en:"to attribute",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"erroné",zh:"错误的",en:"erroneous",level:"B2",type:"adj",cat:"B2形容词",fem:"erronée"},
+  {fr:"restreindre",zh:"限制",en:"to restrict",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"imposer",zh:"强加",en:"to impose",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"franchir",zh:"跨越",en:"to cross / overcome",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"se faufiler",zh:"穿梭",en:"to slip through",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"dense",zh:"密集的",en:"dense",level:"B2",type:"adj",cat:"B2形容词",fem:"dense"},
+  {fr:"modeste",zh:"谦虚的",en:"modest",level:"B2",type:"adj",cat:"B2形容词",fem:"modeste"},
+  {fr:"irréductible",zh:"不屈服的",en:"irreducible",level:"B2",type:"adj",cat:"B2形容词",fem:"irréductible"},
+  {fr:"indigné",zh:"愤慨的",en:"indignant",level:"B2",type:"adj",cat:"B2形容词",fem:"indignée"},
+  {fr:"abusif",zh:"滥用的",en:"abusive / excessive",level:"B2",type:"adj",cat:"B2形容词",fem:"abusive"},
+  {fr:"sacré",zh:"神圣的",en:"sacred",level:"B2",type:"adj",cat:"B2形容词",fem:"sacrée"},
+  {fr:"inviolable",zh:"不可侵犯的",en:"inviolable",level:"B2",type:"adj",cat:"B2形容词",fem:"inviolable"},
+  {fr:"réfléchi",zh:"深思熟虑的",en:"thoughtful",level:"B2",type:"adj",cat:"B2形容词",fem:"réfléchie"},
+  {fr:"dicter",zh:"支配",en:"to dictate",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"grinçant",zh:"尖酸刻薄的",en:"grating / caustic",level:"B2",type:"adj",cat:"B2形容词",fem:"grinçante"},
+  {fr:"percutant",zh:"震撼的",en:"hard-hitting",level:"B2",type:"adj",cat:"B2形容词",fem:"percutante"},
+  {fr:"béni",zh:"受祝福的",en:"blessed",level:"B2",type:"adj",cat:"B2形容词",fem:"bénie"},
+  {fr:"inédit",zh:"前所未有的",en:"unprecedented",level:"B2",type:"adj",cat:"B2形容词",fem:"inédite"},
+  {fr:"subir",zh:"遭受",en:"to undergo / suffer",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"forger",zh:"塑造",en:"to forge",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"désuet",zh:"过时的",en:"obsolete",level:"B2",type:"adj",cat:"B2形容词",fem:"désuète"},
+  {fr:"tendre",zh:"趋向于",en:"to tend towards",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"alléger",zh:"减轻",en:"to lighten",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"prévoir",zh:"预测",en:"to forecast",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"démarquer",zh:"区分",en:"to distinguish",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"caractériser",zh:"表现特征",en:"to characterise",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"réceptif",zh:"易接受的",en:"receptive",level:"B2",type:"adj",cat:"B2形容词",fem:"réceptive"},
+  {fr:"stimulation",zh:"刺激",en:"stimulation",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"transgression",zh:"违反",en:"transgression",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"démocratisation",zh:"民主化",en:"democratisation",level:"B2",type:"noun",cat:"社会与文化",gender:"f"},
+  {fr:"relation",zh:"关系",en:"relationship",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"sain",zh:"健康的",en:"healthy",level:"B2",type:"adj",cat:"B2形容词",fem:"saine"},
+  {fr:"champ",zh:"田野",en:"field",level:"B2",type:"noun",cat:"环境与城市",gender:"m"},
+  {fr:"inventeur",zh:"发明家",en:"inventor",level:"B2",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"appareil",zh:"装置",en:"device",level:"B2",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"vérité",zh:"真相",en:"truth",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"illusion",zh:"幻觉",en:"illusion",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"inconvénient",zh:"缺点",en:"disadvantage",level:"B2",type:"noun",cat:"论述与分析",gender:"m"},
+  {fr:"photographie",zh:"摄影",en:"photography",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"imaginaire",zh:"虚构的",en:"imaginary",level:"B2",type:"adj",cat:"B2形容词",fem:"imaginaire"},
+  {fr:"moral",zh:"道德的",en:"moral",level:"B2",type:"adj",cat:"B2形容词",fem:"morale"},
+  {fr:"dictionnaire",zh:"字典",en:"dictionary",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"phonétique",zh:"语音学",en:"phonetics",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"typographie",zh:"排版",en:"typography",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"lisibilité",zh:"可读性",en:"readability",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"poème",zh:"诗",en:"poem",level:"B2",type:"noun",cat:"文化与艺术",gender:"m"},
+  {fr:"création",zh:"创作",en:"creation",level:"B2",type:"noun",cat:"文化与艺术",gender:"f"},
+  {fr:"émotion",zh:"情感",en:"emotion",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"territoire",zh:"领土/地区",en:"territory",level:"B2",type:"noun",cat:"环境与城市",gender:"m"},
+  {fr:"bio-construction",zh:"生物建筑",en:"bio-construction",level:"B2",type:"noun",cat:"环境与城市",gender:"f"},
+  {fr:"efficacité",zh:"效率",en:"efficiency",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"alternative",zh:"替代方案",en:"alternative",level:"B2",type:"noun",cat:"论述与分析",gender:"f"},
+  {fr:"transition",zh:"过渡/转型",en:"transition",level:"B2",type:"noun",cat:"环境与城市",gender:"f"},
+  {fr:"conservation",zh:"保存",en:"conservation",level:"B2",type:"noun",cat:"环境与城市"},
+  {fr:"substance",zh:"物质",en:"substance",level:"B2",type:"noun",cat:"环境与城市",gender:"f"},
+  {fr:"artificiel",zh:"人工的",en:"artificial",level:"B2",type:"adj",cat:"B2形容词",fem:"artificielle"},
+  {fr:"obsolète",zh:"过时的",en:"obsolete",level:"B2",type:"adj",cat:"B2形容词",fem:"obsolète"},
+  {fr:"smartphone",zh:"智能手机",en:"smartphone",level:"B2",type:"noun",cat:"科技与媒体",gender:"m"},
+  {fr:"fonction",zh:"职务",en:"function / role",level:"B2",type:"noun",cat:"职场与管理"},
+  {fr:"commercialiser",zh:"商业化",en:"to commercialise",level:"B2",type:"verb",cat:"B2核心动词"},
+  {fr:"productivisme",zh:"生产主义",en:"productivism",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"corporatisme",zh:"社团主义",en:"corporatism",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"concurrent",zh:"竞争对手",en:"competitor",level:"B2",type:"noun",cat:"职场与管理",gender:"m"},
+  {fr:"industrie",zh:"工业",en:"industry",level:"B2",type:"noun",cat:"职场与管理",gender:"f"},
+  {fr:"agroalimentaire",zh:"农产食品业",en:"agri-food industry",level:"B2",type:"noun",cat:"职场与管理"},
+  {fr:"occidental",zh:"西方的",en:"western",level:"B2",type:"adj",cat:"B2形容词",fem:"occidentale"},
+  {fr:"personnalité",zh:"性格",en:"personality",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"égocentrisme",zh:"自我中心",en:"egocentrism",level:"B2",type:"noun",cat:"心理与健康",gender:"m"},
+  {fr:"attitude",zh:"态度",en:"attitude",level:"B2",type:"noun",cat:"心理与健康",gender:"f"},
+  {fr:"analyse",zh:"分析",en:"analysis",level:"B2",type:"noun",cat:"论述与分析",gender:"f"}
+];
+
+
+const TYPE_LABEL = {noun:"Noun",verb:"Verb",adj:"Adj.",other:"Other"};
+const GENDER_LABEL = {m:"Masculine (m.)",f:"Feminine (f.)",mf:"Masc./Fem. (m./f.)"};
+const LEVEL_COLOR = {A1:"#3C3489",A2:"#0F6E56",B1:"#993C1D",B2:"#185FA5"};
+
+let activeLevel='all', activeType='all', activeMode='flash', showStarredOnly=false;
+let starred = new Set();
+try { starred = new Set(JSON.parse(localStorage.getItem('mli_starred')||'[]')); } catch(e){}
+function saveStarred(){ try{localStorage.setItem('mli_starred',JSON.stringify([...starred]));}catch(e){} }
+
+function filtered(){
+  return WORDS.filter(w =>
+    (activeLevel==='all'||w.level===activeLevel) &&
+    (activeType==='all'||w.type===activeType) &&
+    (!showStarredOnly||starred.has(w.fr))
+  );
+}
+
+function speakWord(btn){
+  const fr = btn.dataset.fr;
+  if(!fr) return;
+  const fem = btn.dataset.fem || '';
+  const phoneticMap = {
+    'tropical': 'tropicale',
+    'œuvre': 'euvre',
+    'suspense': 'süspanse',
+  };
+  window.speechSynthesis.cancel();
+  function getVoice(){
+    const vs = window.speechSynthesis.getVoices();
+    return vs.find(v => v.lang === 'fr-FR') || vs.find(v => v.lang.startsWith('fr'));
+  }
+  function makeUtterance(text){
+    const u = new SpeechSynthesisUtterance(phoneticMap[text] || text);
+    const v = getVoice();
+    if(v) u.voice = v;
+    u.lang = 'fr-FR';
+    u.rate = 0.85;
+    return u;
+  }
+  function doSpeak(){
+    const u1 = makeUtterance(fr);
+    // If adjective has a different feminine form, speak both
+    if(fem && fem !== fr){
+      u1.onend = () => {
+        setTimeout(() => {
+          window.speechSynthesis.speak(makeUtterance(fem));
+        }, 350);
+      };
+    }
+    window.speechSynthesis.speak(u1);
+  }
+  if(window.speechSynthesis.getVoices().length === 0){
+    window.speechSynthesis.onvoiceschanged = doSpeak;
+  } else {
+    doSpeak();
+  }
+}
+function speak(fr){
+  // legacy wrapper
+  const btn = document.createElement('button');
+  btn.dataset.fr = fr;
+  speakWord(btn);
+}
+
+function genderBadge(w){
+  if(w.type!=='noun'||!w.gender) return '';
+  const cls=w.gender==='m'?'g-m':w.gender==='f'?'g-f':'g-mf';
+  const lbl=w.gender==='m'?'m.':w.gender==='f'?'f.':'m./f.';
+  return `<span class="gender-badge ${cls}">${lbl}</span>`;
+}
+
+// ── FLASH ──
+function renderFlash(){
+  const words=filtered();
+  document.getElementById('stats-text').textContent=`${words.length} words`;
+  const area=document.getElementById('main-area');
+  if(!words.length){area.innerHTML='<div class="grid"><div class="empty">No words match this filter.</div></div>';return;}
+  area.innerHTML='<div class="grid" id="grid"></div>';
+  document.getElementById('grid').innerHTML=words.map((w,i)=>{
+    const isS=starred.has(w.fr);
+    const em=w.emoji||'';
+    const gd=w.gender&&w.type==='noun'?`<div class="gender-display">${GENDER_LABEL[w.gender]||''}</div>`:'';
+    return `<div class="card${isS?' starred-card':''}" data-idx="${i}" onclick="flipCard(this)">
+      <button class="star-btn${isS?' on':''}" data-fr="${i}" onclick="event.stopPropagation();toggleStar(${i},this)">⭐</button>
+      <span class="level-badge badge-${w.level.toLowerCase()}">${w.level}</span>
+      <div class="front">
+        ${em?`<span class="card-emoji">${em}</span>`:''}
+        <div class="word-fr">${w.fr}${genderBadge(w)}
+          <button class="speak-btn" onclick="event.stopPropagation();speakWord(this)" data-fr="${w.fr}" data-fem="${w.fem||''}">🔊</button>
+        </div>
+        <div class="word-type"><span class="type-dot dot-${w.type}"></span>${TYPE_LABEL[w.type]} · ${w.cat}</div>
+        <div class="hint">Click to flip →</div>
+      </div>
+      <div class="back">
+        ${em?`<span class="card-emoji">${em}</span>`:''}
+        <div class="word-fr-sm">${w.fr}</div>
+        ${gd}
+        <div class="word-zh">${w.en}</div>
+        <div class="word-en"></div>
+        <div class="cat-tag">${TYPE_LABEL[w.type]} · ${w.cat}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function flipCard(el){el.classList.toggle('flipped');}
+
+function toggleStar(idx,btn){
+  const fr=WORDS[idx].fr;
+  if(starred.has(fr)){starred.delete(fr);btn.classList.remove('on');btn.closest('.card').classList.remove('starred-card');}
+  else{starred.add(fr);btn.classList.add('on');btn.closest('.card').classList.add('starred-card');}
+  saveStarred();
+  if(showStarredOnly) render();
+}
+
+// ── LIST ──
+function renderList(){
+  const words=filtered();
+  document.getElementById('stats-text').textContent=`${words.length} words`;
+  const wIdx=words.map(w=>WORDS.indexOf(w));
+  document.getElementById('main-area').innerHTML=`<div class="list-wrap"><table>
+    <thead><tr>
+      <th>⭐</th><th>French</th><th>Gender</th><th>English</th><th>Level</th><th>Type</th>
+    </tr></thead>
+    <tbody>${words.map((w,i)=>{
+      const globalIdx=WORDS.indexOf(w);
+      const isS=starred.has(w.fr);
+      const gc=w.gender==='m'?'g-m':w.gender==='f'?'g-f':w.gender==='mf'?'g-mf':'';
+      const gl=w.gender==='m'?'m.':w.gender==='f'?'f.':w.gender==='mf'?'m./f.':'';
+      return `<tr>
+        <td><button onclick="toggleStarList(${globalIdx},this)" style="background:none;border:none;cursor:pointer;font-size:14px;opacity:${isS?1:.2}">${isS?'⭐':'☆'}</button></td>
+        <td style="font-weight:700;color:var(--navy)">${w.type==='adj'&&w.fem&&w.fem!==w.fr ? w.fr+' / '+w.fem : w.fr}
+          <button onclick="speakWord(this)" data-fr="${w.fr}" data-fem="${w.fem||''}" style="background:none;border:none;cursor:pointer;font-size:11px;opacity:.35">🔊</button>
+        </td>
+        <td>${gl?`<span class="gender-badge ${gc}">${gl}</span>`:''}</td>
+        <td>${w.en}</td>
+        <td style="color:#999;font-style:italic"></td>
+        <td><span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:7px;background:${w.level==='A1'?'#EEEDFE':w.level==='A2'?'#E1F5EE':w.level==='B1'?'#FAECE7':'#E6F1FB'};color:${LEVEL_COLOR[w.level]}">${w.level}</span></td>
+        <td style="color:#aaa;font-size:11px">${TYPE_LABEL[w.type]}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+}
+
+function toggleStarList(idx,btn){
+  const fr=WORDS[idx].fr;
+  if(starred.has(fr)){starred.delete(fr);btn.textContent='☆';btn.style.opacity='.2';}
+  else{starred.add(fr);btn.textContent='⭐';btn.style.opacity='1';}
+  saveStarred();
+  if(showStarredOnly) render();
+}
+
+// ── QUIZ ──
+let quizWords=[], quizIdx=0, quizScore=0, quizResults=[], quizAnswered=false;
+
+function startQuiz(){
+  const pool=filtered();
+  if(pool.length<4){document.getElementById('main-area').innerHTML='<div style="padding:2rem;text-align:center;color:var(--muted)">Please select at least 4 words to start the quiz.</div>';return;}
+  quizWords=shuffle([...pool]).slice(0,Math.min(20,pool.length));
+  quizIdx=0;quizScore=0;quizResults=[];quizAnswered=false;
+  renderQuiz();
+}
+
+function renderQuiz(){
+  if(quizIdx>=quizWords.length){renderQuizFinish();return;}
+  const w=quizWords[quizIdx];
+  const pool=filtered();
+  const opts=shuffle([w,...shuffle(pool.filter(x=>x.fr!==w.fr)).slice(0,3)]);
+  const globalIdx=WORDS.indexOf(w);
+  const gc=w.gender==='m'?'g-m':w.gender==='f'?'g-f':w.gender==='mf'?'g-mf':'';
+  const gl=w.gender==='m'?'m.':w.gender==='f'?'f.':w.gender==='mf'?'m./f.':'';
+  const dots=quizWords.map((_,i)=>`<div class="prog-dot ${i<quizIdx?(quizResults[i]?'done-ok':'done-err'):i===quizIdx?'current':''}"></div>`).join('');
+  document.getElementById('main-area').innerHTML=`<div class="quiz-wrap">
+    <div class="quiz-progress">${dots}</div>
+    <div class="quiz-score">Q ${quizIdx+1} / ${quizWords.length} · Score ${quizScore}</div>
+    <div class="quiz-card">
+      ${w.emoji?`<div class="quiz-q-emoji">${w.emoji}</div>`:''}
+      <div class="quiz-q-fr">${w.fr}
+        ${gl?`<span class="gender-badge ${gc}">${gl}</span>`:''}
+        <button onclick="speakWord(this)" data-fr="${w.fr}" style="background:none;border:none;cursor:pointer;font-size:16px;opacity:.4">🔊</button>
+      </div>
+      <div class="quiz-q-sub">${TYPE_LABEL[w.type]} · ${w.level}</div>
+      <div class="quiz-opts" id="quiz-opts">
+        ${opts.map((o,oi)=>`<button class="quiz-opt" data-fr="${o.fr}" data-correct="${w.fr}" onclick="answerQuiz(this)">${o.en}</button>`).join('')}
+      </div>
+      <button class="quiz-next" id="quiz-next" style="display:none" onclick="nextQuiz()">Next →</button>
+    </div>
+  </div>`;
+}
+
+function answerQuiz(btn){
+  if(quizAnswered) return;
+  quizAnswered=true;
+  const chosen=btn.dataset.fr;
+  const correct=btn.dataset.correct;
+  const ok=chosen===correct;
+  if(ok) quizScore++;
+  quizResults.push(ok);
+  document.querySelectorAll('.quiz-opt').forEach(b=>{
+    if(b.dataset.fr===correct) b.classList.add('correct');
+    else if(b===btn&&!ok) b.classList.add('wrong');
+    else b.classList.add('reveal');
+    b.disabled=true;
+  });
+  document.getElementById('quiz-next').style.display='block';
+}
+
+function nextQuiz(){quizIdx++;quizAnswered=false;renderQuiz();}
+
+function renderQuizFinish(){
+  const pct=Math.round(quizScore/quizWords.length*100);
+  const em=pct>=80?'🏆':pct>=60?'😊':'💪';
+  document.getElementById('main-area').innerHTML=`<div class="quiz-wrap"><div class="quiz-finish">
+    <div style="font-size:3rem;margin-bottom:.5rem">${em}</div>
+    <h2>${quizScore} / ${quizWords.length}</h2>
+    <p>Score ${pct}%<br>${pct>=80?'Excellent! Keep it up!':pct>=60?'Good job! Keep practising!':'Keep going! Review your starred words.'}</p>
+    <button class="quiz-restart" onclick="startQuiz()">Try again</button>
+    <button class="quiz-restart" style="background:var(--navy)" onclick="switchMode('flash')">Back to flashcards</button>
+  </div></div>`;
+}
+
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+
+function switchMode(m){
+  activeMode=m;
+  document.querySelectorAll('.mode-tab').forEach(t=>t.classList.toggle('active',t.dataset.mode===m));
+  render();
+}
+
+function render(){
+  if(activeMode==='flash') renderFlash();
+  else if(activeMode==='list') renderList();
+  else startQuiz();
+}
+
+document.querySelectorAll('.btn[data-group]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const g=btn.dataset.group,v=btn.dataset.val;
+    if(g==='level') activeLevel=v; else activeType=v;
+    document.querySelectorAll(`.btn[data-group="${g}"]`).forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  });
+});
+
+document.querySelectorAll('.mode-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>switchMode(tab.dataset.mode));
+});
+
+document.getElementById('starred-toggle').addEventListener('click',function(){
+  showStarredOnly=!showStarredOnly;
+  this.classList.toggle('on',showStarredOnly);
+  this.textContent=showStarredOnly?'⭐ Starred':'⭐ Starred only';
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
