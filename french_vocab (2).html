@@ -1573,11 +1573,31 @@ function filtered(){
   );
 }
 
-function speak(fr){
-  const u=new SpeechSynthesisUtterance(fr);
-  u.lang='fr-FR'; u.rate=0.9;
+function speakWord(btn){
+  const fr = btn.dataset.fr;
+  if(!fr) return;
   window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(u);
+  function doSpeak(){
+    const u = new SpeechSynthesisUtterance(fr);
+    const voices = window.speechSynthesis.getVoices();
+    const frVoice = voices.find(v => v.lang === 'fr-FR') || voices.find(v => v.lang.startsWith('fr'));
+    if(frVoice) u.voice = frVoice;
+    u.lang = 'fr-FR';
+    u.rate = 0.85;
+    window.speechSynthesis.speak(u);
+  }
+  // voices may not be loaded yet on first call
+  if(window.speechSynthesis.getVoices().length === 0){
+    window.speechSynthesis.onvoiceschanged = doSpeak;
+  } else {
+    doSpeak();
+  }
+}
+function speak(fr){
+  // legacy wrapper
+  const btn = document.createElement('button');
+  btn.dataset.fr = fr;
+  speakWord(btn);
 }
 
 function genderBadge(w){
@@ -1604,7 +1624,7 @@ function renderFlash(){
       <div class="front">
         ${em?`<span class="card-emoji">${em}</span>`:''}
         <div class="word-fr">${w.fr}${genderBadge(w)}
-          <button class="speak-btn" data-speak="${i}" onclick="event.stopPropagation();speak(WORDS[${i}].fr)">🔊</button>
+          <button class="speak-btn" onclick="event.stopPropagation();speakWord(this)" data-fr="${w.fr}">🔊</button>
         </div>
         <div class="word-type"><span class="type-dot dot-${w.type}"></span>${TYPE_LABEL[w.type]} · ${w.cat}</div>
         <div class="hint">点击翻转 →</div>
@@ -1648,7 +1668,7 @@ function renderList(){
       return `<tr>
         <td><button onclick="toggleStarList(${globalIdx},this)" style="background:none;border:none;cursor:pointer;font-size:14px;opacity:${isS?1:.2}">${isS?'⭐':'☆'}</button></td>
         <td style="font-weight:700;color:var(--navy)">${w.fr}
-          <button onclick="speak(WORDS[${globalIdx}].fr)" style="background:none;border:none;cursor:pointer;font-size:11px;opacity:.35">🔊</button>
+          <button onclick="speakWord(this)" data-fr="${w.fr}" style="background:none;border:none;cursor:pointer;font-size:11px;opacity:.35">🔊</button>
         </td>
         <td>${gl?`<span class="gender-badge ${gc}">${gl}</span>`:''}</td>
         <td>${w.zh}</td>
@@ -1695,7 +1715,7 @@ function renderQuiz(){
       ${w.emoji?`<div class="quiz-q-emoji">${w.emoji}</div>`:''}
       <div class="quiz-q-fr">${w.fr}
         ${gl?`<span class="gender-badge ${gc}">${gl}</span>`:''}
-        <button onclick="speak(WORDS[${globalIdx}].fr)" style="background:none;border:none;cursor:pointer;font-size:16px;opacity:.4">🔊</button>
+        <button onclick="speakWord(this)" data-fr="${w.fr}" style="background:none;border:none;cursor:pointer;font-size:16px;opacity:.4">🔊</button>
       </div>
       <div class="quiz-q-sub">${TYPE_LABEL[w.type]} · ${w.level}</div>
       <div class="quiz-opts" id="quiz-opts">
