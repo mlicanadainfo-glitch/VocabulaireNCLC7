@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCF — 1000 Vocabulary Questions</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#3BB3A0;--pd:#2A8F7E;--pl:#E6F5F3;
+  --navy:#1B3A6B;--bg:#F4F9F8;
+  --border:#C8E6E2;--text:#1a1a1a;--muted:#5A7A76;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:var(--navy);padding:.7rem 1.25rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(27,58,107,.3)}
+.hinner{display:flex;align-items:center;gap:.85rem}
+.logo{height:34px;background:#fff;border-radius:5px;padding:3px 7px}
+.htitle{color:#fff}.htitle strong{font-size:.92rem;font-weight:700;display:block}.htitle small{font-size:.72rem;opacity:.7}
+.tline{height:3px;background:linear-gradient(90deg,var(--navy),var(--p))}
+/* HOME */
+.home{padding:1rem 1.25rem}
+.summary-card{background:#fff;border-radius:12px;border:1.5px solid var(--border);padding:.9rem 1.1rem;margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
+.summary-big{font-size:1.4rem;font-weight:700;color:var(--navy)}.summary-sub{font-size:.75rem;color:var(--muted);margin-top:.1rem}
+.pbar-wrap{flex:1;height:5px;background:#e0ece8;border-radius:3px;margin-top:.4rem}
+.pbar{height:5px;background:var(--p);border-radius:3px;transition:width .4s}
+.sec-label{font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.55rem}
+.tcard{background:#fff;border-radius:10px;border:1.5px solid var(--border);padding:.8rem .95rem;cursor:pointer;transition:all .15s;position:relative}
+.tcard:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(59,179,160,.15);border-color:var(--p)}
+.tcard.done{border-color:var(--p);background:var(--pl)}
+.tcard-title{font-size:.83rem;font-weight:600;color:var(--navy);line-height:1.3;margin-bottom:.3rem}
+.tcard-meta{font-size:.72rem;color:var(--muted)}
+.tcard-score{position:absolute;top:7px;right:7px;font-size:9px;font-weight:700;padding:2px 5px;border-radius:7px;background:var(--p);color:#fff}
+.tcard-pb{height:3px;background:#e0ece8;border-radius:2px;margin-top:.35rem}.tcard-pb-fill{height:3px;background:var(--p);border-radius:2px}
+/* SCREEN */
+.screen{max-width:600px;margin:0 auto;padding:1rem 1.25rem}
+.screen-hdr{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+.back-btn{background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--muted);padding:.25rem .5rem;border-radius:6px}
+.back-btn:hover{background:var(--pl);color:var(--navy)}
+.screen-title{font-size:.9rem;font-weight:700;color:var(--navy);flex:1}.screen-badge{font-size:.75rem;color:var(--muted)}
+.tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:1rem}
+.tab{padding:.5rem .9rem;font-size:.82rem;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.tab.active{color:var(--p);border-bottom-color:var(--p)}
+/* WORD LIST */
+.word-list{display:flex;flex-direction:column;gap:.4rem}
+.word-row{background:#fff;border-radius:10px;border:1.5px solid var(--border);padding:.65rem .9rem;display:flex;align-items:center;gap:.7rem;transition:border-color .15s}
+.word-row:hover{border-color:var(--p)}
+.word-emoji{font-size:1.4rem;width:1.8rem;text-align:center;flex-shrink:0;line-height:1}
+.word-num{font-size:.7rem;color:#ccc;font-weight:600;min-width:16px;flex-shrink:0}
+.word-main{flex:1;min-width:0}
+.word-fr{font-size:.95rem;font-weight:700;color:var(--navy)}
+.word-en{font-size:.82rem;color:var(--text)}
+.speak-btn{background:none;border:none;cursor:pointer;font-size:.9rem;opacity:.3;flex-shrink:0}
+.speak-btn:hover{opacity:1}
+.star-btn{background:none;border:none;cursor:pointer;font-size:.9rem;opacity:.3;flex-shrink:0;transition:opacity .15s}
+.star-btn.on{opacity:1}
+.star-btn:hover{opacity:.8}
+.start-wrap{padding:1rem 0 .5rem;text-align:center}
+.start-btn{background:var(--p);color:#fff;border:none;padding:.6rem 1.75rem;border-radius:20px;font-size:.88rem;font-weight:600;cursor:pointer;margin:.25rem}
+.start-btn:hover{background:var(--pd)}
+.start-btn.sec{background:#fff;color:var(--navy);border:1.5px solid var(--border)}
+.start-btn.sec:hover{border-color:var(--p);color:var(--p)}
+/* STARRED SECTION */
+.starred-box{background:#fff;border-radius:12px;border:1.5px solid #E6A800;padding:.8rem 1rem;margin-bottom:.85rem}
+.starred-box-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:.55rem}
+.starred-box-title{font-size:.8rem;font-weight:700;color:#B8860B}
+.clear-btn{background:none;border:none;font-size:.72rem;color:var(--muted);cursor:pointer}
+.clear-btn:hover{color:#E05A3A}
+.s-row{display:flex;align-items:center;gap:.55rem;padding:.3rem 0;border-bottom:1px solid #f5f0e0}
+.s-row:last-child{border-bottom:none}
+.s-em{font-size:1.1rem;flex-shrink:0}
+.s-fr{font-size:.85rem;font-weight:700;color:var(--navy)}
+.s-en{font-size:.76rem;color:var(--muted)}
+.unstar{margin-left:auto;background:none;border:none;cursor:pointer;font-size:.8rem;opacity:.4}
+.unstar:hover{opacity:1}
+/* QUIZ */
+.prog-row{display:flex;gap:3px;margin-bottom:.9rem;flex-wrap:wrap}
+.pdot{width:10px;height:10px;border-radius:50%;background:var(--border);transition:background .2s}
+.pdot.ok{background:var(--p)}.pdot.err{background:#E05A3A}.pdot.cur{background:var(--navy)}
+.qcard{background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:1.4rem 1.35rem;box-shadow:0 4px 14px rgba(59,179,160,.08)}
+.q-emoji{font-size:2.2rem;text-align:center;display:block;margin-bottom:.4rem;line-height:1}
+.q-label{font-size:.7rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.3rem}
+.q-fr{font-size:1.4rem;font-weight:700;color:var(--navy);line-height:1.3}
+.q-speak{background:none;border:none;cursor:pointer;font-size:.9rem;opacity:.35;margin-left:.3rem;vertical-align:middle}
+.q-speak:hover{opacity:1}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:1.1rem}
+.opt{padding:.62rem .8rem;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-size:.86rem;cursor:pointer;transition:all .15s;text-align:left;line-height:1.3;color:var(--text)}
+.opt:hover:not(:disabled){border-color:var(--p);background:var(--pl)}
+.opt.correct{background:var(--pl);border-color:var(--p);color:var(--pd);font-weight:600}
+.opt.wrong{background:#FAECE7;border-color:#E05A3A;color:#993C1D}
+.opt.reveal{background:#f5f5f5;color:#bbb;border-color:#eee}
+.fb{margin-top:.7rem;padding:.6rem .85rem;border-radius:9px;font-size:.83rem;line-height:1.5;display:none}
+.fb.show{display:block}.fb.ok{background:var(--pl);color:var(--pd);border:1px solid var(--p)}
+.fb.bad{background:#FAECE7;color:#993C1D;border:1px solid #E05A3A}
+.next-btn{width:100%;padding:.6rem;border-radius:10px;background:var(--p);color:#fff;border:none;font-size:.9rem;cursor:pointer;margin-top:.72rem;font-weight:600;display:none}
+.next-btn.show{display:block}.next-btn:hover{background:var(--pd)}
+/* TYPE */
+.type-card{background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:1.4rem 1.35rem;box-shadow:0 4px 14px rgba(59,179,160,.08)}
+.t-emoji{font-size:2.5rem;text-align:center;display:block;margin-bottom:.4rem;line-height:1}
+.t-prompt{font-size:.78rem;color:var(--muted);margin-bottom:.25rem}
+.t-meaning{font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:.7rem}
+.t-input{width:100%;padding:.65rem 1rem;border-radius:10px;border:2px solid var(--border);font-size:1rem;font-family:inherit;outline:none;transition:border-color .15s;color:var(--navy);font-weight:600}
+.t-input:focus{border-color:var(--p)}
+.t-input.right{border-color:var(--p);background:var(--pl)}
+.t-input.wrong{border-color:#E05A3A;background:#FAECE7}
+.acc-kb{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem}
+.acc{padding:.3rem .55rem;border-radius:7px;border:1.5px solid var(--border);background:#fff;font-size:.95rem;cursor:pointer;color:var(--navy);font-weight:600;transition:all .15s;min-width:2rem;text-align:center}
+.acc:hover{background:var(--pl);border-color:var(--p)}
+.acc:active{transform:scale(.9)}
+.t-fb{margin-top:.55rem;font-size:.83rem;line-height:1.5;min-height:1.2rem}
+.t-fb.ok{color:var(--pd);font-weight:600}.t-fb.bad{color:#993C1D}
+.t-actions{display:flex;gap:.5rem;margin-top:.55rem;align-items:center;flex-wrap:wrap}
+.hint-btn{background:none;border:1.5px solid var(--border);color:var(--muted);padding:.3rem .75rem;border-radius:15px;font-size:.76rem;cursor:pointer}
+.hint-btn:hover{border-color:var(--p);color:var(--p)}
+.skip-btn{background:none;border:1.5px solid var(--border);color:var(--muted);padding:.3rem .75rem;border-radius:15px;font-size:.76rem;cursor:pointer}
+.skip-btn:hover{border-color:#E05A3A;color:#E05A3A}
+/* CONJUGATION TABLE */
+.conj-box{background:#f8fcfb;border-radius:10px;border:1px solid var(--border);padding:.7rem .9rem;margin-top:.75rem}
+.conj-title{font-size:.7rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem}
+.conj-grid{display:grid;grid-template-columns:auto 1fr;gap:.2rem .7rem;font-size:.82rem}
+.conj-pro{color:var(--muted);font-size:.76rem}
+.conj-form{font-weight:600;color:var(--navy)}
+/* FINISH */
+.finish{max-width:500px;margin:1.5rem auto;padding:1rem 1.25rem;text-align:center}
+.fcard{background:#fff;border-radius:16px;border:1.5px solid var(--border);padding:1.75rem 1.4rem;box-shadow:0 4px 18px rgba(59,179,160,.1)}
+.f-emoji{font-size:3.2rem;margin-bottom:.4rem}.f-score{font-size:1.9rem;font-weight:700;color:var(--navy);margin-bottom:.2rem}
+.f-msg{font-size:.86rem;color:var(--muted);margin-bottom:1rem}
+.f-btns{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:.85rem}
+.btn-p{padding:.5rem 1.2rem;border-radius:20px;background:var(--p);color:#fff;border:none;cursor:pointer;font-size:.84rem;font-weight:600}
+.btn-p:hover{background:var(--pd)}
+.btn-s{padding:.5rem 1.2rem;border-radius:20px;background:#fff;color:var(--navy);border:1.5px solid var(--border);cursor:pointer;font-size:.84rem;font-weight:600}
+.btn-s:hover{border-color:var(--p);color:var(--p)}
+.rev-list{text-align:left;margin-top:.6rem}
+.rev-lbl{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem}
+.rev-item{padding:.42rem .65rem;border-radius:8px;font-size:.82rem;margin-bottom:.3rem;background:#FAECE7;display:flex;gap:.5rem;align-items:center}
+.rev-em{font-size:1rem;flex-shrink:0}.rev-fr{font-weight:700;color:var(--navy)}.rev-en{color:var(--muted);font-size:.76rem}
+/* STARRED PAGE */
+.starred-page{max-width:600px;margin:0 auto;padding:1rem 1.25rem}
+.starred-page-hdr{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+.starred-empty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.starred-empty-icon{font-size:3rem;margin-bottom:.5rem}
+.starred-topic-group{margin-bottom:1rem}
+.starred-topic-label{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.35rem 0;border-bottom:1px solid var(--border);margin-bottom:.4rem}
+.starred-full-row{background:#fff;border-radius:10px;border:1.5px solid #E6A800;padding:.65rem .9rem;display:flex;align-items:center;gap:.7rem;margin-bottom:.35rem}
+.starred-full-row .word-emoji{font-size:1.4rem;width:1.8rem;text-align:center;flex-shrink:0}
+.starred-full-row .word-main{flex:1}
+.starred-full-row .word-fr{font-size:.95rem;font-weight:700;color:var(--navy)}
+.starred-full-row .word-en{font-size:.82rem;color:var(--text)}
+
+/* STREAK */
+.streak{position:fixed;bottom:1.25rem;right:1.25rem;background:var(--navy);color:#fff;padding:.45rem .8rem;border-radius:18px;font-size:.78rem;font-weight:600;box-shadow:0 4px 12px rgba(27,58,107,.3);z-index:300;pointer-events:none;opacity:0;transform:translateY(10px);transition:all .25s}
+.streak.pop{opacity:1;transform:translateY(0)}
+@media(max-width:480px){.opts{grid-template-columns:1fr}.topic-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hinner">
+    <img class="logo" src="data:image/jpeg;base64,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" alt="MLI">
+    <div class="htitle">
+      <strong>1000 Vocabulary Questions</strong>
+      <small>TCF Preparation · 19 topics · A1 Level</small>
+    </div>
+  </div>
+</header>
+<div class="tline"></div>
+<div id="app"></div>
+<div class="streak" id="streak"></div>
+<script>
+const QUIZZES = [
+  {
+    title: "Basic Vocabulary",
+    questions: [
+      {fr:"C'est parti",meaning:"It's started",emoji:"🚀",opts:["It's finished", "It's started", "It's late", "It's early"],correct:1,conj:[]},
+      {fr:"Quoi de neuf?",meaning:"What's new?",emoji:"💬",opts:["What's new", "How are you", "What's your name", "Where are you from"],correct:0,conj:[]},
+      {fr:"Parce que",meaning:"Because",emoji:"🤔",opts:["Because", "Therefore", "However", "Although"],correct:0,conj:[]},
+      {fr:"De rien",meaning:"You're welcome",emoji:"😊",opts:["You're welcome", "Thank you", "Excuse me", "Please"],correct:0,conj:[]},
+      {fr:"À tout à l'heure",meaning:"See you later",emoji:"⏰",opts:["See you tomorrow", "See you later", "See you soon", "See you never"],correct:1,conj:[]},
+      {fr:"Ecole",meaning:"School",emoji:"🏫",opts:["School", "House", "Park", "Store"],correct:0,conj:[]},
+      {fr:"Temps",meaning:"Time",emoji:"⏰",opts:["Money", "Weather", "Time", "Food"],correct:2,conj:[]},
+      {fr:"Semaine",meaning:"Week",emoji:"📆",opts:["Month", "Year", "Day", "Week"],correct:3,conj:[]},
+      {fr:"Vilain",meaning:"Beautiful",emoji:"😬",opts:["Beautiful", "Ugly", "Big", "Small"],correct:0,conj:[]},
+      {fr:"Ville",meaning:"City",emoji:"🏙️",opts:["Countryside", "City", "Village", "Town"],correct:1,conj:[]},
+      {fr:"Repos",meaning:"Rest",emoji:"😴",opts:["Work", "Rest", "Play", "Study"],correct:1,conj:[]},
+      {fr:"Manger",meaning:"Drink",emoji:"🍴",opts:["Drink", "Eat", "Sleep", "Walk"],correct:0,conj:["mange", "manges", "mange", "mangeons", "mangez", "mangent"]},
+      {fr:"Boire",meaning:"To drink",emoji:"🥤",opts:["Eat", "Drink", "Run", "Sleep"],correct:1,conj:["bois", "bois", "boit", "buvons", "buvez", "boivent"]},
+      {fr:"Marcher",meaning:"Walk",emoji:"🚶",opts:["Run", "Walk", "Jump", "Swim"],correct:1,conj:["marche", "marches", "marche", "marchons", "marchez", "marchent"]},
+      {fr:"Courir",meaning:"Run",emoji:"🏃",opts:["Walk", "Run", "Crawl", "Skip"],correct:1,conj:["cours", "cours", "court", "courons", "courez", "courent"]}
+    ]
+  },
+  {
+    title: "Common Phrases & Sentences",
+    questions: [
+      {fr:"Comment ça s'est passé?",meaning:"How did that go?",emoji:"💬",opts:["How are you?", "How did it go?", "What's your name?", "Where are you from?"],correct:1,conj:[]},
+      {fr:"Qu'est-ce que tu fais?",meaning:"What are you doing?",emoji:"🤷",opts:["What are you doing?", "What do you want?", "What's your name?", "Where are you going?"],correct:0,conj:[]},
+      {fr:"Enchanté",meaning:"Nice to meet you",emoji:"🤝",opts:["Nice to meet you", "Goodbye", "Thank you", "You're welcome"],correct:0,conj:[]},
+      {fr:"Quelle heure est-il?",meaning:"What time is it?",emoji:"🕐",opts:["What time is it?", "What day is it?", "What month is it?", "What year is it?"],correct:0,conj:[]},
+      {fr:"Parlez-vous anglais?",meaning:"Do you speak English?",emoji:"🇬🇧",opts:["Do you speak French?", "Do you speak English?", "Do you speak Spanish?", "Do you speak German?"],correct:1,conj:[]},
+      {fr:"Je ne comprends pas",meaning:"I don't get it",emoji:"😕",opts:["I understand", "I don't understand", "I know", "I don't know"],correct:1,conj:[]},
+      {fr:"Pouvez-vous répéter?",meaning:"Could you repeat?",emoji:"🔁",opts:["Can you repeat?", "Can you speak louder?", "Can you speak slower?", "Can you write it down?"],correct:0,conj:[]},
+      {fr:"Comment allez-vous?",meaning:"How are you?",emoji:"😊",opts:["How are you?", "What's your name?", "Where are you from?", "What do you do?"],correct:0,conj:[]}
+    ]
+  },
+  {
+    title: "Furniture Vocabulary",
+    questions: [
+      {fr:"Imprimante",meaning:"printer",emoji:"🖨️",opts:["Printer", "Bed", "Pillow", "Sheet"],correct:0,conj:[]},
+      {fr:"Jardin",meaning:"Yard",emoji:"🌳",opts:["Backyard", "Room", "Pool", "Terrace"],correct:0,conj:[]},
+      {fr:"Parasol",meaning:"Parasol",emoji:"⛱️",opts:["Sunshade", "Duvet", "Nap", "Balcony"],correct:0,conj:[]},
+      {fr:"Hamac",meaning:"Swing",emoji:"🏕️",opts:["Swing", "Flowerpot", "Grill", "Patio"],correct:0,conj:[]},
+      {fr:"Banc",meaning:"Seat",emoji:"🪑",opts:["Seat", "Computer", "Printer", "File cabinet"],correct:0,conj:[]},
+      {fr:"Pot de fleurs",meaning:"Flowerpot",emoji:"🌸",opts:["Flowerpot", "Grill", "Patio", "Balcony"],correct:0,conj:[]},
+      {fr:"Réveil",meaning:"Alarm clock",emoji:"⏰",opts:["Alarm clock", "Bed base", "Sheet", "Duvet"],correct:0,conj:[]},
+      {fr:"Taie d'oreiller",meaning:"Pillowcase",emoji:"🛏️",opts:["Pillowcase", "Bed base", "Sheet", "Duvet"],correct:0,conj:[]}
+    ]
+  },
+  {
+    title: "Travel & Transportation",
+    questions: [
+      {fr:"Bateau",meaning:"Boat",emoji:"⛵",opts:["Car", "Train", "Boat", "Plane"],correct:2,conj:[]},
+      {fr:"Navette",meaning:"Shuttle",emoji:"🚌",opts:["Shuttle", "Port", "Map", "Ticket"],correct:0,conj:[]},
+      {fr:"Autoroute",meaning:"Highway",emoji:"🛣️",opts:["Road", "Bridge", "Highway", "Itinerary"],correct:2,conj:[]},
+      {fr:"Route",meaning:"Road",emoji:"🛤️",opts:["Road", "Airport", "Station", "Ticket"],correct:0,conj:[]},
+      {fr:"Pont",meaning:"Bridge",emoji:"🌉",opts:["Bridge", "Highway", "Port", "Map"],correct:0,conj:[]},
+      {fr:"Gare",meaning:"Airport",emoji:"🚉",opts:["Airport", "Station", "Port", "Customs"],correct:0,conj:[]},
+      {fr:"Aéroport",meaning:"Airport",emoji:"✈️",opts:["Airport", "Station", "Port", "Highway"],correct:0,conj:[]},
+      {fr:"Itinéraire",meaning:"Itinerary",emoji:"🗺️",opts:["Itinerary", "Map", "Ticket", "Highway"],correct:0,conj:[]}
+    ]
+  },
+  {
+    title: "Food & Dining",
+    questions: [
+      {fr:"Nourriture",meaning:"Food",emoji:"🍽️",opts:["Drink", "Food", "Napkin", "Plate"],correct:1,conj:[]},
+      {fr:"Repas",meaning:"Meal",emoji:"🍽️",opts:["Meal", "Spoon", "Fork", "Knife"],correct:0,conj:[]},
+      {fr:"Couvert",meaning:"Silverware",emoji:"🍴",opts:["Glass", "Cup", "Silverware", "Napkin"],correct:2,conj:[]},
+      {fr:"Verre",meaning:"Glass",emoji:"🥛",opts:["Cup", "Mug", "Glass", "Spoon"],correct:2,conj:[]},
+      {fr:"Tasse",meaning:"Glass",emoji:"☕",opts:["Glass", "Cup", "Fork", "Knife"],correct:0,conj:[]},
+      {fr:"Cuillère",meaning:"Fork",emoji:"🥄",opts:["Fork", "Knife", "Spoon", "Napkin"],correct:0,conj:[]},
+      {fr:"Fourchette",meaning:"Fork",emoji:"🍴",opts:["Spoon", "Knife", "Fork", "Napkin"],correct:2,conj:[]},
+      {fr:"Couteau",meaning:"Knife",emoji:"🔪",opts:["Fork", "Spoon", "Knife", "Napkin"],correct:2,conj:[]},
+      {fr:"Serviette",meaning:"Napkin",emoji:"🧻",opts:["Napkin", "Glass", "Cup", "Plate"],correct:0,conj:[]},
+      {fr:"Boisson",meaning:"Beverage",emoji:"🥤",opts:["Food", "Beverage", "Napkin", "Spoon"],correct:1,conj:[]},
+      {fr:"Eau",meaning:"Water",emoji:"💧",opts:["Wine", "Tea", "Water", "Coffee"],correct:2,conj:[]},
+      {fr:"Vin",meaning:"Wine (red/white)",emoji:"🍷",opts:["Water", "Tea", "Coffee", "Wine"],correct:3,conj:[]},
+      {fr:"Thé",meaning:"Water",emoji:"🍵",opts:["Water", "Wine", "Coffee", "Tea"],correct:0,conj:[]},
+      {fr:"Légumes",meaning:"Vegetables",emoji:"🥦",opts:["Meat", "Fish", "Poultry", "Vegetables"],correct:3,conj:[]},
+      {fr:"Viande",meaning:"Meat",emoji:"🥩",opts:["Fish", "Poultry", "Vegetables", "Meat"],correct:3,conj:[]},
+      {fr:"Poisson",meaning:"Fish",emoji:"🐟",opts:["Meat", "Poultry", "Vegetables", "Fish"],correct:3,conj:[]},
+      {fr:"Volaille",meaning:"Poultry",emoji:"🐔",opts:["Fish", "Meat", "Vegetables", "Poultry"],correct:3,conj:[]},
+      {fr:"Pâtes",meaning:"Pasta",emoji:"🍝",opts:["Rice", "Bread", "Cheese", "Pasta"],correct:3,conj:[]}
+    ]
+  },
+  {
+    title: "Family & Relationships",
+    questions: [
+      {fr:"Rendez-vous",meaning:"Date",emoji:"📅",opts:["Date", "Food", "Napkin", "Spoon"],correct:0,conj:[]},
+      {fr:"Complicité",meaning:"Closeness",emoji:"🤝",opts:["Closeness", "Hate", "Anger", "Disgust"],correct:0,conj:[]},
+      {fr:"Filial",meaning:"Filial",emoji:"👨‍👦",opts:["Fatherly", "Motherly", "Brotherly", "Filial"],correct:3,conj:[]},
+      {fr:"Veuve",meaning:"Widow",emoji:"🖤",opts:["Widow", "Widower", "Orphan", "Single"],correct:0,conj:[]},
+      {fr:"Lien",meaning:"Separation",emoji:"🔗",opts:["Separation", "Bond", "Distance", "Isolation"],correct:0,conj:[]},
+      {fr:"Cadet",meaning:"Younger",emoji:"👶",opts:["Elder", "Senior", "Younger", "Oldest"],correct:2,conj:[]},
+      {fr:"Parrain",meaning:"Godfather",emoji:"👴",opts:["Godmother", "Godfather", "Uncle", "Aunt"],correct:1,conj:[]},
+      {fr:"Etreinte",meaning:"Embrace",emoji:"🤗",opts:["Push", "Shove", "Embrace", "Repel"],correct:2,conj:[]},
+      {fr:"Embrasser",meaning:"To kiss",emoji:"😘",opts:["To hug", "To kiss", "To slap", "To punch"],correct:1,conj:["embrasse", "embrasses", "embrasse", "embrassons", "embrassez", "embrassent"]},
+      {fr:"Mère",meaning:"Mother",emoji:"👩",opts:["Father", "Brother", "Sister", "Mother"],correct:3,conj:[]},
+      {fr:"Père",meaning:"Father",emoji:"👨",opts:["Mother", "Brother", "Sister", "Father"],correct:3,conj:[]}
+    ]
+  },
+  {
+    title: "Colors & Shapes",
+    questions: [
+      {fr:"Jaune",meaning:"Yellow",emoji:"🟡",opts:["Yellow", "Green", "Black", "Pink"],correct:0,conj:[]},
+      {fr:"Vert",meaning:"Green",emoji:"🟢",opts:["Red", "Green", "Black", "Yellow"],correct:1,conj:[]},
+      {fr:"Rose",meaning:"Pink",emoji:"🌸",opts:["Pink", "Red", "Black", "Green"],correct:0,conj:[]},
+      {fr:"Carré",meaning:"Square",emoji:"🟥",opts:["Circle", "Triangle", "Square", "Rectangle"],correct:2,conj:[]},
+      {fr:"Croix",meaning:"Cross",emoji:"✝️",opts:["Circle", "Cross", "Square", "Triangle"],correct:1,conj:[]},
+      {fr:"Étoile",meaning:"Star",emoji:"⭐",opts:["Star", "Moon", "Sun", "Planet"],correct:0,conj:[]},
+      {fr:"Grand",meaning:"Big",emoji:"⬆️",opts:["Small", "Large", "Thin", "Thick"],correct:0,conj:[]},
+      {fr:"Plat",meaning:"Flat",emoji:"➡️",opts:["Flat", "Deep", "Narrow", "Thick"],correct:0,conj:[]},
+      {fr:"Profond",meaning:"Deep",emoji:"⬇️",opts:["Flat", "Deep", "Narrow", "Thick"],correct:1,conj:[]},
+      {fr:"Fin",meaning:"Thin",emoji:"〰️",opts:["Thick", "Narrow", "Deep", "Thin"],correct:3,conj:[]},
+      {fr:"Épais",meaning:"Thick",emoji:"📦",opts:["Thin", "Narrow", "Deep", "Thick"],correct:3,conj:[]},
+      {fr:"Cercle",meaning:"Circle",emoji:"⭕",opts:["Circle", "Oval", "Triangle", "Square"],correct:0,conj:[]},
+      {fr:"Rectangle",meaning:"Rectangle",emoji:"▬",opts:["Square", "Triangle", "Circle", "Rectangle"],correct:3,conj:[]}
+    ]
+  },
+  {
+    title: "Weather Expressions",
+    questions: [
+      {fr:"Météo",meaning:"Weather",emoji:"🌡️",opts:["Food", "Weather", "Time", "Place"],correct:1,conj:[]},
+      {fr:"Temps",meaning:"Time",emoji:"⏰",opts:["Food", "Weather", "Time", "Place"],correct:2,conj:[]},
+      {fr:"Soleil",meaning:"Sun",emoji:"☀️",opts:["Moon", "Stars", "Sun", "Clouds"],correct:2,conj:[]},
+      {fr:"Pluie",meaning:"Rain",emoji:"🌧️",opts:["Snow", "Wind", "Rain", "Sun"],correct:2,conj:[]},
+      {fr:"Neige",meaning:"Snow",emoji:"❄️",opts:["Rain", "Wind", "Snow", "Sun"],correct:2,conj:[]},
+      {fr:"Foudre",meaning:"Lightning",emoji:"⚡",opts:["Thunder", "Lightning", "Rain", "Wind"],correct:1,conj:[]},
+      {fr:"Éclaircie",meaning:"Clearing",emoji:"🌤️",opts:["Clearing", "Rain", "Snow", "Fog"],correct:0,conj:[]},
+      {fr:"Brouillard",meaning:"Fog",emoji:"🌫️",opts:["Rain", "Fog", "Snow", "Wind"],correct:1,conj:[]},
+      {fr:"Brume",meaning:"Mist",emoji:"🌁",opts:["Fog", "Rain", "Snow", "Wind"],correct:0,conj:[]},
+      {fr:"Givre",meaning:"Frost",emoji:"🧊",opts:["Frost", "Rain", "Snow", "Wind"],correct:0,conj:[]},
+      {fr:"Gelée",meaning:"Freeze",emoji:"🥶",opts:["Snow", "Rain", "Freeze", "Wind"],correct:2,conj:[]},
+      {fr:"Grêle",meaning:"Hail",emoji:"🌨️",opts:["Rain", "Snow", "Hail", "Wind"],correct:2,conj:[]}
+    ]
+  },
+  {
+    title: "Hobbies & Leisure",
+    questions: [
+      {fr:"Loisir",meaning:"Leisure",emoji:"🎮",opts:["Work", "Leisure", "Sleep", "Study"],correct:1,conj:[]},
+      {fr:"Bricolage",meaning:"DIY",emoji:"🔨",opts:["DIY", "Cooking", "Cleaning", "Sleeping"],correct:0,conj:[]},
+      {fr:"Dessiner",meaning:"Drawing",emoji:"✏️",opts:["Writing", "Reading", "Drawing", "Singing"],correct:2,conj:["dessine", "dessines", "dessine", "dessinons", "dessinez", "dessinent"]},
+      {fr:"Écrire",meaning:"Write",emoji:"✍️",opts:["Reading", "Writing", "Listening", "Speaking"],correct:0,conj:["écris", "écris", "écrit", "écrivons", "écrivez", "écrivent"]},
+      {fr:"Voyage",meaning:"Travel",emoji:"✈️",opts:["Stay", "Travel", "Rest", "Sleep"],correct:1,conj:[]},
+      {fr:"Camping",meaning:"Hotel",emoji:"⛺",opts:["Hotel", "Camping", "Resort", "Hostel"],correct:0,conj:[]},
+      {fr:"Pêche",meaning:"Fishing",emoji:"🎣",opts:["Hunting", "Fishing", "Camping", "Hiking"],correct:1,conj:[]},
+      {fr:"Chasse",meaning:"Hunting",emoji:"🏹",opts:["Fishing", "Hunting", "Camping", "Hiking"],correct:1,conj:[]},
+      {fr:"Observation des oiseaux",meaning:"Birdwatching",emoji:"🐦",opts:["Birdwatching", "Fishing", "Hunting", "Camping"],correct:0,conj:[]}
+    ]
+  },
+  {
+    title: "Work & Professions",
+    questions: [
+      {fr:"Travail",meaning:"Job",emoji:"💼",opts:["Play", "Work", "Sleep", "Eat"],correct:0,conj:[]},
+      {fr:"Métier",meaning:"Trade",emoji:"👔",opts:["Holiday", "Hobby", "Game", "Occupation"],correct:0,conj:[]},
+      {fr:"Entretien d'embauche",meaning:"Meeting",emoji:"📋",opts:["Meeting", "Party", "Interview", "Date"],correct:0,conj:[]},
+      {fr:"Poste",meaning:"Chair",emoji:"🏢",opts:["Chair", "Desk", "Position", "Computer"],correct:0,conj:[]},
+      {fr:"Réunion",meaning:"Meeting",emoji:"📊",opts:["Party", "Meeting", "Concert", "Festival"],correct:1,conj:[]},
+      {fr:"Travailleur indépendant",meaning:"Self-employed",emoji:"💻",opts:["Employee", "Manager", "Freelancer", "Intern"],correct:0,conj:[]},
+      {fr:"Congé",meaning:"Leave",emoji:"🏖️",opts:["Work", "Leave", "Overtime", "Shift"],correct:1,conj:[]},
+      {fr:"Embaucher",meaning:"To hire",emoji:"🤝",opts:["To fire", "To promote", "To hire", "To retire"],correct:2,conj:["embauche", "embauches", "embauche", "embauchons", "embauchez", "embauchent"]},
+      {fr:"Licencier",meaning:"To fire",emoji:"📄",opts:["To hire", "To promote", "To fire", "To retire"],correct:2,conj:["licencie", "licencies", "licencie", "licencions", "licenciez", "licencient"]}
+    ]
+  },
+  {
+    title: "Shopping & Clothing",
+    questions: [
+      {fr:"Achats",meaning:"Shopping",emoji:"🛍️",opts:["Sales", "Shopping", "Eating", "Sleeping"],correct:1,conj:[]},
+      {fr:"Magasin",meaning:"Store",emoji:"🏪",opts:["School", "Store", "Park", "Restaurant"],correct:1,conj:[]},
+      {fr:"Vêtements",meaning:"Clothing",emoji:"👕",opts:["Food", "Shoes", "Clothing", "Books"],correct:2,conj:[]},
+      {fr:"Mode",meaning:"Fashion",emoji:"👗",opts:["Food", "Fashion", "Music", "Art"],correct:1,conj:[]},
+      {fr:"Client",meaning:"Customer",emoji:"🛒",opts:["Seller", "Customer", "Manager", "Employee"],correct:1,conj:[]},
+      {fr:"Marque",meaning:"Price",emoji:"🏷️",opts:["Price", "Size", "Color", "Brand"],correct:0,conj:[]},
+      {fr:"Taille",meaning:"Size",emoji:"📏",opts:["Color", "Size", "Price", "Brand"],correct:1,conj:[]},
+      {fr:"Portefeuille",meaning:"Wallet",emoji:"👛",opts:["Wallet", "Bag", "Backpack", "Suitcase"],correct:0,conj:[]},
+      {fr:"Argent",meaning:"Money",emoji:"💰",opts:["Time", "Money", "Energy", "Effort"],correct:1,conj:[]}
+    ]
+  },
+  {
+    title: "Health & Well Being",
+    questions: [
+      {fr:"Santé",meaning:"health",emoji:"💊",opts:["Sickness", "Health", "Weather", "Money"],correct:1,conj:[]},
+      {fr:"Bien-être mental",meaning:"Physical health",emoji:"🧠",opts:["Physical health", "Mental health", "Financial health", "Social health"],correct:0,conj:[]},
+      {fr:"Joie de vivre",meaning:"joy of living",emoji:"😊",opts:["Depression", "Anxiety", "Joy of living", "Stress"],correct:2,conj:[]},
+      {fr:"Prévention",meaning:"prevention",emoji:"🛡️",opts:["Cure", "Treatment", "Prevention", "Diagnosis"],correct:2,conj:[]},
+      {fr:"Immunisation",meaning:"Infection",emoji:"💉",opts:["Infection", "Disease C) Immunization d) Weakness 15. Immunité: a) Vulnerability b) Weakness", "Immunity", "Susceptibility"],correct:0,conj:[]},
+      {fr:"Bien-être",meaning:"well-being",emoji:"🌿",opts:["Illness", "Disease", "Well-being", "Stress"],correct:2,conj:[]},
+      {fr:"Fièvre",meaning:"Chills",emoji:"🤒",opts:["Chills", "Fever", "Cough", "Headache"],correct:0,conj:[]},
+      {fr:"Douleur",meaning:"pain",emoji:"🤕",opts:["Pleasure", "Comfort", "Pain", "Relief"],correct:2,conj:[]},
+      {fr:"Vitalité",meaning:"vitality",emoji:"⚡",opts:["Weakness", "Fatigue", "Vitality", "Lethargy"],correct:2,conj:[]}
+    ]
+  },
+  {
+    title: "Technology & Gadgets",
+    questions: [
+      {fr:"Appareil",meaning:"device",emoji:"📱",opts:["Device", "Food", "Clothing", "Animal"],correct:0,conj:[]},
+      {fr:"Ordinateur",meaning:"Computer",emoji:"💻",opts:["Phone", "Computer", "TV", "Radio"],correct:1,conj:[]},
+      {fr:"Naviguer",meaning:"navigate",emoji:"🌐",opts:["Stay", "Stop", "Navigate", "Wait"],correct:2,conj:["navigue", "navigues", "navigue", "naviguons", "naviguez", "naviguent"]},
+      {fr:"Réseau",meaning:"network",emoji:"📶",opts:["Network", "Computer", "Phone", "TV"],correct:0,conj:[]},
+      {fr:"Copier-coller",meaning:"copy-paste",emoji:"📋",opts:["Cut-paste", "Copy-paste", "Delete~ paste", "Move-paste"],correct:1,conj:[]},
+      {fr:"Navigateur",meaning:"browser",emoji:"🌐",opts:["Browser", "Computer", "Phone", "TV"],correct:0,conj:[]},
+      {fr:"Fichier",meaning:"file",emoji:"📁",opts:["Folder", "File", "Drive", "Program"],correct:1,conj:[]},
+      {fr:"Écran tactile",meaning:"touchscreen",emoji:"👆",opts:["Touchscreen", "Keyboard", "Mouse", "Printer"],correct:0,conj:[]}
+    ]
+  },
+  {
+    title: "Education & School",
+    questions: [
+      {fr:"École",meaning:"School",emoji:"🏫",opts:["School", "Store", "Hospital", "Bank"],correct:0,conj:[]},
+      {fr:"Matière",meaning:"Subject",emoji:"📖",opts:["Book", "Pen", "Subject", "Desk"],correct:2,conj:[]},
+      {fr:"Salle de classe",meaning:"Playground",emoji:"🏫",opts:["Playground", "Library", "Classroom", "Cafeteria"],correct:0,conj:[]},
+      {fr:"Devoirs",meaning:"Homework",emoji:"📝",opts:["Tests", "Exams", "Homework", "Projects"],correct:2,conj:[]},
+      {fr:"Apprentissage",meaning:"Learning",emoji:"🧑‍🎓",opts:["Forgetting", "Ignoring", "Learning", "Playing"],correct:2,conj:[]},
+      {fr:"Etude",meaning:"study",emoji:"📚",opts:["Play", "Study", "Sleep", "Eat"],correct:1,conj:[]},
+      {fr:"Evaluation",meaning:"Punishment",emoji:"📊",opts:["Punishment", "Reward", "Assessment", "Praise"],correct:0,conj:[]}
+    ]
+  },
+  {
+    title: "Sports & Fitness",
+    questions: [
+      {fr:"Plongeon",meaning:"Swimming",emoji:"🤽",opts:["Swimming", "Diving", "Running", "Cycling"],correct:0,conj:[]},
+      {fr:"Aviron",meaning:"rowing",emoji:"🚣",opts:["Rowing", "Sailing", "Surfing", "Swimming"],correct:0,conj:[]},
+      {fr:"Lutte",meaning:"Boxing",emoji:"🤼",opts:["Boxing", "Judo", "Wrestling", "Karate"],correct:0,conj:[]},
+      {fr:"Surf des neiges",meaning:"snowboarding",emoji:"🏂",opts:["Skiing", "Snowboarding", "Skating", "Sledding"],correct:1,conj:[]},
+      {fr:"Échecs",meaning:"Checkers",emoji:"♟️",opts:["Checkers", "Chess", "Backgammon", "Monopoly"],correct:0,conj:[]},
+      {fr:"Escalade",meaning:"climbing",emoji:"🧗",opts:["Hiking", "Camping", "Climbing", "Swimming"],correct:2,conj:[]},
+      {fr:"Bien-être",meaning:"well-being",emoji:"🌿",opts:["Illness", "Disease", "Stress", "Well-being"],correct:3,conj:[]},
+      {fr:"Échauffement",meaning:"Cool-down",emoji:"🏃",opts:["Cool-down", "Warm-up", "Stretching", "Workout"],correct:0,conj:[]}
+    ]
+  },
+  {
+    title: "Cultural Events & Entertainment",
+    questions: [
+      {fr:"Ecriture",meaning:"writing",emoji:"✍️",opts:["Reading", "Speaking", "Writing", "Listening"],correct:2,conj:[]},
+      {fr:"Fanfare",meaning:"Silence",emoji:"🎺",opts:["Silence", "Noise", "Fanfare", "Applause"],correct:0,conj:[]},
+      {fr:"Affiche",meaning:"poster",emoji:"🪧",opts:["Book", "Poster", "Painting", "Sculpture"],correct:1,conj:[]},
+      {fr:"Jingle",meaning:"jingle",emoji:"🎵",opts:["Song", "Jingle", "Symphony", "Opera"],correct:1,conj:[]},
+      {fr:"Livre",meaning:"book",emoji:"📚",opts:["Movie", "Song", "Book", "Painting"],correct:2,conj:[]},
+      {fr:"Poésie",meaning:"poetry",emoji:"📜",opts:["Prose", "Poetry", "Drama", "Fiction"],correct:1,conj:[]},
+      {fr:"Peinture",meaning:"painting",emoji:"🎨",opts:["Sculpture", "Painting", "Music", "Dance"],correct:1,conj:[]},
+      {fr:"Galerie",meaning:"gallery",emoji:"🖼️",opts:["Museum", "Library", "Gallery", "Theater"],correct:2,conj:[]},
+      {fr:"Artisanat",meaning:"craftsmanship",emoji:"🏺",opts:["Industry", "Craftsmanship", "Technology", "Agriculture"],correct:1,conj:[]},
+      {fr:"Cinéaste",meaning:"filmmaker",emoji:"🎬",opts:["Actor", "Writer", "Director", "Producer"],correct:0,conj:[]}
+    ]
+  },
+  {
+    title: "Expressions & Idioms",
+    questions: [
+      {fr:"C'est la vie",meaning:"That's how life is",emoji:"🤷",opts:["That's life", "That's love", "That's it", "That's all"],correct:0,conj:[]},
+      {fr:"Tomber dans les pommes",meaning:"To faint",emoji:"😵",opts:["To faint", "To fall down", "To jump", "To dance"],correct:0,conj:[]},
+      {fr:"Faire la tête",meaning:"To sulk",emoji:"😤",opts:["To smile", "To laugh", "To sulk", "To be happy"],correct:2,conj:[]},
+      {fr:"Tirer les vers du nez",meaning:"To get information by questioning",emoji:"🤫",opts:["To tell a secret", "To grill someone", "To be quiet", "To listen attentively"],correct:0,conj:[]}
+    ]
+  },
+  {
+    title: "Geography",
+    questions: [
+      {fr:"Pays",meaning:"City",emoji:"🌍",opts:["City", "Country", "River", "Mountain"],correct:0,conj:[]},
+      {fr:"Ville",meaning:"City",emoji:"🏙️",opts:["Country", "City", "Lake", "Forest"],correct:1,conj:[]},
+      {fr:"Mer",meaning:"Sea",emoji:"🌊",opts:["Lake", "River", "Sea", "Mountain"],correct:2,conj:[]},
+      {fr:"Fleuve",meaning:"River",emoji:"🏞️",opts:["Lake", "River", "Sea", "Mountain"],correct:1,conj:[]},
+      {fr:"Lac",meaning:"River",emoji:"🏞️",opts:["River", "Sea", "Lake", "Mountain"],correct:0,conj:[]},
+      {fr:"Île",meaning:"Island",emoji:"🏝️",opts:["Continent", "Island", "Peninsula", "Isthmus"],correct:1,conj:[]},
+      {fr:"Frontière",meaning:"Border",emoji:"🗺️",opts:["Border", "Center", "Capital", "Coast"],correct:0,conj:[]},
+      {fr:"Colline",meaning:"Hill",emoji:"⛰️",opts:["Mountain", "Valley", "Hill", "Plain"],correct:2,conj:[]},
+      {fr:"Plage",meaning:"Beach",emoji:"🏖️",opts:["Forest", "Desert", "Beach", "Glacier"],correct:2,conj:[]},
+      {fr:"Archipel",meaning:"Archipelago",emoji:"🏝️",opts:["Archipelago", "Continent", "Peninsula", "Isthmus"],correct:0,conj:[]},
+      {fr:"Nord",meaning:"North",emoji:"🧭",opts:["South", "East", "West", "North"],correct:3,conj:[]},
+      {fr:"Sud",meaning:"South",emoji:"🧭",opts:["North", "East", "West", "South"],correct:3,conj:[]},
+      {fr:"Est",meaning:"East",emoji:"🧭",opts:["West", "North", "South", "East"],correct:3,conj:[]},
+      {fr:"Ouest",meaning:"West",emoji:"🧭",opts:["East", "North", "South", "West"],correct:3,conj:[]},
+      {fr:"Cap",meaning:"Cape",emoji:"🗺️",opts:["Cape", "Bay", "Gulf", "Strait"],correct:0,conj:[]}
+    ]
+  },
+  {
+    title: "Useful French Verbs",
+    questions: [
+      {fr:"Mettre",meaning:"To take",emoji:"📦",opts:["To take", "To put", "To eat", "To drink"],correct:0,conj:["mets", "mets", "met", "mettons", "mettez", "mettent"]},
+      {fr:"Raconter",meaning:"To tell",emoji:"📖",opts:["To listen", "To tell", "To write", "To read"],correct:1,conj:["raconte", "racontes", "raconte", "racontons", "racontez", "racontent"]},
+      {fr:"Vivre",meaning:"To die",emoji:"🌟",opts:["To die", "To sleep", "To live", "To eat"],correct:0,conj:["vis", "vis", "vit", "vivons", "vivez", "vivent"]},
+      {fr:"Travailler",meaning:"To work",emoji:"💼",opts:["To play", "To rest", "To work", "To sleep"],correct:2,conj:["travaille", "travailles", "travaille", "travaillons", "travaillez", "travaillent"]},
+      {fr:"Se taire",meaning:"To be silent",emoji:"🤫",opts:["To speak", "To shout", "To be silent", "To sing"],correct:2,conj:["me tais", "te tais", "se tait", "nous taisons", "vous taisez", "se taisent"]},
+      {fr:"Chercher",meaning:"To search",emoji:"🔍",opts:["To find", "To lose", "To search", "To give up"],correct:2,conj:["cherche", "cherches", "cherche", "cherchons", "cherchez", "cherchent"]},
+      {fr:"Apprendre",meaning:"To learn",emoji:"📚",opts:["To forget", "To unlearn", "To learn", "To ignore"],correct:2,conj:["apprends", "apprends", "apprend", "apprenons", "apprenez", "apprennent"]},
+      {fr:"Souhaiter",meaning:"To wish",emoji:"🙏",opts:["To hate", "To dislike", "To wish", "To despise"],correct:2,conj:["souhaite", "souhaites", "souhaite", "souhaitons", "souhaitez", "souhaitent"]},
+      {fr:"Partager",meaning:"To share",emoji:"🤝",opts:["To keep", "To hide", "To share", "To steal"],correct:2,conj:["partage", "partages", "partage", "partageons", "partagez", "partagent"]},
+      {fr:"Espérer",meaning:"To hope",emoji:"🌟",opts:["To despair", "To give up", "To hope", "To fear"],correct:2,conj:["espère", "espères", "espère", "espérons", "espérez", "espèrent"]},
+      {fr:"Partir",meaning:"To leave",emoji:"👋",opts:["To arrive", "To stay", "To leave", "To return"],correct:2,conj:["pars", "pars", "part", "partons", "partez", "partent"]},
+      {fr:"Arriver",meaning:"To arrive",emoji:"🎯",opts:["To leave", "To depart", "To arrive", "To go"],correct:2,conj:["arrive", "arrives", "arrive", "arrivons", "arrivez", "arrivent"]},
+      {fr:"Passer",meaning:"To pass",emoji:"➡️",opts:["To fail", "To pass", "To stop", "To stay"],correct:1,conj:["passe", "passes", "passe", "passons", "passez", "passent"]}
+    ]
+  }
+];
+// ── State ──
+let scores = {}, starred = new Set();
+try { scores = JSON.parse(localStorage.getItem('tcf_v4') || '{}'); } catch(e) {}
+try { starred = new Set(JSON.parse(localStorage.getItem('tcf_stars') || '[]')); } catch(e) {}
+function save() {
+  try { localStorage.setItem('tcf_v4', JSON.stringify(scores)); } catch(e) {}
+  try { localStorage.setItem('tcf_stars', JSON.stringify([...starred])); } catch(e) {}
+}
+function toggleStar(fr) {
+  starred.has(fr) ? starred.delete(fr) : starred.add(fr);
+  save();
+}
+
+let cQ = null, cTab = 'study', cIdx = 0, results = [], answered = false, streak = 0;
+let typeAnswered = false, hintCount = 0;
+const PROS = ['je','tu','il / elle','nous','vous','ils / elles'];
+
+// ── SPEAK ──
+function speak(fr, ev) {
+  if (ev) ev.stopPropagation();
+  window.speechSynthesis.cancel();
+  function go() {
+    const u = new SpeechSynthesisUtterance(fr);
+    const vs = window.speechSynthesis.getVoices();
+    const v = vs.find(v => v.lang === 'fr-FR') || vs.find(v => v.lang === 'fr-CA') || vs.find(v => v.lang.startsWith('fr'));
+    if (v) u.voice = v;
+    u.lang = 'fr-FR'; u.rate = 0.82;
+    window.speechSynthesis.speak(u);
+  }
+  window.speechSynthesis.getVoices().length ? go() : (window.speechSynthesis.onvoiceschanged = go);
+}
+
+// ── STARRED PAGE ──
+function showStarred() {
+  if (!starred.size) {
+    document.getElementById('app').innerHTML = `
+      <div class="starred-page">
+        <div class="starred-page-hdr">
+          <button class="back-btn" onclick="showHome()">←</button>
+          <div class="screen-title">⭐ My starred words</div>
+          <div class="screen-badge">${starred.size} words</div>
+        </div>
+        <div class="starred-empty">
+          <div class="starred-empty-icon">⭐</div>
+          <div style="font-weight:600;color:var(--navy);margin-bottom:.35rem">No starred words yet</div>
+          <div style="font-size:.85rem">Star words you find difficult while studying or typing — they'll all appear here.</div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  // Group starred words by topic
+  const grouped = {};
+  QUIZZES.forEach((q, qi) => {
+    q.questions.forEach(item => {
+      if (starred.has(item.fr)) {
+        if (!grouped[q.title]) grouped[q.title] = [];
+        grouped[q.title].push(item);
+      }
+    });
+  });
+
+  const groupsHtml = Object.entries(grouped).map(([title, items]) => `
+    <div class="starred-topic-group">
+      <div class="starred-topic-label">${title}</div>
+      ${items.map(item => `
+        <div class="starred-full-row">
+          <div class="word-emoji">${item.emoji || '📝'}</div>
+          <div class="word-main">
+            <div class="word-fr">${item.fr}</div>
+            <div class="word-en">${item.meaning}</div>
+          </div>
+          <button class="speak-btn" onclick="speak(${JSON.stringify(item.fr)})">🔊</button>
+          <button class="star-btn on" onclick="toggleStar(${JSON.stringify(item.fr)});showStarred()">⭐</button>
+        </div>`).join('')}
+    </div>`).join('');
+
+  document.getElementById('app').innerHTML = `
+    <div class="starred-page">
+      <div class="starred-page-hdr">
+        <button class="back-btn" onclick="showHome()">←</button>
+        <div class="screen-title">⭐ My starred words</div>
+        <div class="screen-badge">${starred.size} words</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:.6rem">
+        <button onclick="clearAllStars()" style="background:none;border:none;font-size:.78rem;color:var(--muted);cursor:pointer">Clear all ✕</button>
+      </div>
+      ${groupsHtml}
+    </div>`;
+}
+
+function clearAllStars() {
+  if (!confirm('Clear all starred words?')) return;
+  starred.clear(); save(); showStarred();
+}
+
+// ── HOME ──
+function showHome() {
+  cQ = null;
+  const totalQ = QUIZZES.reduce((s, q) => s + q.questions.length, 0);
+  const totalC = Object.values(scores).filter(v=>!isNaN(v?.correct)).reduce((s,v)=>s+(v.correct||0),0);
+  const totalA = Object.values(scores).filter(v=>!isNaN(v?.total)).reduce((s,v)=>s+(v.total||0),0);
+  const pct = totalA ? Math.round(totalC/totalA*100) : 0;
+  const bar = Math.round(totalC/totalQ*100);
+  const cards = QUIZZES.map((q,i)=>{
+    const sc=scores[i]; const p=sc?Math.round(sc.correct/sc.total*100):null; const b=sc?Math.round(sc.correct/q.questions.length*100):0;
+    return `<div class="tcard${sc&&sc.total===q.questions.length?' done':''}" onclick="openTopic(${i})">
+      ${p!==null?`<span class="tcard-score">${p}%</span>`:''}
+      <div class="tcard-title">${q.title}</div>
+      <div class="tcard-meta">${q.questions.length} words</div>
+      <div class="tcard-pb"><div class="tcard-pb-fill" style="width:${b}%"></div></div>
+    </div>`;
+  }).join('');
+  document.getElementById('app').innerHTML = `
+    <div class="home">
+      <div class="summary-card">
+        <div style="flex:1">
+          <div class="summary-big">${totalC} / ${totalQ}</div>
+          <div class="summary-sub">correct answers overall</div>
+          <div class="pbar-wrap"><div class="pbar" style="width:${bar}%"></div></div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:1.7rem;font-weight:700;color:var(--p)">${pct}%</div>
+          <div style="font-size:.7rem;color:var(--muted)">accuracy</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem">
+        <div class="sec-label" style="margin-bottom:0">Choose a topic to start</div>
+        <button onclick="showStarred()" style="background:none;border:1.5px solid #E6A800;color:#B8860B;padding:.3rem .75rem;border-radius:15px;font-size:.78rem;font-weight:600;cursor:pointer">⭐ My starred words</button>
+      </div>
+      <div class="topic-grid">${cards}</div>
+    </div>`;
+}
+
+function openTopic(idx) { cQ = idx; cTab = 'study'; showStudy(); }
+
+function tabBar(active) {
+  const sc = scores[cQ]; const tp = scores[cQ+'t'];
+  const qp = sc ? ` · ${Math.round(sc.correct/sc.total*100)}%` : '';
+  const pp = tp ? ` · ${Math.round(tp.correct/tp.total*100)}%` : '';
+  return `<div class="tabs">
+    <div class="tab${active==='study'?' active':''}" onclick="cTab='study';showStudy()">📖 Study</div>
+    <div class="tab${active==='type'?' active':''}" onclick="cTab='type';startType()">⌨️ Type${pp}</div>
+    <div class="tab${active==='quiz'?' active':''}" onclick="cTab='quiz';startQuiz()">✏️ Quiz${qp}</div>
+  </div>`;
+}
+
+// ── STUDY ──
+function showStudy() {
+  const q = QUIZZES[cQ];
+  const starredHere = q.questions.filter(it => starred.has(it.fr));
+  const rows = q.questions.map((it,i) => {
+    const isS = starred.has(it.fr);
+    return `<div class="word-row">
+      <div class="word-emoji">${it.emoji||'📝'}</div>
+      <div class="word-num">${i+1}</div>
+      <div class="word-main">
+        <div class="word-fr">${it.fr}</div>
+        <div class="word-en">${it.meaning}</div>
+      </div>
+      <button class="speak-btn" onclick="speak(${JSON.stringify(it.fr)})">🔊</button>
+      <button class="star-btn${isS?' on':''}" onclick="toggleStar(${JSON.stringify(it.fr)});showStudy()">${isS?'⭐':'☆'}</button>
+    </div>`;
+  }).join('');
+
+  const starredHtml = starredHere.length ? `
+    <div class="starred-box">
+      <div class="starred-box-hdr">
+        <div class="starred-box-title">⭐ Starred words (${starredHere.length})</div>
+        <button class="clear-btn" onclick="clearStars()">clear all</button>
+      </div>
+      ${starredHere.map(it=>`<div class="s-row">
+        <span class="s-em">${it.emoji||'📝'}</span>
+        <div><div class="s-fr">${it.fr}</div><div class="s-en">${it.meaning}</div></div>
+        <button class="unstar" onclick="toggleStar(${JSON.stringify(it.fr)});showStudy()">✕</button>
+      </div>`).join('')}
+    </div>` : '';
+
+  document.getElementById('app').innerHTML = `
+    <div class="screen">
+      <div class="screen-hdr">
+        <button class="back-btn" onclick="showHome()">←</button>
+        <div class="screen-title">${q.title}</div>
+        <div class="screen-badge">${q.questions.length} words</div>
+      </div>
+      ${tabBar('study')}
+      ${starredHtml}
+      <div class="word-list">${rows}</div>
+      <div class="start-wrap">
+        <button class="start-btn sec" onclick="startType()">⌨️ Practise typing</button>
+        <button class="start-btn" onclick="startQuiz()">✏️ Take the quiz</button>
+      </div>
+    </div>`;
+}
+
+function clearStars() {
+  QUIZZES[cQ].questions.forEach(it => starred.delete(it.fr));
+  save(); showStudy();
+}
+
+// ── TYPE ──
+function startType() { cTab='type'; cIdx=0; results=[]; typeAnswered=false; hintCount=0; renderType(); }
+
+function renderType() {
+  const q = QUIZZES[cQ];
+  if (cIdx >= q.questions.length) { showTypeFinish(); return; }
+  const it = q.questions[cIdx];
+  const total = q.questions.length;
+  const dots = q.questions.map((_,i)=>{
+    const c = i<cIdx?(results[i]==='ok'?'ok':results[i]==='skip'?'':'err'):i===cIdx?'cur':'';
+    return `<div class="pdot ${c}"></div>`;
+  }).join('');
+
+  // Conjugation table HTML
+  const conjHtml = it.conj && it.conj.length ? `
+    <div class="conj-box">
+      <div class="conj-title">Présent de l'indicatif — ${it.fr}</div>
+      <div class="conj-grid">
+        ${PROS.map((p,i)=>`<span class="conj-pro">${p}</span><span class="conj-form">${it.conj[i]}</span>`).join('')}
+      </div>
+    </div>` : '';
+
+  document.getElementById('app').innerHTML = `
+    <div class="screen">
+      <div class="screen-hdr">
+        <button class="back-btn" onclick="showStudy()">←</button>
+        <div class="screen-title">${q.title} — Type</div>
+        <div class="screen-badge">${cIdx+1} / ${total}</div>
+      </div>
+      ${tabBar('type')}
+      <div class="prog-row">${dots}</div>
+      <div class="type-card">
+        ${it.emoji?`<span class="t-emoji">${it.emoji}</span>`:''}
+        <div class="t-prompt">Type the French word for:</div>
+        <div class="t-meaning">${it.meaning}</div>
+        <input class="t-input" id="tinp" type="text" autocomplete="off" autocorrect="off"
+          spellcheck="false" placeholder="Type in French…"
+          oninput="checkType(this)" onkeydown="if(event.key==='Enter')nextType()">
+        <div class="acc-kb">
+          ${['é','è','ê','ë','à','â','î','ï','ô','ù','û','ü','ç','œ','æ'].map(c=>`<button class="acc" onclick="insertAcc('${c}')">${c}</button>`).join('')}
+        </div>
+        <div class="t-fb" id="tfb"></div>
+        <div class="t-actions">
+          <button class="speak-btn" style="opacity:.5;font-size:.95rem" onclick="speak(${JSON.stringify(it.fr)})">🔊 hear it</button>
+          <button class="hint-btn" onclick="showHint()">💡 hint</button>
+          <button class="skip-btn" onclick="skipType()">Skip →</button>
+        </div>
+        ${conjHtml}
+      </div>
+      <button class="next-btn show" id="tnext" style="display:none" onclick="nextType()">${cIdx+1<total?'Next →':'See results →'}</button>
+    </div>`;
+  document.getElementById('tinp').focus();
+}
+
+function insertAcc(c) {
+  const inp = document.getElementById('tinp');
+  if (!inp) return;
+  const s = inp.selectionStart, e = inp.selectionEnd;
+  inp.value = inp.value.slice(0,s) + c + inp.value.slice(e);
+  inp.selectionStart = inp.selectionEnd = s+1;
+  inp.focus(); checkType(inp);
+}
+
+function norm(s) {
+  return s.trim().toLowerCase()
+    .replace(/[àáâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[îï]/g,'i')
+    .replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/ç/g,'c').replace(/[œ]/g,'oe');
+}
+
+function checkType(inp) {
+  if (typeAnswered) return;
+  const it = QUIZZES[cQ].questions[cIdx];
+  const typed = norm(inp.value), correct = norm(it.fr);
+  const fb = document.getElementById('tfb');
+  if (typed === correct) {
+    inp.classList.add('right'); inp.classList.remove('wrong');
+    fb.className='t-fb ok'; fb.textContent='✅ Correct!  ' + it.fr;
+    typeAnswered=true; results[cIdx]='ok';
+    document.getElementById('tnext').style.display='block';
+    speak(it.fr);
+  } else if (correct.startsWith(typed) && typed.length>0) {
+    inp.classList.remove('wrong'); fb.className='t-fb'; fb.textContent='';
+  } else if (typed.length>=2) {
+    inp.classList.add('wrong'); inp.classList.remove('right');
+  }
+}
+
+function showHint() {
+  if (typeAnswered) return;
+  hintCount++;
+  const it = QUIZZES[cQ].questions[cIdx];
+  const reveal = Math.min(hintCount*2, it.fr.length);
+  document.getElementById('tfb').className='t-fb';
+  document.getElementById('tfb').textContent='💡 ' + it.fr.slice(0,reveal) + '…';
+  document.getElementById('tinp').focus();
+}
+
+function skipType() {
+  if (typeAnswered) { nextType(); return; }
+  const it = QUIZZES[cQ].questions[cIdx];
+  results[cIdx]='skip';
+  const inp = document.getElementById('tinp');
+  inp.value=it.fr; inp.classList.add('wrong');
+  const isS = starred.has(it.fr);
+  document.getElementById('tfb').className='t-fb bad';
+  document.getElementById('tfb').innerHTML=`👀 <strong>${it.fr}</strong> &nbsp;<button onclick="toggleStar(${JSON.stringify(it.fr)});this.textContent=starred.has(${JSON.stringify(it.fr)})?'⭐ Starred':'☆ Star'" style="background:none;border:1px solid #E6A800;border-radius:6px;padding:2px 7px;cursor:pointer;font-size:.75rem;color:#B8860B">${isS?'⭐ Starred':'☆ Star'}</button>`;
+  typeAnswered=true;
+  document.getElementById('tnext').style.display='block';
+}
+
+function nextType() { cIdx++; typeAnswered=false; hintCount=0; renderType(); }
+
+function showTypeFinish() {
+  const q=QUIZZES[cQ], correct=results.filter(r=>r==='ok').length, total=q.questions.length;
+  const pct=Math.round(correct/total*100);
+  scores[cQ+'t']={correct,total}; save();
+  const em=pct>=80?'🏆':pct>=60?'😊':'💪';
+  const wrongs=results.map((r,i)=>({r,it:q.questions[i]})).filter(x=>x.r!=='ok');
+  document.getElementById('app').innerHTML=`
+    <div class="finish"><div class="fcard">
+      <div class="f-emoji">${em}</div>
+      <div class="f-score">${correct} / ${total}</div>
+      <div class="f-msg">${pct}% — ${pct>=80?'Excellent spelling!':pct>=60?'Good effort! Keep practising.':'Review the words and try again.'}</div>
+      <div class="f-btns">
+        <button class="btn-p" onclick="startType()">🔄 Try again</button>
+        <button class="btn-p" style="background:var(--navy)" onclick="startQuiz()">✏️ Take quiz</button>
+        <button class="btn-s" onclick="showStudy()">📖 Study list</button>
+      </div>
+      ${wrongs.length?`<div class="rev-list"><div class="rev-lbl">To review (${wrongs.length})</div>
+        ${wrongs.map(x=>`<div class="rev-item"><span class="rev-em">${x.it.emoji||'📝'}</span>
+          <div><div class="rev-fr">${x.it.fr}</div><div class="rev-en">${x.it.meaning}</div></div></div>`).join('')}
+      </div>`:'<p style="color:var(--p);font-weight:600;margin:.5rem 0">Perfect! 🎉</p>'}
+    </div></div>`;
+}
+
+// ── QUIZ ──
+function startQuiz() { cTab='quiz'; cIdx=0; results=[]; answered=false; streak=0; renderQuiz(); }
+
+function renderQuiz() {
+  const q=QUIZZES[cQ], it=q.questions[cIdx], total=q.questions.length;
+  const dots=q.questions.map((_,i)=>{
+    const c=i<cIdx?(results[i]?'ok':'err'):i===cIdx?'cur':'';
+    return `<div class="pdot ${c}"></div>`;
+  }).join('');
+  const opts=it.opts.map((o,i)=>`<button class="opt" onclick="answer(this,${i},${it.correct})">${o}</button>`).join('');
+  document.getElementById('app').innerHTML=`
+    <div class="screen">
+      <div class="screen-hdr">
+        <button class="back-btn" onclick="showStudy()">←</button>
+        <div class="screen-title">${q.title}</div>
+        <div class="screen-badge">${cIdx+1} / ${total}</div>
+      </div>
+      ${tabBar('quiz')}
+      <div class="prog-row">${dots}</div>
+      <div class="qcard">
+        ${it.emoji?`<span class="q-emoji">${it.emoji}</span>`:''}
+        <div class="q-label">What does this mean?</div>
+        <div class="q-fr">${it.fr}<button class="q-speak" onclick="speak(${JSON.stringify(it.fr)})">🔊</button></div>
+        <div class="opts">${opts}</div>
+        <div class="fb" id="fb"></div>
+      </div>
+      <button class="next-btn" id="nb" onclick="nextQ()">${cIdx+1<total?'Next →':'See results →'}</button>
+    </div>`;
+}
+
+function answer(btn,chosen,correct) {
+  if (answered) return;
+  answered=true;
+  const ok=chosen===correct;
+  if(ok) streak++; else streak=0;
+  results.push(ok);
+  document.querySelectorAll('.opt').forEach((b,i)=>{
+    if(i===correct) b.classList.add('correct');
+    else if(b===btn&&!ok) b.classList.add('wrong');
+    else b.classList.add('reveal');
+    b.disabled=true;
+  });
+  const it=QUIZZES[cQ].questions[cIdx];
+  const fb=document.getElementById('fb');
+  fb.className=`fb show ${ok?'ok':'bad'}`;
+  fb.innerHTML=ok?`✅ <strong>Correct!</strong> "${it.fr}" = ${it.meaning}`
+    :`❌ The answer is: <strong>${it.opts[correct]}</strong> — "${it.fr}" = ${it.meaning}`;
+  if(streak>=3){
+    const el=document.getElementById('streak');
+    el.textContent=streak>=10?`🔥 ${streak} in a row!`:streak>=5?`⚡ ${streak} correct!`:`🎯 ${streak} in a row!`;
+    el.classList.add('pop'); setTimeout(()=>el.classList.remove('pop'),2000);
+  }
+  document.getElementById('nb').classList.add('show');
+}
+
+function nextQ() { answered=false; cIdx++; cIdx>=QUIZZES[cQ].questions.length?showQuizFinish():renderQuiz(); }
+
+function showQuizFinish() {
+  const q=QUIZZES[cQ], correct=results.filter(Boolean).length, total=q.questions.length;
+  const pct=Math.round(correct/total*100);
+  scores[cQ]={correct,total}; save();
+  const em=pct>=80?'🏆':pct>=60?'😊':'💪';
+  const wrongs=results.map((r,i)=>({r,it:q.questions[i]})).filter(x=>!x.r);
+  document.getElementById('app').innerHTML=`
+    <div class="finish"><div class="fcard">
+      <div class="f-emoji">${em}</div>
+      <div class="f-score">${correct} / ${total}</div>
+      <div class="f-msg">${pct}% — ${pct>=80?'Excellent! Keep it up!':pct>=60?'Good job! A little more practice.':'Review the words first, then try again.'}</div>
+      <div class="f-btns">
+        <button class="btn-p" onclick="startQuiz()">🔄 Try again</button>
+        <button class="btn-p" style="background:var(--navy)" onclick="showStudy()">📖 Review words</button>
+        <button class="btn-s" onclick="showHome()">🏠 All topics</button>
+      </div>
+      ${wrongs.length?`<div class="rev-list"><div class="rev-lbl">Words to review (${wrongs.length})</div>
+        ${wrongs.map(x=>`<div class="rev-item"><span class="rev-em">${x.it.emoji||'📝'}</span>
+          <div><div class="rev-fr">${x.it.fr}</div><div class="rev-en">= ${x.it.meaning}</div></div></div>`).join('')}
+      </div>`:'<p style="color:var(--p);font-weight:600;margin:.5rem 0">Perfect score! 🎉</p>'}
+    </div></div>`;
+}
+
+showHome();
+</script>
+</body>
+</html>
