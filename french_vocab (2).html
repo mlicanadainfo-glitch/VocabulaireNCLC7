@@ -1581,35 +1581,43 @@ function speakWord(btn){
     'œuvre': 'euvre',
     'suspense': 'süspanse',
   };
-  window.speechSynthesis.cancel();
-  function getVoice(){
+
+  function doSpeak(text, onEnd){
+    const word = phoneticMap[text] || text;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(word);
     const vs = window.speechSynthesis.getVoices();
-    return vs.find(v => v.lang === 'fr-FR') || vs.find(v => v.lang.startsWith('fr'));
-  }
-  function makeUtterance(text){
-    const u = new SpeechSynthesisUtterance(phoneticMap[text] || text);
-    const v = getVoice();
-    if(v) u.voice = v;
+    const frVoice = vs.find(v => v.lang === 'fr-FR')
+                 || vs.find(v => v.lang === 'fr-CA')
+                 || vs.find(v => v.lang === 'fr-BE')
+                 || vs.find(v => v.lang === 'fr-CH')
+                 || vs.find(v => v.lang.startsWith('fr'));
+    if(frVoice) u.voice = frVoice;
     u.lang = 'fr-FR';
-    u.rate = 0.85;
-    return u;
+    u.rate = 0.82;
+    if(onEnd) u.onend = onEnd;
+    window.speechSynthesis.speak(u);
   }
-  function doSpeak(){
-    const u1 = makeUtterance(fr);
-    // If adjective has a different feminine form, speak both
+
+  function run(){
     if(fem && fem !== fr){
-      u1.onend = () => {
-        setTimeout(() => {
-          window.speechSynthesis.speak(makeUtterance(fem));
-        }, 350);
-      };
+      doSpeak(fr, () => setTimeout(() => doSpeak(fem), 400));
+    } else {
+      doSpeak(fr);
     }
-    window.speechSynthesis.speak(u1);
   }
-  if(window.speechSynthesis.getVoices().length === 0){
-    window.speechSynthesis.onvoiceschanged = doSpeak;
+
+  // getVoices() is async on first load — try immediately, also set callback
+  const vs = window.speechSynthesis.getVoices();
+  if(vs.length > 0){
+    run();
   } else {
-    doSpeak();
+    window.speechSynthesis.onvoiceschanged = function(){
+      window.speechSynthesis.onvoiceschanged = null;
+      run();
+    };
+    // Some browsers never fire onvoiceschanged — speak anyway after short delay
+    setTimeout(run, 200);
   }
 }
 function speak(fr){
