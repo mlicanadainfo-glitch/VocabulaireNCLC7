@@ -344,7 +344,7 @@ const QUIZZES = [
       {fr:"Vêtements",meaning:"Clothing",emoji:"👕",opts:["Food", "Shoes", "Clothing", "Books"],correct:2,conj:[],gender:"m"},
       {fr:"Mode",meaning:"Fashion",emoji:"👗",opts:["Food", "Fashion", "Music", "Art"],correct:1,conj:[],gender:"f"},
       {fr:"Client",meaning:"Customer",emoji:"🛒",opts:["Seller", "Customer", "Manager", "Employee"],correct:1,conj:[],gender:"m"},
-      {fr:"Marque",meaning:"Brand",emoji:"🏷️",opts:["Price", "Size", "Color", "Brand"],correct:3,conj:[],gender:"f"},
+      {fr:"Marque",meaning:"Price",emoji:"🏷️",opts:["Price", "Size", "Color", "Brand"],correct:0,conj:[],gender:"f"},
       {fr:"Taille",meaning:"Size",emoji:"📏",opts:["Color", "Size", "Price", "Brand"],correct:1,conj:[],gender:"f"},
       {fr:"Portefeuille",meaning:"Wallet",emoji:"👛",opts:["Wallet", "Bag", "Backpack", "Suitcase"],correct:0,conj:[],gender:"m"},
       {fr:"Argent",meaning:"Money",emoji:"💰",opts:["Time", "Money", "Energy", "Effort"],correct:1,conj:[],gender:"m"}
@@ -357,7 +357,7 @@ const QUIZZES = [
       {fr:"Bien-être mental",meaning:"Physical health",emoji:"🧠",opts:["Physical health", "Mental health", "Financial health", "Social health"],correct:0,conj:[],gender:"m"},
       {fr:"Joie de vivre",meaning:"joy of living",emoji:"😊",opts:["Depression", "Anxiety", "Joy of living", "Stress"],correct:2,conj:[],gender:"f"},
       {fr:"Prévention",meaning:"prevention",emoji:"🛡️",opts:["Cure", "Treatment", "Prevention", "Diagnosis"],correct:2,conj:[],gender:"f"},
-      {fr:"Immunisation",meaning:"Immunization",emoji:"💉",opts:["Infection", "Disease", "Immunization", "Weakness"],correct:2,conj:[],gender:"f"},
+      {fr:"Immunisation",meaning:"Infection",emoji:"💉",opts:["Infection", "Disease C) Immunization d) Weakness 15. Immunité: a) Vulnerability b) Weakness", "Immunity", "Susceptibility"],correct:0,conj:[],gender:"f"},
       {fr:"Bien-être",meaning:"well-being",emoji:"🌿",opts:["Illness", "Disease", "Well-being", "Stress"],correct:2,conj:[],gender:"m"},
       {fr:"Fièvre",meaning:"Chills",emoji:"🤒",opts:["Chills", "Fever", "Cough", "Headache"],correct:0,conj:[],gender:"f"},
       {fr:"Douleur",meaning:"pain",emoji:"🤕",opts:["Pleasure", "Comfort", "Pain", "Relief"],correct:2,conj:[],gender:"f"},
@@ -392,9 +392,9 @@ const QUIZZES = [
   {
     title: "Sports & Fitness",
     questions: [
-      {fr:"Natation",meaning:"Swimming",emoji:"🏊",opts:["Diving", "Cycling", "Running", "Swimming"],correct:3,conj:[],gender:"f"},
+      {fr:"Plongeon",meaning:"Swimming",emoji:"🤽",opts:["Swimming", "Diving", "Running", "Cycling"],correct:0,conj:[],gender:"m"},
       {fr:"Aviron",meaning:"rowing",emoji:"🚣",opts:["Rowing", "Sailing", "Surfing", "Swimming"],correct:0,conj:[],gender:"m"},
-      {fr:"Lutte",meaning:"Wrestling",emoji:"🤼",opts:["Boxing", "Judo", "Wrestling", "Karate"],correct:2,conj:[],gender:"f"},
+      {fr:"Lutte",meaning:"Boxing",emoji:"🤼",opts:["Boxing", "Judo", "Wrestling", "Karate"],correct:0,conj:[],gender:"f"},
       {fr:"Surf des neiges",meaning:"snowboarding",emoji:"🏂",opts:["Skiing", "Snowboarding", "Skating", "Sledding"],correct:1,conj:[],gender:"m"},
       {fr:"Échecs",meaning:"Checkers",emoji:"♟️",opts:["Checkers", "Chess", "Backgammon", "Monopoly"],correct:0,conj:[],gender:"m"},
       {fr:"Escalade",meaning:"climbing",emoji:"🧗",opts:["Hiking", "Camping", "Climbing", "Swimming"],correct:2,conj:[],gender:"f"},
@@ -406,7 +406,7 @@ const QUIZZES = [
     title: "Cultural Events & Entertainment",
     questions: [
       {fr:"Ecriture",meaning:"writing",emoji:"✍️",opts:["Reading", "Speaking", "Writing", "Listening"],correct:2,conj:[]},
-      {fr:"Fanfare",meaning:"Brass band",emoji:"🎺",opts:["Silence", "Noise", "Fanfare", "Brass band"],correct:3,conj:[],gender:"f"},
+      {fr:"Fanfare",meaning:"Silence",emoji:"🎺",opts:["Silence", "Noise", "Fanfare", "Applause"],correct:0,conj:[],gender:"f"},
       {fr:"Affiche",meaning:"poster",emoji:"🪧",opts:["Book", "Poster", "Painting", "Sculpture"],correct:1,conj:[],gender:"f"},
       {fr:"Jingle",meaning:"jingle",emoji:"🎵",opts:["Song", "Jingle", "Symphony", "Opera"],correct:1,conj:[],gender:"m"},
       {fr:"Livre",meaning:"book",emoji:"📚",opts:["Movie", "Song", "Book", "Painting"],correct:2,conj:[],gender:"m"},
@@ -484,17 +484,32 @@ const PROS = ['je','tu','il / elle','nous','vous','ils / elles'];
 
 // ── SPEAK ──
 function speakDirect(fr) {
-  window.speechSynthesis.cancel();
-  function go() {
+  function doSpeak(){
+    window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(fr);
     const vs = window.speechSynthesis.getVoices();
-    const v = vs.find(v => v.lang === 'fr-FR') || vs.find(v => v.lang === 'fr-CA') || vs.find(v => v.lang.startsWith('fr'));
-    if (v) u.voice = v;
-    u.lang = 'fr-FR'; u.rate = 0.82;
+    const v = vs.find(v => v.lang === 'fr-FR')
+            || vs.find(v => v.lang === 'fr-CA')
+            || vs.find(v => v.lang === 'fr-BE')
+            || vs.find(v => v.lang.startsWith('fr'));
+    if(v) u.voice = v;
+    u.lang = 'fr-FR';
+    u.rate = 0.82;
     window.speechSynthesis.speak(u);
   }
-  window.speechSynthesis.getVoices().length ? go() : (window.speechSynthesis.onvoiceschanged = go);
+  const vs = window.speechSynthesis.getVoices();
+  if(vs.length > 0){
+    doSpeak();
+  } else {
+    window.speechSynthesis.onvoiceschanged = function(){
+      window.speechSynthesis.onvoiceschanged = null;
+      doSpeak();
+    };
+    setTimeout(doSpeak, 200);
+  }
 }
+function speakData(btn) { speakDirect(btn.dataset.fr); }
+function speak(fr) { speakDirect(fr); }
 function speakData(btn) {
   speakDirect(btn.dataset.fr);
 }
