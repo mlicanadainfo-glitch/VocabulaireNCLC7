@@ -183,7 +183,7 @@ const QUIZZES = [
       {fr:"Parce que",meaning:"Because",emoji:"🤔",opts:["Because", "Therefore", "However", "Although"],correct:0,conj:[]},
       {fr:"De rien",meaning:"You're welcome",emoji:"😊",opts:["You're welcome", "Thank you", "Excuse me", "Please"],correct:0,conj:[]},
       {fr:"À tout à l'heure",meaning:"See you later",emoji:"⏰",opts:["See you tomorrow", "See you later", "See you soon", "See you never"],correct:1,conj:[]},
-      {fr:"Ecole",meaning:"School",emoji:"🏫",opts:["School", "House", "Park", "Store"],correct:0,conj:[],gender:"f"},
+      {fr:"École",meaning:"School",emoji:"🏫",opts:["School", "House", "Park", "Store"],correct:0,conj:[],gender:"f"},
       {fr:"Temps",meaning:"Time",emoji:"⏰",opts:["Money", "Weather", "Time", "Food"],correct:2,conj:[],gender:"m"},
       {fr:"Semaine",meaning:"Week",emoji:"📆",opts:["Month", "Year", "Day", "Week"],correct:3,conj:[],gender:"f"},
       {fr:"Vilain / Vilaine",meaning:"Beautiful",emoji:"😬",opts:["Beautiful", "Ugly", "Big", "Small"],correct:0,conj:[]},
@@ -267,7 +267,7 @@ const QUIZZES = [
       {fr:"Lien",meaning:"Separation",emoji:"🔗",opts:["Separation", "Bond", "Distance", "Isolation"],correct:0,conj:[],gender:"m"},
       {fr:"Cadet",meaning:"Younger",emoji:"👶",opts:["Elder", "Senior", "Younger", "Oldest"],correct:2,conj:[],gender:"m"},
       {fr:"Parrain",meaning:"Godfather",emoji:"👴",opts:["Godmother", "Godfather", "Uncle", "Aunt"],correct:1,conj:[],gender:"m"},
-      {fr:"Etreinte",meaning:"Embrace",emoji:"🤗",opts:["Push", "Shove", "Embrace", "Repel"],correct:2,conj:[],gender:"f"},
+      {fr:"Étreinte",meaning:"Embrace",emoji:"🤗",opts:["Push", "Shove", "Embrace", "Repel"],correct:2,conj:[],gender:"f"},
       {fr:"Embrasser",meaning:"To kiss",emoji:"😘",opts:["To hug", "To kiss", "To slap", "To punch"],correct:1,conj:["embrasse", "embrasses", "embrasse", "embrassons", "embrassez", "embrassent"]},
       {fr:"Mère",meaning:"Mother",emoji:"👩",opts:["Father", "Brother", "Sister", "Mother"],correct:3,conj:[],gender:"f"},
       {fr:"Père",meaning:"Father",emoji:"👨",opts:["Mother", "Brother", "Sister", "Father"],correct:3,conj:[],gender:"m"}
@@ -385,8 +385,8 @@ const QUIZZES = [
       {fr:"Salle de classe",meaning:"Playground",emoji:"🏫",opts:["Playground", "Library", "Classroom", "Cafeteria"],correct:0,conj:[],gender:"f"},
       {fr:"Devoirs",meaning:"Homework",emoji:"📝",opts:["Tests", "Exams", "Homework", "Projects"],correct:2,conj:[],gender:"m"},
       {fr:"Apprentissage",meaning:"Learning",emoji:"🧑‍🎓",opts:["Forgetting", "Ignoring", "Learning", "Playing"],correct:2,conj:[],gender:"m"},
-      {fr:"Etude",meaning:"study",emoji:"📚",opts:["Play", "Study", "Sleep", "Eat"],correct:1,conj:[],gender:"f"},
-      {fr:"Evaluation",meaning:"Punishment",emoji:"📊",opts:["Punishment", "Reward", "Assessment", "Praise"],correct:0,conj:[],gender:"f"}
+      {fr:"Étude",meaning:"study",emoji:"📚",opts:["Play", "Study", "Sleep", "Eat"],correct:1,conj:[],gender:"f"},
+      {fr:"Évaluation",meaning:"Punishment",emoji:"📊",opts:["Punishment", "Reward", "Assessment", "Praise"],correct:0,conj:[],gender:"f"}
     ]
   },
   {
@@ -405,7 +405,7 @@ const QUIZZES = [
   {
     title: "Cultural Events & Entertainment",
     questions: [
-      {fr:"Ecriture",meaning:"writing",emoji:"✍️",opts:["Reading", "Speaking", "Writing", "Listening"],correct:2,conj:[]},
+      {fr:"Écriture",meaning:"writing",gender:"f",emoji:"✍️",opts:["Reading", "Speaking", "Writing", "Listening"],correct:2,conj:[]},
       {fr:"Fanfare",meaning:"Silence",emoji:"🎺",opts:["Silence", "Noise", "Fanfare", "Applause"],correct:0,conj:[],gender:"f"},
       {fr:"Affiche",meaning:"poster",emoji:"🪧",opts:["Book", "Poster", "Painting", "Sculpture"],correct:1,conj:[],gender:"f"},
       {fr:"Jingle",meaning:"jingle",emoji:"🎵",opts:["Song", "Jingle", "Symphony", "Opera"],correct:1,conj:[],gender:"m"},
@@ -414,7 +414,7 @@ const QUIZZES = [
       {fr:"Peinture",meaning:"painting",emoji:"🎨",opts:["Sculpture", "Painting", "Music", "Dance"],correct:1,conj:[],gender:"f"},
       {fr:"Galerie",meaning:"gallery",emoji:"🖼️",opts:["Museum", "Library", "Gallery", "Theater"],correct:2,conj:[],gender:"f"},
       {fr:"Artisanat",meaning:"craftsmanship",emoji:"🏺",opts:["Industry", "Craftsmanship", "Technology", "Agriculture"],correct:1,conj:[],gender:"m"},
-      {fr:"Cinéaste",meaning:"filmmaker",emoji:"🎬",opts:["Actor", "Writer", "Director", "Producer"],correct:0,conj:[]}
+      {fr:"Cinéaste",meaning:"filmmaker",gender:"mf",emoji:"🎬",opts:["Actor", "Writer", "Director", "Producer"],correct:0,conj:[]}
     ]
   },
   {
@@ -483,37 +483,32 @@ let typeAnswered = false, hintCount = 0;
 const PROS = ['je','tu','il / elle','nous','vous','ils / elles'];
 
 // ── SPEAK ──
-function speakDirect(fr) {
-  function doSpeak(){
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(fr);
-    const vs = window.speechSynthesis.getVoices();
-    const v = vs.find(v => v.lang === 'fr-FR')
-            || vs.find(v => v.lang === 'fr-CA')
-            || vs.find(v => v.lang === 'fr-BE')
-            || vs.find(v => v.lang.startsWith('fr'));
-    if(v) u.voice = v;
-    u.lang = 'fr-FR';
-    u.rate = 0.82;
-    window.speechSynthesis.speak(u);
+function speakDirect(fr){
+  // Strip parenthetical suffixes: Enchanté(e) → Enchanté, Grand(e) → Grand
+  const clean = fr.replace(/\([^)]*\)/g, '').trim();
+  // Check if adjective with slash: "Grand / Grande" → speak both with pause
+  const parts = clean.split(/\s*\/\s*/);
+  function playOne(word, onEnd){
+    // Remove diacritics that confuse TTS (rare cases)
+    const url='https://translate.googleapis.com/translate_tts?ie=UTF-8&tl=fr&client=gtx&q='+encodeURIComponent(word);
+    const audio=new Audio(url);
+    let done=false;
+    function fallback(){ if(done) return; done=true; window.speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(word); const vs=window.speechSynthesis.getVoices(); const v=vs.find(v=>v.lang==='fr-FR')||vs.find(v=>v.lang==='fr-CA')||vs.find(v=>v.lang.startsWith('fr')); if(v) u.voice=v; u.lang='fr-FR'; u.rate=0.85; if(onEnd) u.onend=onEnd; window.speechSynthesis.speak(u); }
+    audio.onended=()=>{ done=true; if(onEnd) onEnd(); };
+    audio.onerror=fallback;
+    const t=setTimeout(fallback,2000);
+    const p=audio.play();
+    if(p) p.then(()=>clearTimeout(t)).catch(()=>{ clearTimeout(t); fallback(); });
   }
-  const vs = window.speechSynthesis.getVoices();
-  if(vs.length > 0){
-    doSpeak();
+  if(parts.length >= 2 && parts[1].trim()){
+    // Adjective: play masculine, pause 600ms, play feminine
+    playOne(parts[0].trim(), ()=>setTimeout(()=>playOne(parts[1].trim()), 600));
   } else {
-    window.speechSynthesis.onvoiceschanged = function(){
-      window.speechSynthesis.onvoiceschanged = null;
-      doSpeak();
-    };
-    setTimeout(doSpeak, 200);
+    playOne(parts[0].trim());
   }
 }
-function speakData(btn) { speakDirect(btn.dataset.fr); }
-function speak(fr) { speakDirect(fr); }
-function speakData(btn) {
-  speakDirect(btn.dataset.fr);
-}
-function speak(fr) { speakDirect(fr); }
+function speakData(btn){ speakDirect(btn.dataset.fr); }
+function speak(fr){ speakDirect(fr); }
 function starData(btn, context) {
   const fr = btn.dataset.fr;
   toggleStar(fr);
