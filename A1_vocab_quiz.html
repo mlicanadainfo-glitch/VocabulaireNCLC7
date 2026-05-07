@@ -184,7 +184,7 @@ const QUIZZES = [
       {fr:"De rien",meaning:"You're welcome",emoji:"😊",opts:["You're welcome", "Thank you", "Excuse me", "Please"],correct:0,conj:[]},
       {fr:"À tout à l'heure",meaning:"See you later",emoji:"⏰",opts:["See you tomorrow", "See you later", "See you soon", "See you never"],correct:1,conj:[]},
       {fr:"École",meaning:"School",emoji:"🏫",opts:["School", "House", "Park", "Store"],correct:0,conj:[],gender:"f"},
-      {fr:"Temps",meaning:"Time",emoji:"⏰",opts:["Money", "Weather", "Time", "Food"],correct:2,conj:[],gender:"m"},
+      {fr:"Temps",meaning:"Time / Weather",emoji:"⏰",opts:["Money", "Weather", "Time", "Food"],correct:2,alts:[1],conj:[],gender:"m"},
       {fr:"Semaine",meaning:"Week",emoji:"📆",opts:["Month", "Year", "Day", "Week"],correct:3,conj:[],gender:"f"},
       {fr:"Vilain / Vilaine",meaning:"Ugly",emoji:"😬",opts:["Beautiful", "Ugly", "Big", "Small"],correct:1,conj:[]},
       {fr:"Ville",meaning:"City",emoji:"🏙️",opts:["Countryside", "City", "Village", "Town"],correct:1,conj:[],gender:"f"},
@@ -268,7 +268,7 @@ const QUIZZES = [
       {fr:"Cadet",meaning:"Younger",emoji:"👶",opts:["Elder", "Senior", "Younger", "Oldest"],correct:2,conj:[],gender:"m"},
       {fr:"Parrain",meaning:"Godfather",emoji:"👴",opts:["Godmother", "Godfather", "Uncle", "Aunt"],correct:1,conj:[],gender:"m"},
       {fr:"Étreinte",meaning:"Embrace",emoji:"🤗",opts:["Push", "Shove", "Embrace", "Repel"],correct:2,conj:[],gender:"f"},
-      {fr:"Embrasser",meaning:"To kiss",emoji:"😘",opts:["To hug", "To kiss", "To slap", "To punch"],correct:1,conj:["embrasse", "embrasses", "embrasse", "embrassons", "embrassez", "embrassent"]},
+      {fr:"Embrasser",meaning:"To hug / To kiss",emoji:"😘",opts:["To hug", "To kiss", "To slap", "To punch"],correct:1,alts:[0],conj:["embrasse", "embrasses", "embrasse", "embrassons", "embrassez", "embrassent"]},
       {fr:"Mère",meaning:"Mother",emoji:"👩",opts:["Father", "Brother", "Sister", "Mother"],correct:3,conj:[],gender:"f"},
       {fr:"Père",meaning:"Father",emoji:"👨",opts:["Mother", "Brother", "Sister", "Father"],correct:3,conj:[],gender:"m"}
     ]
@@ -295,7 +295,7 @@ const QUIZZES = [
     title: "Weather Expressions",
     questions: [
       {fr:"Météo",meaning:"Weather",emoji:"🌡️",opts:["Food", "Weather", "Time", "Place"],correct:1,conj:[],gender:"f"},
-      {fr:"Temps",meaning:"Time",emoji:"⏰",opts:["Food", "Weather", "Time", "Place"],correct:2,conj:[],gender:"m"},
+      {fr:"Temps",meaning:"Time / Weather",emoji:"⏰",opts:["Food", "Weather", "Time", "Place"],correct:2,alts:[1],conj:[],gender:"m"},
       {fr:"Soleil",meaning:"Sun",emoji:"☀️",opts:["Moon", "Stars", "Sun", "Clouds"],correct:2,conj:[],gender:"m"},
       {fr:"Pluie",meaning:"Rain",emoji:"🌧️",opts:["Snow", "Wind", "Rain", "Sun"],correct:2,conj:[],gender:"f"},
       {fr:"Neige",meaning:"Snow",emoji:"❄️",opts:["Rain", "Wind", "Snow", "Sun"],correct:2,conj:[],gender:"f"},
@@ -441,9 +441,9 @@ const QUIZZES = [
       {fr:"Archipel",meaning:"Archipelago",emoji:"🏝️",opts:["Archipelago", "Continent", "Peninsula", "Isthmus"],correct:0,conj:[],gender:"m"},
       {fr:"Nord",meaning:"North",emoji:"🧭",opts:["South", "East", "West", "North"],correct:3,conj:[]},
       {fr:"Sud",meaning:"South",emoji:"🧭",opts:["North", "East", "West", "South"],correct:3,conj:[]},
-      {fr:"Est",meaning:"East",emoji:"🧭",opts:["West", "North", "South", "East"],correct:3,conj:[]},
+      {fr:"Est",speak:"este",meaning:"East",emoji:"🧭",opts:["West", "North", "South", "East"],correct:3,conj:[]},
       {fr:"Ouest",meaning:"West",emoji:"🧭",opts:["East", "North", "South", "West"],correct:3,conj:[]},
-      {fr:"Cap",meaning:"Cape",emoji:"🗺️",opts:["Cape", "Bay", "Gulf", "Strait"],correct:0,conj:[],gender:"m"}
+      {fr:"Cap",speak:"cape",meaning:"Cape",emoji:"🗺️",opts:["Cape", "Bay", "Gulf", "Strait"],correct:0,conj:[],gender:"m"}
     ]
   },
   {
@@ -483,9 +483,10 @@ let typeAnswered = false, hintCount = 0;
 const PROS = ['je','tu','il / elle','nous','vous','ils / elles'];
 
 // ── SPEAK ──
-function speakDirect(fr){
+function speakDirect(fr, speakOverride){
   // Strip parenthetical suffixes: Enchanté(e) → Enchanté, Grand(e) → Grand
-  const clean = fr.replace(/\([^)]*\)/g, '').trim();
+  const raw = speakOverride || fr;
+  const clean = raw.replace(/\([^)]*\)/g, '').trim();
   // Check if adjective with slash: "Grand / Grande" → speak both with pause
   const parts = clean.split(/\s*\/\s*/);
   function playOne(word, onEnd){
@@ -507,7 +508,7 @@ function speakDirect(fr){
     playOne(parts[0].trim());
   }
 }
-function speakData(btn){ speakDirect(btn.dataset.fr); }
+function speakData(btn){ speakDirect(btn.dataset.fr, btn.dataset.speak); }
 function speak(fr){ speakDirect(fr); }
 function starData(btn, context) {
   const fr = btn.dataset.fr;
@@ -646,7 +647,7 @@ function showStudy() {
         <div class="word-fr">${it.fr}${it.gender ? `<span class="gender-badge g-${it.gender}">${it.gender==='m'?'m.':'f.'}</span>` : ''}</div>
         <div class="word-en">${it.gender ? `<span class="gender-article">${it.gender==='m'?'le / un':'la / une'}</span> ` : ''}${it.meaning}</div>
       </div>
-      <button class="speak-btn" data-fr="${it.fr.replace(/"/g,'&quot;')}" onclick="speakData(this)">🔊</button>
+      <button class="speak-btn" data-fr="${it.fr.replace(/"/g,'&quot;')}" data-speak="${(it.speak||it.fr).replace(/"/g,'&quot;')}" onclick="speakData(this)">🔊</button>
       <button class="star-btn${isS?' on':''}" data-fr="${it.fr.replace(/"/g,'&quot;')}" onclick="starData(this,'study')">
         ${isS?'⭐':'☆'}
       </button>
@@ -851,7 +852,7 @@ function renderQuiz() {
       <div class="qcard">
         ${it.emoji?`<span class="q-emoji">${it.emoji}</span>`:''}
         <div class="q-label">What does this mean?</div>
-        <div class="q-fr">${it.fr}${it.gender ? `<span class="gender-badge g-${it.gender}">${it.gender==='m'?'m.':'f.'}</span>` : ''}<button class="q-speak" data-fr="${it.fr.replace(/"/g,'&quot;')}" onclick="speakData(this)">🔊</button></div>
+        <div class="q-fr">${it.fr}${it.gender ? `<span class="gender-badge g-${it.gender}">${it.gender==='m'?'m.':'f.'}</span>` : ''}<button class="q-speak" data-fr="${it.fr.replace(/"/g,'&quot;')}" data-speak="${(it.speak||it.fr).replace(/"/g,'&quot;')}" onclick="speakData(this)">🔊</button></div>
         ${it.gender ? `<div class="q-gender">${it.gender==='m'?'le / un':'la / une'}</div>` : ''}
         <div class="opts">${opts}</div>
         <div class="fb" id="fb"></div>
@@ -863,16 +864,17 @@ function renderQuiz() {
 function answer(btn,chosen,correct) {
   if (answered) return;
   answered=true;
-  const ok=chosen===correct;
+  const it=QUIZZES[cQ].questions[cIdx];
+  const alts=it.alts||[];
+  const ok=chosen===correct||alts.includes(chosen);
   if(ok) streak++; else streak=0;
   results.push(ok);
   document.querySelectorAll('.opt').forEach((b,i)=>{
-    if(i===correct) b.classList.add('correct');
+    if(i===correct||alts.includes(i)) b.classList.add('correct');
     else if(b===btn&&!ok) b.classList.add('wrong');
     else b.classList.add('reveal');
     b.disabled=true;
   });
-  const it=QUIZZES[cQ].questions[cIdx];
   const fb=document.getElementById('fb');
   fb.className=`fb show ${ok?'ok':'bad'}`;
   fb.innerHTML=ok?`✅ <strong>Correct!</strong> "${it.fr}" = ${it.meaning}`
