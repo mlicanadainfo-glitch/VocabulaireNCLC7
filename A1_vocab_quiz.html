@@ -186,10 +186,10 @@ const QUIZZES = [
       {fr:"École",meaning:"School",emoji:"🏫",opts:["School", "House", "Park", "Store"],correct:0,conj:[],gender:"f"},
       {fr:"Temps",meaning:"Time",emoji:"⏰",opts:["Money", "Weather", "Time", "Food"],correct:2,conj:[],gender:"m"},
       {fr:"Semaine",meaning:"Week",emoji:"📆",opts:["Month", "Year", "Day", "Week"],correct:3,conj:[],gender:"f"},
-      {fr:"Vilain / Vilaine",meaning:"Beautiful",emoji:"😬",opts:["Beautiful", "Ugly", "Big", "Small"],correct:0,conj:[]},
+      {fr:"Vilain / Vilaine",meaning:"Ugly",emoji:"😬",opts:["Beautiful", "Ugly", "Big", "Small"],correct:1,conj:[]},
       {fr:"Ville",meaning:"City",emoji:"🏙️",opts:["Countryside", "City", "Village", "Town"],correct:1,conj:[],gender:"f"},
       {fr:"Repos",meaning:"Rest",emoji:"😴",opts:["Work", "Rest", "Play", "Study"],correct:1,conj:[],gender:"m"},
-      {fr:"Manger",meaning:"Drink",emoji:"🍴",opts:["Drink", "Eat", "Sleep", "Walk"],correct:0,conj:["mange", "manges", "mange", "mangeons", "mangez", "mangent"]},
+      {fr:"Manger",meaning:"To eat",emoji:"🍴",opts:["Drink", "Eat", "Sleep", "Walk"],correct:1,conj:["mange", "manges", "mange", "mangeons", "mangez", "mangent"]},
       {fr:"Boire",meaning:"To drink",emoji:"🥤",opts:["Eat", "Drink", "Run", "Sleep"],correct:1,conj:["bois", "bois", "boit", "buvons", "buvez", "boivent"]},
       {fr:"Marcher",meaning:"Walk",emoji:"🚶",opts:["Run", "Walk", "Jump", "Swim"],correct:1,conj:["marche", "marches", "marche", "marchons", "marchez", "marchent"]},
       {fr:"Courir",meaning:"Run",emoji:"🏃",opts:["Walk", "Run", "Crawl", "Skip"],correct:1,conj:["cours", "cours", "court", "courons", "courez", "courent"]}
@@ -229,7 +229,7 @@ const QUIZZES = [
       {fr:"Autoroute",meaning:"Highway",emoji:"🛣️",opts:["Road", "Bridge", "Highway", "Itinerary"],correct:2,conj:[],gender:"f"},
       {fr:"Route",meaning:"Road",emoji:"🛤️",opts:["Road", "Airport", "Station", "Ticket"],correct:0,conj:[],gender:"f"},
       {fr:"Pont",meaning:"Bridge",emoji:"🌉",opts:["Bridge", "Highway", "Port", "Map"],correct:0,conj:[],gender:"m"},
-      {fr:"Gare",meaning:"Airport",emoji:"🚉",opts:["Airport", "Station", "Port", "Customs"],correct:0,conj:[],gender:"f"},
+      {fr:"Gare",meaning:"Station",emoji:"🚉",opts:["Airport", "Station", "Port", "Customs"],correct:1,conj:[],gender:"f"},
       {fr:"Aéroport",meaning:"Airport",emoji:"✈️",opts:["Airport", "Station", "Port", "Highway"],correct:0,conj:[],gender:"m"},
       {fr:"Itinéraire",meaning:"Itinerary",emoji:"🗺️",opts:["Itinerary", "Map", "Ticket", "Highway"],correct:0,conj:[],gender:"m"}
     ]
@@ -241,15 +241,15 @@ const QUIZZES = [
       {fr:"Repas",meaning:"Meal",emoji:"🍽️",opts:["Meal", "Spoon", "Fork", "Knife"],correct:0,conj:[],gender:"m"},
       {fr:"Couvert",meaning:"Silverware",emoji:"🍴",opts:["Glass", "Cup", "Silverware", "Napkin"],correct:2,conj:[],gender:"m"},
       {fr:"Verre",meaning:"Glass",emoji:"🥛",opts:["Cup", "Mug", "Glass", "Spoon"],correct:2,conj:[],gender:"m"},
-      {fr:"Tasse",meaning:"Glass",emoji:"☕",opts:["Glass", "Cup", "Fork", "Knife"],correct:0,conj:[],gender:"f"},
-      {fr:"Cuillère",meaning:"Fork",emoji:"🥄",opts:["Fork", "Knife", "Spoon", "Napkin"],correct:0,conj:[],gender:"f"},
+      {fr:"Tasse",meaning:"Cup",emoji:"☕",opts:["Glass", "Cup", "Fork", "Knife"],correct:1,conj:[],gender:"f"},
+      {fr:"Cuillère",meaning:"Spoon",emoji:"🥄",opts:["Fork", "Knife", "Spoon", "Napkin"],correct:2,conj:[],gender:"f"},
       {fr:"Fourchette",meaning:"Fork",emoji:"🍴",opts:["Spoon", "Knife", "Fork", "Napkin"],correct:2,conj:[],gender:"f"},
       {fr:"Couteau",meaning:"Knife",emoji:"🔪",opts:["Fork", "Spoon", "Knife", "Napkin"],correct:2,conj:[],gender:"m"},
       {fr:"Serviette",meaning:"Napkin",emoji:"🧻",opts:["Napkin", "Glass", "Cup", "Plate"],correct:0,conj:[],gender:"f"},
       {fr:"Boisson",meaning:"Beverage",emoji:"🥤",opts:["Food", "Beverage", "Napkin", "Spoon"],correct:1,conj:[],gender:"f"},
       {fr:"Eau",meaning:"Water",emoji:"💧",opts:["Wine", "Tea", "Water", "Coffee"],correct:2,conj:[],gender:"f"},
       {fr:"Vin",meaning:"Wine (red/white)",emoji:"🍷",opts:["Water", "Tea", "Coffee", "Wine"],correct:3,conj:[],gender:"m"},
-      {fr:"Thé",meaning:"Water",emoji:"🍵",opts:["Water", "Wine", "Coffee", "Tea"],correct:0,conj:[],gender:"m"},
+      {fr:"Thé",meaning:"Tea",emoji:"🍵",opts:["Water", "Wine", "Coffee", "Tea"],correct:3,conj:[],gender:"m"},
       {fr:"Légumes",meaning:"Vegetables",emoji:"🥦",opts:["Meat", "Fish", "Poultry", "Vegetables"],correct:3,conj:[],gender:"m"},
       {fr:"Viande",meaning:"Meat",emoji:"🥩",opts:["Fish", "Poultry", "Vegetables", "Meat"],correct:3,conj:[],gender:"f"},
       {fr:"Poisson",meaning:"Fish",emoji:"🐟",opts:["Meat", "Poultry", "Vegetables", "Fish"],correct:3,conj:[],gender:"m"},
@@ -264,7 +264,7 @@ const QUIZZES = [
       {fr:"Complicité",meaning:"Closeness",emoji:"🤝",opts:["Closeness", "Hate", "Anger", "Disgust"],correct:0,conj:[],gender:"f"},
       {fr:"Filial / Filiale",meaning:"Filial",emoji:"👨‍👦",opts:["Fatherly", "Motherly", "Brotherly", "Filial"],correct:3,conj:[]},
       {fr:"Veuve",meaning:"Widow",emoji:"🖤",opts:["Widow", "Widower", "Orphan", "Single"],correct:0,conj:[],gender:"f"},
-      {fr:"Lien",meaning:"Separation",emoji:"🔗",opts:["Separation", "Bond", "Distance", "Isolation"],correct:0,conj:[],gender:"m"},
+      {fr:"Lien",meaning:"Bond",emoji:"🔗",opts:["Separation", "Bond", "Distance", "Isolation"],correct:1,conj:[],gender:"m"},
       {fr:"Cadet",meaning:"Younger",emoji:"👶",opts:["Elder", "Senior", "Younger", "Oldest"],correct:2,conj:[],gender:"m"},
       {fr:"Parrain",meaning:"Godfather",emoji:"👴",opts:["Godmother", "Godfather", "Uncle", "Aunt"],correct:1,conj:[],gender:"m"},
       {fr:"Étreinte",meaning:"Embrace",emoji:"🤗",opts:["Push", "Shove", "Embrace", "Repel"],correct:2,conj:[],gender:"f"},
@@ -314,9 +314,9 @@ const QUIZZES = [
       {fr:"Loisir",meaning:"Leisure",emoji:"🎮",opts:["Work", "Leisure", "Sleep", "Study"],correct:1,conj:[],gender:"m"},
       {fr:"Bricolage",meaning:"DIY",emoji:"🔨",opts:["DIY", "Cooking", "Cleaning", "Sleeping"],correct:0,conj:[],gender:"m"},
       {fr:"Dessiner",meaning:"Drawing",emoji:"✏️",opts:["Writing", "Reading", "Drawing", "Singing"],correct:2,conj:["dessine", "dessines", "dessine", "dessinons", "dessinez", "dessinent"]},
-      {fr:"Écrire",meaning:"Write",emoji:"✍️",opts:["Reading", "Writing", "Listening", "Speaking"],correct:0,conj:["écris", "écris", "écrit", "écrivons", "écrivez", "écrivent"]},
+      {fr:"Écrire",meaning:"Write",emoji:"✍️",opts:["Reading", "Writing", "Listening", "Speaking"],correct:1,conj:["écris", "écris", "écrit", "écrivons", "écrivez", "écrivent"]},
       {fr:"Voyage",meaning:"Travel",emoji:"✈️",opts:["Stay", "Travel", "Rest", "Sleep"],correct:1,conj:[],gender:"m"},
-      {fr:"Camping",meaning:"Hotel",emoji:"⛺",opts:["Hotel", "Camping", "Resort", "Hostel"],correct:0,conj:[],gender:"m"},
+      {fr:"Camping",meaning:"Camping",emoji:"⛺",opts:["Hotel", "Camping", "Resort", "Hostel"],correct:1,conj:[],gender:"m"},
       {fr:"Pêche",meaning:"Fishing",emoji:"🎣",opts:["Hunting", "Fishing", "Camping", "Hiking"],correct:1,conj:[],gender:"f"},
       {fr:"Chasse",meaning:"Hunting",emoji:"🏹",opts:["Fishing", "Hunting", "Camping", "Hiking"],correct:1,conj:[],gender:"f"},
       {fr:"Observation des oiseaux",meaning:"Birdwatching",emoji:"🐦",opts:["Birdwatching", "Fishing", "Hunting", "Camping"],correct:0,conj:[],gender:"f"}
@@ -327,10 +327,10 @@ const QUIZZES = [
     questions: [
       {fr:"Travail",meaning:"Job",emoji:"💼",opts:["Play", "Work", "Sleep", "Eat"],correct:0,conj:[],gender:"m"},
       {fr:"Métier",meaning:"Trade",emoji:"👔",opts:["Holiday", "Hobby", "Game", "Occupation"],correct:0,conj:[],gender:"m"},
-      {fr:"Entretien d'embauche",meaning:"Meeting",emoji:"📋",opts:["Meeting", "Party", "Interview", "Date"],correct:0,conj:[],gender:"m"},
-      {fr:"Poste",meaning:"Chair",emoji:"🏢",opts:["Chair", "Desk", "Position", "Computer"],correct:0,conj:[],gender:"m"},
+      {fr:"Entretien d'embauche",meaning:"Job interview",emoji:"📋",opts:["Meeting", "Party", "Interview", "Date"],correct:2,conj:[],gender:"m"},
+      {fr:"Poste",meaning:"Position",emoji:"🏢",opts:["Chair", "Desk", "Position", "Computer"],correct:2,conj:[],gender:"m"},
       {fr:"Réunion",meaning:"Meeting",emoji:"📊",opts:["Party", "Meeting", "Concert", "Festival"],correct:1,conj:[],gender:"f"},
-      {fr:"Travailleur indépendant / Travailleuse indépendante",meaning:"Self-employed",emoji:"💻",opts:["Employee", "Manager", "Freelancer", "Intern"],correct:0,conj:[]},
+      {fr:"Travailleur indépendant / Travailleuse indépendante",meaning:"Self-employed",emoji:"💻",opts:["Employee", "Manager", "Self-employed", "Intern"],correct:2,conj:[]},
       {fr:"Congé",meaning:"Leave",emoji:"🏖️",opts:["Work", "Leave", "Overtime", "Shift"],correct:1,conj:[],gender:"m"},
       {fr:"Embaucher",meaning:"To hire",emoji:"🤝",opts:["To fire", "To promote", "To hire", "To retire"],correct:2,conj:["embauche", "embauches", "embauche", "embauchons", "embauchez", "embauchent"]},
       {fr:"Licencier",meaning:"To fire",emoji:"📄",opts:["To hire", "To promote", "To fire", "To retire"],correct:2,conj:["licencie", "licencies", "licencie", "licencions", "licenciez", "licencient"]}
@@ -344,7 +344,7 @@ const QUIZZES = [
       {fr:"Vêtements",meaning:"Clothing",emoji:"👕",opts:["Food", "Shoes", "Clothing", "Books"],correct:2,conj:[],gender:"m"},
       {fr:"Mode",meaning:"Fashion",emoji:"👗",opts:["Food", "Fashion", "Music", "Art"],correct:1,conj:[],gender:"f"},
       {fr:"Client",meaning:"Customer",emoji:"🛒",opts:["Seller", "Customer", "Manager", "Employee"],correct:1,conj:[],gender:"m"},
-      {fr:"Marque",meaning:"Price",emoji:"🏷️",opts:["Price", "Size", "Color", "Brand"],correct:0,conj:[],gender:"f"},
+      {fr:"Marque",meaning:"Brand",emoji:"🏷️",opts:["Price", "Size", "Color", "Brand"],correct:3,conj:[],gender:"f"},
       {fr:"Taille",meaning:"Size",emoji:"📏",opts:["Color", "Size", "Price", "Brand"],correct:1,conj:[],gender:"f"},
       {fr:"Portefeuille",meaning:"Wallet",emoji:"👛",opts:["Wallet", "Bag", "Backpack", "Suitcase"],correct:0,conj:[],gender:"m"},
       {fr:"Argent",meaning:"Money",emoji:"💰",opts:["Time", "Money", "Energy", "Effort"],correct:1,conj:[],gender:"m"}
@@ -354,12 +354,12 @@ const QUIZZES = [
     title: "Health & Well Being",
     questions: [
       {fr:"Santé",meaning:"health",emoji:"💊",opts:["Sickness", "Health", "Weather", "Money"],correct:1,conj:[],gender:"f"},
-      {fr:"Bien-être mental",meaning:"Physical health",emoji:"🧠",opts:["Physical health", "Mental health", "Financial health", "Social health"],correct:0,conj:[],gender:"m"},
+      {fr:"Bien-être mental",meaning:"Mental health",emoji:"🧠",opts:["Physical health", "Mental health", "Financial health", "Social health"],correct:1,conj:[],gender:"m"},
       {fr:"Joie de vivre",meaning:"joy of living",emoji:"😊",opts:["Depression", "Anxiety", "Joy of living", "Stress"],correct:2,conj:[],gender:"f"},
       {fr:"Prévention",meaning:"prevention",emoji:"🛡️",opts:["Cure", "Treatment", "Prevention", "Diagnosis"],correct:2,conj:[],gender:"f"},
-      {fr:"Immunisation",meaning:"Infection",emoji:"💉",opts:["Infection", "Disease C) Immunization d) Weakness 15. Immunité: a) Vulnerability b) Weakness", "Immunity", "Susceptibility"],correct:0,conj:[],gender:"f"},
+      {fr:"Immunisation",meaning:"Immunization",emoji:"💉",opts:["Infection", "Disease", "Immunization", "Weakness"],correct:2,conj:[],gender:"f"},
       {fr:"Bien-être",meaning:"well-being",emoji:"🌿",opts:["Illness", "Disease", "Well-being", "Stress"],correct:2,conj:[],gender:"m"},
-      {fr:"Fièvre",meaning:"Chills",emoji:"🤒",opts:["Chills", "Fever", "Cough", "Headache"],correct:0,conj:[],gender:"f"},
+      {fr:"Fièvre",meaning:"Fever",emoji:"🤒",opts:["Chills", "Fever", "Cough", "Headache"],correct:1,conj:[],gender:"f"},
       {fr:"Douleur",meaning:"pain",emoji:"🤕",opts:["Pleasure", "Comfort", "Pain", "Relief"],correct:2,conj:[],gender:"f"},
       {fr:"Vitalité",meaning:"vitality",emoji:"⚡",opts:["Weakness", "Fatigue", "Vitality", "Lethargy"],correct:2,conj:[],gender:"f"}
     ]
@@ -382,31 +382,31 @@ const QUIZZES = [
     questions: [
       {fr:"École",meaning:"School",emoji:"🏫",opts:["School", "Store", "Hospital", "Bank"],correct:0,conj:[],gender:"f"},
       {fr:"Matière",meaning:"Subject",emoji:"📖",opts:["Book", "Pen", "Subject", "Desk"],correct:2,conj:[],gender:"f"},
-      {fr:"Salle de classe",meaning:"Playground",emoji:"🏫",opts:["Playground", "Library", "Classroom", "Cafeteria"],correct:0,conj:[],gender:"f"},
+      {fr:"Salle de classe",meaning:"Classroom",emoji:"🏫",opts:["Playground", "Library", "Classroom", "Cafeteria"],correct:2,conj:[],gender:"f"},
       {fr:"Devoirs",meaning:"Homework",emoji:"📝",opts:["Tests", "Exams", "Homework", "Projects"],correct:2,conj:[],gender:"m"},
       {fr:"Apprentissage",meaning:"Learning",emoji:"🧑‍🎓",opts:["Forgetting", "Ignoring", "Learning", "Playing"],correct:2,conj:[],gender:"m"},
       {fr:"Étude",meaning:"study",emoji:"📚",opts:["Play", "Study", "Sleep", "Eat"],correct:1,conj:[],gender:"f"},
-      {fr:"Évaluation",meaning:"Punishment",emoji:"📊",opts:["Punishment", "Reward", "Assessment", "Praise"],correct:0,conj:[],gender:"f"}
+      {fr:"Évaluation",meaning:"Assessment",emoji:"📊",opts:["Punishment", "Reward", "Assessment", "Praise"],correct:2,conj:[],gender:"f"}
     ]
   },
   {
     title: "Sports & Fitness",
     questions: [
-      {fr:"Plongeon",meaning:"Swimming",emoji:"🤽",opts:["Swimming", "Diving", "Running", "Cycling"],correct:0,conj:[],gender:"m"},
+      {fr:"Plongeon",meaning:"Diving",emoji:"🤽",opts:["Swimming", "Diving", "Running", "Cycling"],correct:1,conj:[],gender:"m"},
       {fr:"Aviron",meaning:"rowing",emoji:"🚣",opts:["Rowing", "Sailing", "Surfing", "Swimming"],correct:0,conj:[],gender:"m"},
-      {fr:"Lutte",meaning:"Boxing",emoji:"🤼",opts:["Boxing", "Judo", "Wrestling", "Karate"],correct:0,conj:[],gender:"f"},
+      {fr:"Lutte",meaning:"Wrestling",emoji:"🤼",opts:["Boxing", "Judo", "Wrestling", "Karate"],correct:2,conj:[],gender:"f"},
       {fr:"Surf des neiges",meaning:"snowboarding",emoji:"🏂",opts:["Skiing", "Snowboarding", "Skating", "Sledding"],correct:1,conj:[],gender:"m"},
-      {fr:"Échecs",meaning:"Checkers",emoji:"♟️",opts:["Checkers", "Chess", "Backgammon", "Monopoly"],correct:0,conj:[],gender:"m"},
+      {fr:"Échecs",meaning:"Chess",emoji:"♟️",opts:["Checkers", "Chess", "Backgammon", "Monopoly"],correct:1,conj:[],gender:"m"},
       {fr:"Escalade",meaning:"climbing",emoji:"🧗",opts:["Hiking", "Camping", "Climbing", "Swimming"],correct:2,conj:[],gender:"f"},
       {fr:"Bien-être",meaning:"well-being",emoji:"🌿",opts:["Illness", "Disease", "Stress", "Well-being"],correct:3,conj:[],gender:"m"},
-      {fr:"Échauffement",meaning:"Cool-down",emoji:"🏃",opts:["Cool-down", "Warm-up", "Stretching", "Workout"],correct:0,conj:[],gender:"m"}
+      {fr:"Échauffement",meaning:"Warm-up",emoji:"🏃",opts:["Cool-down", "Warm-up", "Stretching", "Workout"],correct:1,conj:[],gender:"m"}
     ]
   },
   {
     title: "Cultural Events & Entertainment",
     questions: [
       {fr:"Écriture",meaning:"writing",gender:"f",emoji:"✍️",opts:["Reading", "Speaking", "Writing", "Listening"],correct:2,conj:[]},
-      {fr:"Fanfare",meaning:"Silence",emoji:"🎺",opts:["Silence", "Noise", "Fanfare", "Applause"],correct:0,conj:[],gender:"f"},
+      {fr:"Fanfare",meaning:"Fanfare",emoji:"🎺",opts:["Silence", "Noise", "Fanfare", "Applause"],correct:2,conj:[],gender:"f"},
       {fr:"Affiche",meaning:"poster",emoji:"🪧",opts:["Book", "Poster", "Painting", "Sculpture"],correct:1,conj:[],gender:"f"},
       {fr:"Jingle",meaning:"jingle",emoji:"🎵",opts:["Song", "Jingle", "Symphony", "Opera"],correct:1,conj:[],gender:"m"},
       {fr:"Livre",meaning:"book",emoji:"📚",opts:["Movie", "Song", "Book", "Painting"],correct:2,conj:[],gender:"m"},
@@ -414,7 +414,7 @@ const QUIZZES = [
       {fr:"Peinture",meaning:"painting",emoji:"🎨",opts:["Sculpture", "Painting", "Music", "Dance"],correct:1,conj:[],gender:"f"},
       {fr:"Galerie",meaning:"gallery",emoji:"🖼️",opts:["Museum", "Library", "Gallery", "Theater"],correct:2,conj:[],gender:"f"},
       {fr:"Artisanat",meaning:"craftsmanship",emoji:"🏺",opts:["Industry", "Craftsmanship", "Technology", "Agriculture"],correct:1,conj:[],gender:"m"},
-      {fr:"Cinéaste",meaning:"filmmaker",gender:"mf",emoji:"🎬",opts:["Actor", "Writer", "Director", "Producer"],correct:0,conj:[]}
+      {fr:"Cinéaste",meaning:"filmmaker",gender:"mf",emoji:"🎬",opts:["Actor", "Writer", "Filmmaker", "Producer"],correct:2,conj:[]}
     ]
   },
   {
@@ -429,11 +429,11 @@ const QUIZZES = [
   {
     title: "Geography",
     questions: [
-      {fr:"Pays",meaning:"City",emoji:"🌍",opts:["City", "Country", "River", "Mountain"],correct:0,conj:[],gender:"m"},
+      {fr:"Pays",meaning:"Country",emoji:"🌍",opts:["City", "Country", "River", "Mountain"],correct:1,conj:[],gender:"m"},
       {fr:"Ville",meaning:"City",emoji:"🏙️",opts:["Country", "City", "Lake", "Forest"],correct:1,conj:[],gender:"f"},
       {fr:"Mer",meaning:"Sea",emoji:"🌊",opts:["Lake", "River", "Sea", "Mountain"],correct:2,conj:[],gender:"f"},
       {fr:"Fleuve",meaning:"River",emoji:"🏞️",opts:["Lake", "River", "Sea", "Mountain"],correct:1,conj:[],gender:"m"},
-      {fr:"Lac",meaning:"River",emoji:"🏞️",opts:["River", "Sea", "Lake", "Mountain"],correct:0,conj:[],gender:"m"},
+      {fr:"Lac",meaning:"Lake",emoji:"🏞️",opts:["River", "Sea", "Lake", "Mountain"],correct:2,conj:[],gender:"m"},
       {fr:"Île",meaning:"Island",emoji:"🏝️",opts:["Continent", "Island", "Peninsula", "Isthmus"],correct:1,conj:[],gender:"f"},
       {fr:"Frontière",meaning:"Border",emoji:"🗺️",opts:["Border", "Center", "Capital", "Coast"],correct:0,conj:[],gender:"f"},
       {fr:"Colline",meaning:"Hill",emoji:"⛰️",opts:["Mountain", "Valley", "Hill", "Plain"],correct:2,conj:[],gender:"f"},
