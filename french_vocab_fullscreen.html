@@ -143,9 +143,39 @@ tr:nth-child(even) td{background:#F9FEFE}
 }
 .fullscreen-btn:hover{background:var(--primary);transform:translateY(-1px)}
 :fullscreen .fullscreen-btn,:-webkit-full-screen .fullscreen-btn{background:var(--primary-dark)}
+
+/* ── language chooser overlay ── */
+.lang-overlay{position:fixed;inset:0;z-index:10000;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-dark) 55%,var(--primary-dark) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;text-align:center;color:#fff}
+.lang-overlay.hidden{display:none}
+.lang-logo{height:54px;background:#fff;border-radius:10px;padding:6px 14px;margin-bottom:1.7rem}
+.lang-title{font-size:1.4rem;font-weight:700;margin-bottom:.3rem;letter-spacing:.02em}
+.lang-sub{font-size:.9rem;opacity:.72;margin-bottom:2.1rem}
+.lang-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.lang-choice{min-width:158px;padding:1.15rem 1.4rem;border-radius:16px;border:2px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;font-size:1.08rem;font-weight:700;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;align-items:center;gap:.35rem}
+.lang-choice:hover{background:#fff;color:var(--navy);border-color:#fff;transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+.lang-choice .lc-flag{font-size:1.9rem;line-height:1}
+.lang-choice .lc-sub{font-size:.7rem;font-weight:500;opacity:.7}
 </style>
 </head>
 <body>
+
+<div class="lang-overlay" id="lang-overlay">
+  <img class="lang-logo" id="lang-logo-img" alt="MLI">
+  <div class="lang-title">Choisissez votre langue</div>
+  <div class="lang-sub">选择显示语言 · Choose your display language</div>
+  <div class="lang-btns">
+    <button class="lang-choice" onclick="chooseLang('zh')">
+      <span class="lc-flag">🀄</span>
+      中文
+      <span class="lc-sub">中文 · English · Français</span>
+    </button>
+    <button class="lang-choice" onclick="chooseLang('en')">
+      <span class="lc-flag">🔤</span>
+      English
+      <span class="lc-sub">English · Français</span>
+    </button>
+  </div>
+</div>
 
 <header>
   <div class="header-top">
@@ -1567,9 +1597,105 @@ const WORDS = [
 ];
 
 
-const TYPE_LABEL = {noun:"名词",verb:"动词",adj:"形容词",other:"其他"};
-const GENDER_LABEL = {m:"阳性 (m.)",f:"阴性 (f.)",mf:"阴/阳性 (m./f.)"};
 const LEVEL_COLOR = {A1:"#3C3489",A2:"#0F6E56",B1:"#993C1D",B2:"#185FA5"};
+
+// ── i18n ──
+let interfaceLang = 'zh';   // 'zh' = 中/英/法 ; 'en' = 法/英
+
+const TYPE_LABEL_ZH = {noun:"名词",verb:"动词",adj:"形容词",other:"其他"};
+const TYPE_LABEL_EN = {noun:"Noun",verb:"Verb",adj:"Adj.",other:"Other"};
+const GENDER_LABEL_ZH = {m:"阳性 (m.)",f:"阴性 (f.)",mf:"阴/阳性 (m./f.)"};
+const GENDER_LABEL_EN = {m:"masculine (m.)",f:"feminine (f.)",mf:"m./f."};
+
+// 分类中→英对照（英文模式用）
+const CAT_EN = {
+  "人物与家庭":"People & Family","地点与交通":"Places & Transport","房屋与物品":"Home & Objects",
+  "时间与日期":"Time & Date","饮食与动物":"Food & Animals","饮식与动物":"Food & Animals",
+  "购物与消费":"Shopping","旅游与休闲":"Travel & Leisure","健康与心理":"Health & Mind",
+  "心理与健康":"Mind & Health","自然与健康":"Nature & Health","教育与研究":"Education & Research",
+  "职场与学校":"Work & School","职场与教育":"Work & Education","职场与管理":"Work & Management",
+  "科技与媒体":"Tech & Media","社会与文化":"Society & Culture","文化与艺术":"Culture & Arts",
+  "环境与生态":"Environment & Ecology","环境与城市":"Environment & City","论述与分析":"Discourse & Analysis",
+  "核心动词":"Core verbs","A2核心动词":"A2 Core verbs","B1核心动词":"B1 Core verbs","B2核心动词":"B2 Core verbs",
+  "形容词":"Adjectives","A2形容词":"A2 Adjectives","B1形容词":"B1 Adjectives","B2形容词":"B2 Adjectives",
+  "代词与其他":"Pronouns & Others","A2副词与其他":"A2 Adverbs & Others"
+};
+
+function TL(){ return interfaceLang==='en'?TYPE_LABEL_EN:TYPE_LABEL_ZH; }
+function GL(){ return interfaceLang==='en'?GENDER_LABEL_EN:GENDER_LABEL_ZH; }
+function catLabel(c){ return interfaceLang==='en' ? (CAT_EN[c]||c) : c; }
+
+const I18N = {
+  zh:{
+    levelLabel:'Niveau', typeLabel:'词性',
+    lvAll:'全部', tpAll:'全部', noun:'名词', verb:'动词', adj:'形容词', other:'其他',
+    flash:'🃏 单字卡', quiz:'✏️ 测验', list:'📋 清单',
+    starredOnly:'⭐ 仅显示已标记', starredOn:'⭐ 已标记',
+    showing:n=>`显示 ${n} 个单词`,
+    empty:'没有符合条件的单词',
+    flip:'点击翻转 →',
+    thStar:'⭐', thFr:'法语', thGender:'阴阳性', thZh:'简体中文', thEn:'English', thLevel:'等级', thType:'词性',
+    quizNeed:'请至少选择 4 个单词来开始测验',
+    quizProg:(i,n,s)=>`第 ${i} / ${n} 题 · 得分 ${s}`,
+    quizNext:'下一题 →',
+    quizScore:(s,n)=>`${s} / ${n} 分`,
+    quizAcc:p=>`正确率 ${p}%`,
+    quizMsg:p=>p>=80?'太棒了！继续保持！':p>=60?'不错！再多练习几次吧':'加油！多复习标记的单词',
+    quizRetry:'再来一次', quizBack:'回到单字卡'
+  },
+  en:{
+    levelLabel:'Niveau', typeLabel:'Type',
+    lvAll:'All', tpAll:'All', noun:'Noun', verb:'Verb', adj:'Adj.', other:'Other',
+    flash:'🃏 Flashcards', quiz:'✏️ Quiz', list:'📋 List',
+    starredOnly:'⭐ Starred only', starredOn:'⭐ Starred',
+    showing:n=>`Showing ${n} words`,
+    empty:'No words match your filters',
+    flip:'Tap to flip →',
+    thStar:'⭐', thFr:'French', thGender:'Gender', thEn:'English', thLevel:'Level', thType:'Type',
+    quizNeed:'Select at least 4 words to start the quiz',
+    quizProg:(i,n,s)=>`Question ${i} / ${n} · Score ${s}`,
+    quizNext:'Next →',
+    quizScore:(s,n)=>`${s} / ${n}`,
+    quizAcc:p=>`Accuracy ${p}%`,
+    quizMsg:p=>p>=80?'Great job! Keep it up!':p>=60?'Nice! Keep practising':'Keep going! Review your starred words',
+    quizRetry:'Try again', quizBack:'Back to flashcards'
+  }
+};
+function T(){ return I18N[interfaceLang]; }
+
+// 把 overlay 的 logo 换成 header 里的 MLI logo（避免重复 base64）
+(function(){
+  var src=document.querySelector('header .logo-img');
+  var dst=document.getElementById('lang-logo-img');
+  if(src&&dst) dst.src=src.src;
+})();
+
+function chooseLang(lang){
+  interfaceLang = (lang==='en')?'en':'zh';
+  document.getElementById('lang-overlay').classList.add('hidden');
+  applyStaticLabels();
+  render();
+}
+
+function applyStaticLabels(){
+  const t=T();
+  const fls=document.querySelectorAll('.controls .filter-label');
+  if(fls[0]) fls[0].textContent=t.levelLabel;
+  if(fls[1]) fls[1].textContent=t.typeLabel;
+  const q=(sel)=>document.querySelector(sel);
+  q('.btn[data-group="level"][data-val="all"]').textContent=t.lvAll;
+  q('.btn[data-group="type"][data-val="all"]').textContent=t.tpAll;
+  q('.btn[data-group="type"][data-val="noun"]').textContent=t.noun;
+  q('.btn[data-group="type"][data-val="verb"]').textContent=t.verb;
+  q('.btn[data-group="type"][data-val="adj"]').textContent=t.adj;
+  q('.btn[data-group="type"][data-val="other"]').textContent=t.other;
+  q('.mode-tab[data-mode="flash"]').textContent=t.flash;
+  q('.mode-tab[data-mode="quiz"]').textContent=t.quiz;
+  q('.mode-tab[data-mode="list"]').textContent=t.list;
+  const st=document.getElementById('starred-toggle');
+  st.textContent=showStarredOnly?t.starredOn:t.starredOnly;
+  document.documentElement.lang = interfaceLang==='en'?'en':'zh-Hans';
+}
 
 let activeLevel='all', activeType='all', activeMode='flash', showStarredOnly=false;
 let starred = new Set();
@@ -1649,14 +1775,17 @@ function genderBadge(w){
 // ── FLASH ──
 function renderFlash(){
   const words=filtered();
-  document.getElementById('stats-text').textContent=`显示 ${words.length} 个单词`;
+  document.getElementById('stats-text').textContent=T().showing(words.length);
   const area=document.getElementById('main-area');
-  if(!words.length){area.innerHTML='<div class="grid"><div class="empty">没有符合条件的单词</div></div>';return;}
+  if(!words.length){area.innerHTML=`<div class="grid"><div class="empty">${T().empty}</div></div>`;return;}
   area.innerHTML='<div class="grid" id="grid"></div>';
   document.getElementById('grid').innerHTML=words.map((w,i)=>{
     const isS=starred.has(w.fr);
     const em=w.emoji||'';
-    const gd=w.gender&&w.type==='noun'?`<div class="gender-display">${GENDER_LABEL[w.gender]||''}</div>`:'';
+    const gd=w.gender&&w.type==='noun'?`<div class="gender-display">${GL()[w.gender]||''}</div>`:'';
+    const backMeaning = interfaceLang==='en'
+      ? `<div class="word-zh">${w.en}</div>`
+      : `<div class="word-zh">${w.zh}</div><div class="word-en">${w.en}</div>`;
     return `<div class="card${isS?' starred-card':''}" data-idx="${i}" onclick="flipCard(this)">
       <button class="star-btn${isS?' on':''}" data-fr="${i}" onclick="event.stopPropagation();toggleStar(${i},this)">⭐</button>
       <span class="level-badge badge-${w.level.toLowerCase()}">${w.level}</span>
@@ -1665,16 +1794,15 @@ function renderFlash(){
         <div class="word-fr">${w.type==='adj'&&w.fem&&w.fem!==w.fr ? w.fr+' / '+w.fem : w.fr}${genderBadge(w)}
           <button class="speak-btn" onclick="event.stopPropagation();speakWord(this)" data-fr="${w.fr}" data-fem="${w.fem||''}">🔊</button>
         </div>
-        <div class="word-type"><span class="type-dot dot-${w.type}"></span>${TYPE_LABEL[w.type]} · ${w.cat}</div>
-        <div class="hint">点击翻转 →</div>
+        <div class="word-type"><span class="type-dot dot-${w.type}"></span>${TL()[w.type]} · ${catLabel(w.cat)}</div>
+        <div class="hint">${T().flip}</div>
       </div>
       <div class="back">
         ${em?`<span class="card-emoji">${em}</span>`:''}
         <div class="word-fr-sm">${w.fr}</div>
         ${gd}
-        <div class="word-zh">${w.zh}</div>
-        <div class="word-en">${w.en}</div>
-        <div class="cat-tag">${TYPE_LABEL[w.type]} · ${w.cat}</div>
+        ${backMeaning}
+        <div class="cat-tag">${TL()[w.type]} · ${catLabel(w.cat)}</div>
       </div>
     </div>`;
   }).join('');
@@ -1693,27 +1821,31 @@ function toggleStar(idx,btn){
 // ── LIST ──
 function renderList(){
   const words=filtered();
-  document.getElementById('stats-text').textContent=`显示 ${words.length} 个单词`;
-  const wIdx=words.map(w=>WORDS.indexOf(w));
+  document.getElementById('stats-text').textContent=T().showing(words.length);
+  const t=T();
+  const en=interfaceLang==='en';
+  const head = en
+    ? `<th>${t.thStar}</th><th>${t.thFr}</th><th>${t.thGender}</th><th>${t.thEn}</th><th>${t.thLevel}</th><th>${t.thType}</th>`
+    : `<th>${t.thStar}</th><th>${t.thFr}</th><th>${t.thGender}</th><th>${t.thZh}</th><th>${t.thEn}</th><th>${t.thLevel}</th><th>${t.thType}</th>`;
   document.getElementById('main-area').innerHTML=`<div class="list-wrap"><table>
-    <thead><tr>
-      <th>⭐</th><th>法语</th><th>阴阳性</th><th>简体中文</th><th>English</th><th>等级</th><th>词性</th>
-    </tr></thead>
+    <thead><tr>${head}</tr></thead>
     <tbody>${words.map((w,i)=>{
       const globalIdx=WORDS.indexOf(w);
       const isS=starred.has(w.fr);
       const gc=w.gender==='m'?'g-m':w.gender==='f'?'g-f':w.gender==='mf'?'g-mf':'';
       const gl=w.gender==='m'?'m.':w.gender==='f'?'f.':w.gender==='mf'?'m./f.':'';
+      const meaningCells = en
+        ? `<td>${w.en}</td>`
+        : `<td>${w.zh}</td><td style="color:#999;font-style:italic">${w.en}</td>`;
       return `<tr>
         <td><button onclick="toggleStarList(${globalIdx},this)" style="background:none;border:none;cursor:pointer;font-size:14px;opacity:${isS?1:.2}">${isS?'⭐':'☆'}</button></td>
         <td style="font-weight:700;color:var(--navy)">${w.type==='adj'&&w.fem&&w.fem!==w.fr ? w.fr+' / '+w.fem : w.fr}
           <button onclick="speakWord(this)" data-fr="${w.fr}" style="background:none;border:none;cursor:pointer;font-size:11px;opacity:.35">🔊</button>
         </td>
         <td>${gl?`<span class="gender-badge ${gc}">${gl}</span>`:''}</td>
-        <td>${w.zh}</td>
-        <td style="color:#999;font-style:italic">${w.en}</td>
+        ${meaningCells}
         <td><span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:7px;background:${w.level==='A1'?'#EEEDFE':w.level==='A2'?'#E1F5EE':w.level==='B1'?'#FAECE7':'#E6F1FB'};color:${LEVEL_COLOR[w.level]}">${w.level}</span></td>
-        <td style="color:#aaa;font-size:11px">${TYPE_LABEL[w.type]}</td>
+        <td style="color:#aaa;font-size:11px">${TL()[w.type]}</td>
       </tr>`;
     }).join('')}</tbody>
   </table></div>`;
@@ -1732,7 +1864,7 @@ let quizWords=[], quizIdx=0, quizScore=0, quizResults=[], quizAnswered=false;
 
 function startQuiz(){
   const pool=filtered();
-  if(pool.length<4){document.getElementById('main-area').innerHTML='<div style="padding:2rem;text-align:center;color:var(--muted)">请至少选择 4 个单词来开始测验</div>';return;}
+  if(pool.length<4){document.getElementById('main-area').innerHTML=`<div style="padding:2rem;text-align:center;color:var(--muted)">${T().quizNeed}</div>`;return;}
   quizWords=shuffle([...pool]).slice(0,Math.min(20,pool.length));
   quizIdx=0;quizScore=0;quizResults=[];quizAnswered=false;
   renderQuiz();
@@ -1747,20 +1879,21 @@ function renderQuiz(){
   const gc=w.gender==='m'?'g-m':w.gender==='f'?'g-f':w.gender==='mf'?'g-mf':'';
   const gl=w.gender==='m'?'m.':w.gender==='f'?'f.':w.gender==='mf'?'m./f.':'';
   const dots=quizWords.map((_,i)=>`<div class="prog-dot ${i<quizIdx?(quizResults[i]?'done-ok':'done-err'):i===quizIdx?'current':''}"></div>`).join('');
+  const optText = o => interfaceLang==='en' ? o.en : o.zh;
   document.getElementById('main-area').innerHTML=`<div class="quiz-wrap">
     <div class="quiz-progress">${dots}</div>
-    <div class="quiz-score">第 ${quizIdx+1} / ${quizWords.length} 题 · 得分 ${quizScore}</div>
+    <div class="quiz-score">${T().quizProg(quizIdx+1,quizWords.length,quizScore)}</div>
     <div class="quiz-card">
       ${w.emoji?`<div class="quiz-q-emoji">${w.emoji}</div>`:''}
       <div class="quiz-q-fr">${w.fr}
         ${gl?`<span class="gender-badge ${gc}">${gl}</span>`:''}
         <button onclick="speakWord(this)" data-fr="${w.fr}" style="background:none;border:none;cursor:pointer;font-size:16px;opacity:.4">🔊</button>
       </div>
-      <div class="quiz-q-sub">${TYPE_LABEL[w.type]} · ${w.level}</div>
+      <div class="quiz-q-sub">${TL()[w.type]} · ${w.level}</div>
       <div class="quiz-opts" id="quiz-opts">
-        ${opts.map((o,oi)=>`<button class="quiz-opt" data-fr="${o.fr}" data-correct="${w.fr}" onclick="answerQuiz(this)">${o.zh}</button>`).join('')}
+        ${opts.map((o,oi)=>`<button class="quiz-opt" data-fr="${o.fr}" data-correct="${w.fr}" onclick="answerQuiz(this)">${optText(o)}</button>`).join('')}
       </div>
-      <button class="quiz-next" id="quiz-next" style="display:none" onclick="nextQuiz()">下一题 →</button>
+      <button class="quiz-next" id="quiz-next" style="display:none" onclick="nextQuiz()">${T().quizNext}</button>
     </div>
   </div>`;
 }
@@ -1787,12 +1920,13 @@ function nextQuiz(){quizIdx++;quizAnswered=false;renderQuiz();}
 function renderQuizFinish(){
   const pct=Math.round(quizScore/quizWords.length*100);
   const em=pct>=80?'🏆':pct>=60?'😊':'💪';
+  const t=T();
   document.getElementById('main-area').innerHTML=`<div class="quiz-wrap"><div class="quiz-finish">
     <div style="font-size:3rem;margin-bottom:.5rem">${em}</div>
-    <h2>${quizScore} / ${quizWords.length} 分</h2>
-    <p>正确率 ${pct}%<br>${pct>=80?'太棒了！继续保持！':pct>=60?'不错！再多练习几次吧':'加油！多复习标记的单词'}</p>
-    <button class="quiz-restart" onclick="startQuiz()">再来一次</button>
-    <button class="quiz-restart" style="background:var(--navy)" onclick="switchMode('flash')">回到单字卡</button>
+    <h2>${t.quizScore(quizScore,quizWords.length)}</h2>
+    <p>${t.quizAcc(pct)}<br>${t.quizMsg(pct)}</p>
+    <button class="quiz-restart" onclick="startQuiz()">${t.quizRetry}</button>
+    <button class="quiz-restart" style="background:var(--navy)" onclick="switchMode('flash')">${t.quizBack}</button>
   </div></div>`;
 }
 
@@ -1827,7 +1961,7 @@ document.querySelectorAll('.mode-tab').forEach(tab=>{
 document.getElementById('starred-toggle').addEventListener('click',function(){
   showStarredOnly=!showStarredOnly;
   this.classList.toggle('on',showStarredOnly);
-  this.textContent=showStarredOnly?'⭐ 已标记':'⭐ 仅显示已标记';
+  this.textContent=showStarredOnly?T().starredOn:T().starredOnly;
   render();
 });
 
